@@ -347,12 +347,26 @@ const Heading = ({ level = 1, children }) => {
 ## Design System Components
 
 ### Available Components
+- `Button`: Comprehensive button component with 7 styles, 5 sizes, and smooth motion animations
 - `Bichaurinho`: Mascot illustrations with 32 variants
 - `Logo`: Auto-switching logo for light/dark themes
 
 ```jsx
+import Button from 'src/design-system/components/Button.jsx';
 import Bichaurinho from 'src/design-system/components/Bichaurinho.jsx';
 import Logo from 'src/design-system/components/Logo.jsx';
+
+// Button usage - ALWAYS use this component for ANY button needs
+<Button 
+  label="Click me"
+  style="primary"        // 'primary' | 'secondary' | 'dashed' | 'soft' | 'ghost' | 'ghostMuted' | 'destructive'
+  size="lg"             // 'lg' | 'md' | 'sm' | 'xs' | '2xs'
+  onClick={handleClick}
+  leadIcon={<Icon />}   // Optional leading icon
+  tailIcon={<Icon />}   // Optional trailing icon
+  loading={false}       // Loading state with spinner
+  disabled={false}      // Disabled state
+/>
 
 // Bichaurinho usage
 <Bichaurinho variant={1-32} size={128} className="custom-class" />
@@ -361,31 +375,78 @@ import Logo from 'src/design-system/components/Logo.jsx';
 <Logo width={120} className="custom-class" alt="Custom alt text" />
 ```
 
+#### Button Component Styles
+The Button component provides 7 complete styles for different use cases:
+
+- **Primary**: Blue backgrounds, white text/icons, shadows - for main actions
+- **Secondary**: Light backgrounds, default text, muted icons, borders, shadows - for secondary actions  
+- **Dashed**: Same as secondary but with dashed borders, no shadows - for draft/temporary actions
+- **Soft**: Soft colored backgrounds, muted text/icons, no borders/shadows - for subtle actions
+- **Ghost**: Minimal backgrounds, default text, muted icons, no borders/shadows - for minimal actions
+- **Ghost Muted**: Same as ghost but with muted text - for ultra-subtle actions
+- **Destructive**: Red backgrounds, white text/icons, shadows - for delete/remove actions
+
+#### Button Component Features
+- **Theme-Aware**: Automatically adapts to light/dark themes
+- **Motion Enhanced**: Smooth hover/press scale animations and color transitions
+- **Loading States**: Built-in loading spinner with smooth animations
+- **Icon Support**: Lead and tail icons with hover animations
+- **Accessibility**: Full keyboard navigation and screen reader support
+- **Consistent**: Uses all design system tokens (colors, spacing, typography, shadows)
+
 ## Rules for Cursor
 
 ### ALWAYS DO:
-1. **Import and use existing design tokens** instead of hardcoding values
-2. **Use semantic colors** (`colors.text.default`, `colors.bg.card.default`) for theme compatibility
-3. **Use the `useTheme()` hook** for theme-aware components
-4. **Reference `textStyles`** for typography instead of manual font/size combinations
-5. **Use spacing tokens** for consistent padding, margins, and gaps
-6. **Use cornerRadius tokens** for consistent border radius
-7. **Use design system shadow tokens** (`shadows.regular.card`, `shadows.component.default`) for all shadows
-8. **Use `getShadow()` helper** for theme-aware borders and focus rings
-9. **Use existing components** (`Bichaurinho`, `Logo`) when appropriate
-10. **Follow the established patterns** shown in existing components
+1. **Use the Button component** for ALL button needs - never create custom buttons or use HTML `<button>` elements
+2. **Import and use existing design tokens** instead of hardcoding values
+3. **Use semantic colors** (`colors.text.default`, `colors.bg.card.default`) for theme compatibility
+4. **Use the `useTheme()` hook** for theme-aware components
+5. **Reference `textStyles`** for typography instead of manual font/size combinations
+6. **Use spacing tokens** for consistent padding, margins, and gaps
+7. **Use cornerRadius tokens** for consistent border radius
+8. **Use design system shadow tokens** (`shadows.regular.card`, `shadows.component.default`) for all shadows
+9. **Use `getShadow()` helper** for theme-aware borders and focus rings
+10. **Use existing components** (`Button`, `Bichaurinho`, `Logo`) when appropriate
+11. **Follow the established patterns** shown in existing components
 
 ### NEVER DO:
-1. **Hardcode colors, fonts, spacing, or shadow values** - always use tokens
-2. **Create new design tokens** - use existing ones or ask for clarification
-3. **Use CSS color names or hex values directly** - use the color system
-4. **Ignore theme compatibility** - always consider light/dark mode
-5. **Create typography styles manually** - use `textStyles` or typography tokens
-6. **Use arbitrary Tailwind values** - use the extended theme values
-7. **Use Tailwind shadow classes** - use design system shadow tokens instead
-8. **Hardcode CSS box-shadow values** - use `shadows` tokens or `getShadow()` helper
+1. **Create custom buttons or use HTML `<button>` elements** - always use the Button component
+2. **Hardcode colors, fonts, spacing, or shadow values** - always use tokens
+3. **Create new design tokens** - use existing ones or ask for clarification
+4. **Use CSS color names or hex values directly** - use the color system
+5. **Ignore theme compatibility** - always consider light/dark mode
+6. **Create typography styles manually** - use `textStyles` or typography tokens
+7. **Use arbitrary Tailwind values** - use the extended theme values
+8. **Use Tailwind shadow classes** - use design system shadow tokens instead
+9. **Hardcode CSS box-shadow values** - use `shadows` tokens or `getShadow()` helper
 
 ### Examples of Good vs Bad:
+
+❌ **DON'T** (Custom Buttons):
+```jsx
+<button 
+  style={{ 
+    backgroundColor: '#007bff', 
+    color: 'white',
+    padding: '12px 16px',
+    borderRadius: '6px',
+    border: 'none'
+  }}
+  onClick={handleClick}
+>
+  Submit
+</button>
+```
+
+✅ **DO** (Button Component):
+```jsx
+<Button 
+  label="Submit"
+  style="primary"
+  size="lg"
+  onClick={handleClick}
+/>
+```
 
 ❌ **DON'T**:
 ```jsx
@@ -433,6 +494,7 @@ const { colors } = useTheme();
 ```
 
 ### Component Creation Checklist:
+- [ ] Uses the Button component for ANY button needs (never create custom buttons)
 - [ ] Uses semantic colors for theme compatibility
 - [ ] Imports design tokens from the design system
 - [ ] Uses `useTheme()` hook if theme-aware
@@ -444,4 +506,4 @@ const { colors } = useTheme();
 - [ ] Follows existing component patterns
 - [ ] Works in both light and dark themes
 
-Remember: The design system is comprehensive and battle-tested. Always use existing tokens and patterns rather than creating new ones. When in doubt, reference the existing components (`Bichaurinho.jsx`, `Logo.jsx`) for implementation patterns. 
+Remember: The design system is comprehensive and battle-tested. Always use existing tokens and patterns rather than creating new ones. When in doubt, reference the existing components (`Button.jsx`, `Bichaurinho.jsx`, `Logo.jsx`) for implementation patterns. **NEVER create custom buttons - the Button component handles all use cases with 7 styles, 5 sizes, and full motion animations.** 

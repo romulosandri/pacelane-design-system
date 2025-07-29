@@ -1,39 +1,50 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const LoadingSpinner = ({ size = 18, color = 'currentColor' }) => (
-  <svg
+  <motion.svg
     width={size}
     height={size}
     viewBox="0 0 24 24"
     fill="none"
-    className="animate-spin"
     style={{ color }}
+    animate={{ rotate: 360 }}
+    transition={{
+      duration: 1,
+      repeat: Infinity,
+      ease: "linear"
+    }}
   >
-    <circle
+    <motion.circle
       cx="12"
       cy="12"
       r="10"
       stroke="currentColor"
       strokeWidth="4"
-      strokeDasharray="32"
-      strokeDashoffset="32"
       strokeLinecap="round"
+      fill="none"
       opacity="0.3"
-    >
-      <animate
-        attributeName="stroke-dasharray"
-        dur="2s"
-        values="0 32;16 16;0 32;0 32"
-        repeatCount="indefinite"
-      />
-      <animate
-        attributeName="stroke-dashoffset"
-        dur="2s"
-        values="0;-16;-32;-32"
-        repeatCount="indefinite"
-      />
-    </circle>
-  </svg>
+    />
+    <motion.circle
+      cx="12"
+      cy="12"
+      r="10"
+      stroke="currentColor"
+      strokeWidth="4"
+      strokeLinecap="round"
+      fill="none"
+      strokeDasharray="63"
+      strokeDashoffset="63"
+      animate={{
+        strokeDashoffset: [63, 0, 63],
+      }}
+      transition={{
+        duration: 1.5,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }}
+    />
+  </motion.svg>
 );
 
 export default LoadingSpinner; 

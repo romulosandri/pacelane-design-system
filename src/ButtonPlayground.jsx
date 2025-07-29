@@ -189,13 +189,13 @@ const ButtonPlayground = () => {
 
       {/* Secondary Style Examples */}
       <div style={sectionStyle}>
-        <h2 style={headingStyle}>Secondary & Dashed Styles - All States</h2>
+        <h2 style={headingStyle}>All Button Styles - Complete Design System</h2>
         <p style={{
           ...textStyles.md.normal,
           color: colors.text.subtle,
           marginBottom: spacing.spacing[24]
         }}>
-          Secondary buttons with borders and shadows vs. Dashed buttons with dashed borders and no shadows.
+          Secondary (default text, muted icons, solid borders + shadows), Dashed (default text, muted icons, dashed borders, no shadows), Soft (muted text & icons, no borders, no shadows, subtle backgrounds), Ghost (default text, muted icons, no borders, no shadows, minimal backgrounds), Ghost Muted (muted text & icons, no borders, no shadows, minimal backgrounds), and Destructive (white text & icons, no borders, shadows, red backgrounds).
         </p>
         
         <div style={gridStyle}>
@@ -326,18 +326,278 @@ const ButtonPlayground = () => {
             <span style={labelStyle}>Disabled State</span>
           </div>
         </div>
+
+        <h3 style={subHeadingStyle}>Soft Style (No Borders, Subtle Backgrounds)</h3>
+        <div style={gridStyle}>
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Default"
+              onClick={() => handleButtonClick('Soft Default')}
+              size="lg"
+              style="soft"
+            />
+            <span style={labelStyle}>Soft Default</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="With Lead Icon"
+              leadIcon={<Icon name="user" size={18} />}
+              onClick={() => handleButtonClick('Soft with Icon')}
+              size="lg"
+              style="soft"
+            />
+            <span style={labelStyle}>Hover for Hover State</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="With Tail Icon"
+              tailIcon={<Icon name="plus" size={18} />}
+              onClick={() => handleButtonClick('Soft with Tail')}
+              size="lg"
+              style="soft"
+            />
+            <span style={labelStyle}>Click for Press State</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Focus Me"
+              onClick={() => handleButtonClick('Soft Focus')}
+              size="lg"
+              style="soft"
+            />
+            <span style={labelStyle}>Tab to focus</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Loading..."
+              loading={true}
+              size="lg"
+              style="soft"
+            />
+            <span style={labelStyle}>Loading State</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Disabled"
+              disabled={true}
+              size="lg"
+              style="soft"
+            />
+            <span style={labelStyle}>Disabled State</span>
+          </div>
+        </div>
+
+        <h3 style={subHeadingStyle}>Ghost Style (No Borders, No Shadows, Minimal Backgrounds)</h3>
+        <div style={gridStyle}>
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Default"
+              onClick={() => handleButtonClick('Ghost Default')}
+              size="lg"
+              style="ghost"
+            />
+            <span style={labelStyle}>Ghost Default</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="With Lead Icon"
+              leadIcon={<Icon name="user" size={18} />}
+              onClick={() => handleButtonClick('Ghost with Icon')}
+              size="lg"
+              style="ghost"
+            />
+            <span style={labelStyle}>Hover for Hover State</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="With Tail Icon"
+              tailIcon={<Icon name="plus" size={18} />}
+              onClick={() => handleButtonClick('Ghost with Tail')}
+              size="lg"
+              style="ghost"
+            />
+            <span style={labelStyle}>Click for Press State</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Focus Me"
+              onClick={() => handleButtonClick('Ghost Focus')}
+              size="lg"
+              style="ghost"
+            />
+            <span style={labelStyle}>Tab to focus</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Loading..."
+              loading={true}
+              size="lg"
+              style="ghost"
+            />
+            <span style={labelStyle}>Loading State</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Disabled"
+              disabled={true}
+              size="lg"
+              style="ghost"
+            />
+            <span style={labelStyle}>Disabled State</span>
+          </div>
+        </div>
+
+        <h3 style={subHeadingStyle}>Ghost Muted Style (Same as Ghost but Muted Text)</h3>
+        <div style={gridStyle}>
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Default"
+              onClick={() => handleButtonClick('Ghost Muted Default')}
+              size="lg"
+              style="ghostMuted"
+            />
+            <span style={labelStyle}>Ghost Muted Default</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="With Lead Icon"
+              leadIcon={<Icon name="user" size={18} />}
+              onClick={() => handleButtonClick('Ghost Muted with Icon')}
+              size="lg"
+              style="ghostMuted"
+            />
+            <span style={labelStyle}>Hover for Hover State</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="With Tail Icon"
+              tailIcon={<Icon name="plus" size={18} />}
+              onClick={() => handleButtonClick('Ghost Muted with Tail')}
+              size="lg"
+              style="ghostMuted"
+            />
+            <span style={labelStyle}>Click for Press State</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Focus Me"
+              onClick={() => handleButtonClick('Ghost Muted Focus')}
+              size="lg"
+              style="ghostMuted"
+            />
+            <span style={labelStyle}>Tab to focus</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Loading..."
+              loading={true}
+              size="lg"
+              style="ghostMuted"
+            />
+            <span style={labelStyle}>Loading State</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Disabled"
+              disabled={true}
+              size="lg"
+              style="ghostMuted"
+            />
+            <span style={labelStyle}>Disabled State</span>
+          </div>
+        </div>
+
+        <h3 style={subHeadingStyle}>Destructive Style (White Text & Icons, Red Backgrounds)</h3>
+        <div style={gridStyle}>
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Delete"
+              onClick={() => handleButtonClick('Destructive Default')}
+              size="lg"
+              style="destructive"
+            />
+            <span style={labelStyle}>Destructive Default</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Remove"
+              leadIcon={<Icon name="user" size={18} />}
+              onClick={() => handleButtonClick('Destructive with Icon')}
+              size="lg"
+              style="destructive"
+            />
+            <span style={labelStyle}>Hover for Hover State</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Clear All"
+              tailIcon={<Icon name="plus" size={18} />}
+              onClick={() => handleButtonClick('Destructive with Tail')}
+              size="lg"
+              style="destructive"
+            />
+            <span style={labelStyle}>Click for Press State</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Focus Me"
+              onClick={() => handleButtonClick('Destructive Focus')}
+              size="lg"
+              style="destructive"
+            />
+            <span style={labelStyle}>Tab to focus</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Loading..."
+              loading={true}
+              size="lg"
+              style="destructive"
+            />
+            <span style={labelStyle}>Loading State</span>
+          </div>
+
+          <div style={buttonGroupStyle}>
+            <Button
+              label="Disabled"
+              disabled={true}
+              size="lg"
+              style="destructive"
+            />
+            <span style={labelStyle}>Disabled State</span>
+          </div>
+        </div>
       </div>
 
       {/* Interactive Examples */}
       <div style={sectionStyle}>
         <h2 style={headingStyle}>Interactive Examples</h2>
         
-        <h3 style={subHeadingStyle}>Different Sizes (Primary vs Secondary vs Dashed)</h3>
+        <h3 style={subHeadingStyle}>Different Sizes (All Styles)</h3>
         <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: spacing.spacing[12],
-          marginBottom: spacing.spacing[12],
+          marginBottom: spacing.spacing[8],
           flexWrap: 'wrap'
         }}>
           <Button label="2XS" size="2xs" onClick={() => handleButtonClick('Primary 2XS')} />
@@ -350,7 +610,7 @@ const ButtonPlayground = () => {
           display: 'flex',
           alignItems: 'center',
           gap: spacing.spacing[12],
-          marginBottom: spacing.spacing[12],
+          marginBottom: spacing.spacing[8],
           flexWrap: 'wrap'
         }}>
           <Button label="2XS" size="2xs" style="secondary" onClick={() => handleButtonClick('Secondary 2XS')} />
@@ -363,7 +623,7 @@ const ButtonPlayground = () => {
           display: 'flex',
           alignItems: 'center',
           gap: spacing.spacing[12],
-          marginBottom: spacing.spacing[24],
+          marginBottom: spacing.spacing[8],
           flexWrap: 'wrap'
         }}>
           <Button label="2XS" size="2xs" style="dashed" onClick={() => handleButtonClick('Dashed 2XS')} />
@@ -372,13 +632,65 @@ const ButtonPlayground = () => {
           <Button label="MD" size="md" style="dashed" onClick={() => handleButtonClick('Dashed MD')} />
           <Button label="LG" size="lg" style="dashed" onClick={() => handleButtonClick('Dashed LG')} />
         </div>
-
-        <h3 style={subHeadingStyle}>With Icons (Primary, Secondary & Dashed)</h3>
         <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: spacing.spacing[12],
-          marginBottom: spacing.spacing[12],
+          marginBottom: spacing.spacing[8],
+          flexWrap: 'wrap'
+        }}>
+          <Button label="2XS" size="2xs" style="soft" onClick={() => handleButtonClick('Soft 2XS')} />
+          <Button label="XS" size="xs" style="soft" onClick={() => handleButtonClick('Soft XS')} />
+          <Button label="SM" size="sm" style="soft" onClick={() => handleButtonClick('Soft SM')} />
+          <Button label="MD" size="md" style="soft" onClick={() => handleButtonClick('Soft MD')} />
+          <Button label="LG" size="lg" style="soft" onClick={() => handleButtonClick('Soft LG')} />
+        </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: spacing.spacing[12],
+          marginBottom: spacing.spacing[8],
+          flexWrap: 'wrap'
+        }}>
+          <Button label="2XS" size="2xs" style="ghost" onClick={() => handleButtonClick('Ghost 2XS')} />
+          <Button label="XS" size="xs" style="ghost" onClick={() => handleButtonClick('Ghost XS')} />
+          <Button label="SM" size="sm" style="ghost" onClick={() => handleButtonClick('Ghost SM')} />
+          <Button label="MD" size="md" style="ghost" onClick={() => handleButtonClick('Ghost MD')} />
+          <Button label="LG" size="lg" style="ghost" onClick={() => handleButtonClick('Ghost LG')} />
+        </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: spacing.spacing[12],
+          marginBottom: spacing.spacing[8],
+          flexWrap: 'wrap'
+        }}>
+          <Button label="2XS" size="2xs" style="ghostMuted" onClick={() => handleButtonClick('Ghost Muted 2XS')} />
+          <Button label="XS" size="xs" style="ghostMuted" onClick={() => handleButtonClick('Ghost Muted XS')} />
+          <Button label="SM" size="sm" style="ghostMuted" onClick={() => handleButtonClick('Ghost Muted SM')} />
+          <Button label="MD" size="md" style="ghostMuted" onClick={() => handleButtonClick('Ghost Muted MD')} />
+          <Button label="LG" size="lg" style="ghostMuted" onClick={() => handleButtonClick('Ghost Muted LG')} />
+        </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: spacing.spacing[12],
+          marginBottom: spacing.spacing[24],
+          flexWrap: 'wrap'
+        }}>
+          <Button label="2XS" size="2xs" style="destructive" onClick={() => handleButtonClick('Destructive 2XS')} />
+          <Button label="XS" size="xs" style="destructive" onClick={() => handleButtonClick('Destructive XS')} />
+          <Button label="SM" size="sm" style="destructive" onClick={() => handleButtonClick('Destructive SM')} />
+          <Button label="MD" size="md" style="destructive" onClick={() => handleButtonClick('Destructive MD')} />
+          <Button label="LG" size="lg" style="destructive" onClick={() => handleButtonClick('Destructive LG')} />
+        </div>
+
+        <h3 style={subHeadingStyle}>With Icons (All Styles)</h3>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: spacing.spacing[12],
+          marginBottom: spacing.spacing[8],
           flexWrap: 'wrap'
         }}>
           <Button 
@@ -402,7 +714,7 @@ const ButtonPlayground = () => {
           display: 'flex',
           alignItems: 'center',
           gap: spacing.spacing[12],
-          marginBottom: spacing.spacing[12],
+          marginBottom: spacing.spacing[8],
           flexWrap: 'wrap'
         }}>
           <Button 
@@ -429,7 +741,7 @@ const ButtonPlayground = () => {
           display: 'flex',
           alignItems: 'center',
           gap: spacing.spacing[12],
-          marginBottom: spacing.spacing[24],
+          marginBottom: spacing.spacing[8],
           flexWrap: 'wrap'
         }}>
           <Button 
@@ -450,6 +762,114 @@ const ButtonPlayground = () => {
             tailIcon={<Icon name="user" />}
             style="dashed"
             onClick={() => handleButtonClick('Settings Dashed')} 
+          />
+        </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: spacing.spacing[12],
+          marginBottom: spacing.spacing[8],
+          flexWrap: 'wrap'
+        }}>
+          <Button 
+            label="Save" 
+            leadIcon={<Icon name="heart" />}
+            style="soft"
+            onClick={() => handleButtonClick('Save Soft')} 
+          />
+          <Button 
+            label="Download" 
+            tailIcon={<Icon name="download" />}
+            style="soft"
+            onClick={() => handleButtonClick('Download Soft')} 
+          />
+          <Button 
+            label="Settings" 
+            leadIcon={<Icon name="settings" />}
+            tailIcon={<Icon name="user" />}
+            style="soft"
+            onClick={() => handleButtonClick('Settings Soft')} 
+          />
+        </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: spacing.spacing[12],
+          marginBottom: spacing.spacing[8],
+          flexWrap: 'wrap'
+        }}>
+          <Button 
+            label="Save" 
+            leadIcon={<Icon name="heart" />}
+            style="ghost"
+            onClick={() => handleButtonClick('Save Ghost')} 
+          />
+          <Button 
+            label="Download" 
+            tailIcon={<Icon name="download" />}
+            style="ghost"
+            onClick={() => handleButtonClick('Download Ghost')} 
+          />
+          <Button 
+            label="Settings" 
+            leadIcon={<Icon name="settings" />}
+            tailIcon={<Icon name="user" />}
+            style="ghost"
+            onClick={() => handleButtonClick('Settings Ghost')} 
+          />
+        </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: spacing.spacing[12],
+          marginBottom: spacing.spacing[8],
+          flexWrap: 'wrap'
+        }}>
+          <Button 
+            label="Save" 
+            leadIcon={<Icon name="heart" />}
+            style="ghostMuted"
+            onClick={() => handleButtonClick('Save Ghost Muted')} 
+          />
+          <Button 
+            label="Download" 
+            tailIcon={<Icon name="download" />}
+            style="ghostMuted"
+            onClick={() => handleButtonClick('Download Ghost Muted')} 
+          />
+          <Button 
+            label="Settings" 
+            leadIcon={<Icon name="settings" />}
+            tailIcon={<Icon name="user" />}
+            style="ghostMuted"
+            onClick={() => handleButtonClick('Settings Ghost Muted')} 
+          />
+        </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: spacing.spacing[12],
+          marginBottom: spacing.spacing[24],
+          flexWrap: 'wrap'
+        }}>
+          <Button 
+            label="Delete" 
+            leadIcon={<Icon name="heart" />}
+            style="destructive"
+            onClick={() => handleButtonClick('Delete Destructive')} 
+          />
+          <Button 
+            label="Remove" 
+            tailIcon={<Icon name="download" />}
+            style="destructive"
+            onClick={() => handleButtonClick('Remove Destructive')} 
+          />
+          <Button 
+            label="Clear All" 
+            leadIcon={<Icon name="settings" />}
+            tailIcon={<Icon name="user" />}
+            style="destructive"
+            onClick={() => handleButtonClick('Clear All Destructive')} 
           />
         </div>
 
@@ -487,12 +907,12 @@ const ButtonPlayground = () => {
           />
         </div>
 
-        <h3 style={subHeadingStyle}>States in Action (Primary, Secondary & Dashed)</h3>
+        <h3 style={subHeadingStyle}>States in Action (All Styles)</h3>
         <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: spacing.spacing[12],
-          marginBottom: spacing.spacing[8],
+          marginBottom: spacing.spacing[6],
           flexWrap: 'wrap'
         }}>
           <Button 
@@ -515,7 +935,7 @@ const ButtonPlayground = () => {
           display: 'flex',
           alignItems: 'center',
           gap: spacing.spacing[12],
-          marginBottom: spacing.spacing[8],
+          marginBottom: spacing.spacing[6],
           flexWrap: 'wrap'
         }}>
           <Button 
@@ -541,6 +961,7 @@ const ButtonPlayground = () => {
           display: 'flex',
           alignItems: 'center',
           gap: spacing.spacing[12],
+          marginBottom: spacing.spacing[6],
           flexWrap: 'wrap'
         }}>
           <Button 
@@ -560,6 +981,109 @@ const ButtonPlayground = () => {
             style="dashed"
             disabled={clickCount % 8 === 0 && clickCount > 0}
             onClick={() => handleButtonClick('Disabled Toggle Dashed')}
+          />
+        </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: spacing.spacing[12],
+          marginBottom: spacing.spacing[6],
+          flexWrap: 'wrap'
+        }}>
+          <Button 
+            label="Click Me!"
+            style="soft"
+            onClick={() => handleButtonClick('Interactive Soft')}
+            leadIcon={<Icon name="user" />}
+          />
+          <Button 
+            label="Loading Example"
+            style="soft"
+            loading={clickCount % 9 === 0 && clickCount > 0}
+            onClick={() => handleButtonClick('Loading Toggle Soft')}
+          />
+          <Button 
+            label="Disabled Example"
+            style="soft"
+            disabled={clickCount % 10 === 0 && clickCount > 0}
+            onClick={() => handleButtonClick('Disabled Toggle Soft')}
+          />
+        </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: spacing.spacing[12],
+          marginBottom: spacing.spacing[6],
+          flexWrap: 'wrap'
+        }}>
+          <Button 
+            label="Click Me!"
+            style="ghost"
+            onClick={() => handleButtonClick('Interactive Ghost')}
+            leadIcon={<Icon name="user" />}
+          />
+          <Button 
+            label="Loading Example"
+            style="ghost"
+            loading={clickCount % 11 === 0 && clickCount > 0}
+            onClick={() => handleButtonClick('Loading Toggle Ghost')}
+          />
+          <Button 
+            label="Disabled Example"
+            style="ghost"
+            disabled={clickCount % 12 === 0 && clickCount > 0}
+            onClick={() => handleButtonClick('Disabled Toggle Ghost')}
+          />
+        </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: spacing.spacing[12],
+          marginBottom: spacing.spacing[6],
+          flexWrap: 'wrap'
+        }}>
+          <Button 
+            label="Click Me!"
+            style="ghostMuted"
+            onClick={() => handleButtonClick('Interactive Ghost Muted')}
+            leadIcon={<Icon name="user" />}
+          />
+          <Button 
+            label="Loading Example"
+            style="ghostMuted"
+            loading={clickCount % 13 === 0 && clickCount > 0}
+            onClick={() => handleButtonClick('Loading Toggle Ghost Muted')}
+          />
+          <Button 
+            label="Disabled Example"
+            style="ghostMuted"
+            disabled={clickCount % 14 === 0 && clickCount > 0}
+            onClick={() => handleButtonClick('Disabled Toggle Ghost Muted')}
+          />
+        </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: spacing.spacing[12],
+          flexWrap: 'wrap'
+        }}>
+          <Button 
+            label="Delete!"
+            style="destructive"
+            onClick={() => handleButtonClick('Interactive Destructive')}
+            leadIcon={<Icon name="user" />}
+          />
+          <Button 
+            label="Loading Example"
+            style="destructive"
+            loading={clickCount % 15 === 0 && clickCount > 0}
+            onClick={() => handleButtonClick('Loading Toggle Destructive')}
+          />
+          <Button 
+            label="Disabled Example"
+            style="destructive"
+            disabled={clickCount % 16 === 0 && clickCount > 0}
+            onClick={() => handleButtonClick('Disabled Toggle Destructive')}
           />
         </div>
       </div>
@@ -639,6 +1163,7 @@ const ButtonPlayground = () => {
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
           gap: spacing.spacing[16],
+          marginBottom: spacing.spacing[24],
         }}>
           <Button 
             label={`${theme} Theme`}
@@ -660,6 +1185,129 @@ const ButtonPlayground = () => {
           <Button 
             loading={true}
             style="dashed"
+            label="Loading..."
+          />
+        </div>
+
+        <h3 style={subHeadingStyle}>Soft Style Theme Adaptation</h3>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: spacing.spacing[16],
+          marginBottom: spacing.spacing[24],
+        }}>
+          <Button 
+            label={`${theme} Theme`}
+            style="soft"
+            onClick={toggleTheme}
+            leadIcon={<Icon name="settings" />}
+          />
+          <Button 
+            label="Test Hover"
+            style="soft"
+            onClick={() => handleButtonClick('Theme Test Soft')}
+            tailIcon={<Icon name="heart" />}
+          />
+          <Button 
+            label="Test Focus"
+            style="soft"
+            onClick={() => handleButtonClick('Focus Test Soft')}
+          />
+          <Button 
+            loading={true}
+            style="soft"
+            label="Loading..."
+          />
+        </div>
+
+        <h3 style={subHeadingStyle}>Ghost Style Theme Adaptation</h3>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: spacing.spacing[16],
+          marginBottom: spacing.spacing[24],
+        }}>
+          <Button 
+            label={`${theme} Theme`}
+            style="ghost"
+            onClick={toggleTheme}
+            leadIcon={<Icon name="settings" />}
+          />
+          <Button 
+            label="Test Hover"
+            style="ghost"
+            onClick={() => handleButtonClick('Theme Test Ghost')}
+            tailIcon={<Icon name="heart" />}
+          />
+          <Button 
+            label="Test Focus"
+            style="ghost"
+            onClick={() => handleButtonClick('Focus Test Ghost')}
+          />
+          <Button 
+            loading={true}
+            style="ghost"
+            label="Loading..."
+          />
+        </div>
+
+        <h3 style={subHeadingStyle}>Ghost Muted Style Theme Adaptation</h3>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: spacing.spacing[16],
+          marginBottom: spacing.spacing[24],
+        }}>
+          <Button 
+            label={`${theme} Theme`}
+            style="ghostMuted"
+            onClick={toggleTheme}
+            leadIcon={<Icon name="settings" />}
+          />
+          <Button 
+            label="Test Hover"
+            style="ghostMuted"
+            onClick={() => handleButtonClick('Theme Test Ghost Muted')}
+            tailIcon={<Icon name="heart" />}
+          />
+          <Button 
+            label="Test Focus"
+            style="ghostMuted"
+            onClick={() => handleButtonClick('Focus Test Ghost Muted')}
+          />
+          <Button 
+            loading={true}
+            style="ghostMuted"
+            label="Loading..."
+          />
+        </div>
+
+        <h3 style={subHeadingStyle}>Destructive Style Theme Adaptation</h3>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: spacing.spacing[16],
+        }}>
+          <Button 
+            label={`${theme} Theme`}
+            style="destructive"
+            onClick={toggleTheme}
+            leadIcon={<Icon name="settings" />}
+          />
+          <Button 
+            label="Test Hover"
+            style="destructive"
+            onClick={() => handleButtonClick('Theme Test Destructive')}
+            tailIcon={<Icon name="heart" />}
+          />
+          <Button 
+            label="Test Focus"
+            style="destructive"
+            onClick={() => handleButtonClick('Focus Test Destructive')}
+          />
+          <Button 
+            loading={true}
+            style="destructive"
             label="Loading..."
           />
         </div>

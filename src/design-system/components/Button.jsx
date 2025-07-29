@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../../services/theme-context.jsx';
 import { spacing } from '../tokens/spacing.js';
 import { cornerRadius } from '../tokens/corner-radius.js';
@@ -120,31 +121,31 @@ const Button = ({
     const secondaryConfig = {
       default: {
         backgroundColor: colors.bg.state.secondary,
-        color: colors.text.muted,
+        color: colors.text.default,
         borderColor: colors.border.default,
         shadow: shadows.component.default
       },
       hover: {
         backgroundColor: colors.bg.state.secondaryHover,
-        color: colors.text.muted,
+        color: colors.text.default,
         borderColor: colors.border.default,
         shadow: shadows.component.default
       },
       press: {
         backgroundColor: colors.bg.state.secondaryPress,
-        color: colors.text.muted,
+        color: colors.text.default,
         borderColor: colors.border.default,
         shadow: shadows.component.default
       },
       focus: {
         backgroundColor: colors.bg.state.secondary,
-        color: colors.text.muted,
+        color: colors.text.default,
         borderColor: colors.border.default,
         shadow: getShadow('component.focus', colors, { focusType: 'default' })
       },
       loading: {
         backgroundColor: colors.bg.state.secondaryLoading,
-        color: colors.text.muted,
+        color: colors.text.default,
         borderColor: colors.border.default,
         shadow: shadows.component.default
       },
@@ -159,31 +160,31 @@ const Button = ({
     const dashedConfig = {
       default: {
         backgroundColor: colors.bg.state.secondary,
-        color: colors.text.muted,
+        color: colors.text.default,
         borderColor: colors.border.darker,
         shadow: 'none'
       },
       hover: {
         backgroundColor: colors.bg.state.secondaryHover,
-        color: colors.text.muted,
+        color: colors.text.default,
         borderColor: colors.border.darker,
         shadow: 'none'
       },
       press: {
         backgroundColor: colors.bg.state.secondaryPress,
-        color: colors.text.muted,
+        color: colors.text.default,
         borderColor: colors.border.darker,
         shadow: 'none'
       },
       focus: {
         backgroundColor: colors.bg.state.secondary,
-        color: colors.text.muted,
+        color: colors.text.default,
         borderColor: colors.border.darker,
         shadow: getShadow('component.focus', colors, { focusType: 'default' })
       },
       loading: {
         backgroundColor: colors.bg.state.secondaryLoading,
-        color: colors.text.muted,
+        color: colors.text.default,
         borderColor: colors.border.darker,
         shadow: 'none'
       },
@@ -195,7 +196,163 @@ const Button = ({
       }
     };
 
-    const styleConfigs = { primary: primaryConfig, secondary: secondaryConfig, dashed: dashedConfig };
+    const softConfig = {
+      default: {
+        backgroundColor: colors.bg.state.soft,
+        color: colors.text.muted,
+        borderColor: 'transparent',
+        shadow: 'none'
+      },
+      hover: {
+        backgroundColor: colors.bg.state.softHover,
+        color: colors.text.muted,
+        borderColor: 'transparent',
+        shadow: 'none'
+      },
+      press: {
+        backgroundColor: colors.bg.state.softPress,
+        color: colors.text.muted,
+        borderColor: 'transparent',
+        shadow: 'none'
+      },
+      focus: {
+        backgroundColor: colors.bg.state.soft,
+        color: colors.text.muted,
+        borderColor: 'transparent',
+        shadow: getShadow('component.focus', colors, { focusType: 'default' })
+      },
+      loading: {
+        backgroundColor: colors.bg.state.softLoading,
+        color: colors.text.muted,
+        borderColor: 'transparent',
+        shadow: 'none'
+      },
+      disabled: {
+        backgroundColor: colors.bg.state.disabled,
+        color: colors.text.hint,
+        borderColor: 'transparent',
+        shadow: 'none'
+      }
+    };
+
+    const ghostConfig = {
+      default: {
+        backgroundColor: colors.bg.state.ghost,
+        color: colors.text.default,
+        borderColor: 'transparent',
+        shadow: 'none'
+      },
+      hover: {
+        backgroundColor: colors.bg.state.ghostHover,
+        color: colors.text.default,
+        borderColor: 'transparent',
+        shadow: 'none'
+      },
+      press: {
+        backgroundColor: colors.bg.state.ghostPress,
+        color: colors.text.default,
+        borderColor: 'transparent',
+        shadow: 'none'
+      },
+      focus: {
+        backgroundColor: colors.bg.state.ghost,
+        color: colors.text.default,
+        borderColor: 'transparent',
+        shadow: getShadow('component.focus', colors, { focusType: 'default' })
+      },
+      loading: {
+        backgroundColor: colors.bg.state.ghostLoading,
+        color: colors.text.default,
+        borderColor: 'transparent',
+        shadow: 'none'
+      },
+      disabled: {
+        backgroundColor: colors.bg.state.disabled,
+        color: colors.text.hint,
+        borderColor: 'transparent',
+        shadow: 'none'
+      }
+    };
+
+    const ghostMutedConfig = {
+      default: {
+        backgroundColor: colors.bg.state.ghost,
+        color: colors.text.muted,
+        borderColor: 'transparent',
+        shadow: 'none'
+      },
+      hover: {
+        backgroundColor: colors.bg.state.ghostHover,
+        color: colors.text.muted,
+        borderColor: 'transparent',
+        shadow: 'none'
+      },
+      press: {
+        backgroundColor: colors.bg.state.ghostPress,
+        color: colors.text.muted,
+        borderColor: 'transparent',
+        shadow: 'none'
+      },
+      focus: {
+        backgroundColor: colors.bg.state.ghost,
+        color: colors.text.muted,
+        borderColor: 'transparent',
+        shadow: getShadow('component.focus', colors, { focusType: 'default' })
+      },
+      loading: {
+        backgroundColor: colors.bg.state.ghostLoading,
+        color: colors.text.muted,
+        borderColor: 'transparent',
+        shadow: 'none'
+      },
+      disabled: {
+        backgroundColor: colors.bg.state.disabled,
+        color: colors.text.hint,
+        borderColor: 'transparent',
+        shadow: 'none'
+      }
+    };
+
+    const destructiveConfig = {
+      default: {
+        backgroundColor: colors.bg.state.destructive,
+        color: colors.text.white.default,
+        borderColor: 'transparent',
+        shadow: shadows.component.default
+      },
+      hover: {
+        backgroundColor: colors.bg.state.destructiveHover,
+        color: colors.text.white.default,
+        borderColor: 'transparent',
+        shadow: shadows.component.default
+      },
+      press: {
+        backgroundColor: colors.bg.state.destructivePress,
+        color: colors.text.white.default,
+        borderColor: 'transparent',
+        shadow: shadows.component.default
+      },
+      focus: {
+        backgroundColor: colors.bg.state.destructive,
+        color: colors.text.white.default,
+        borderColor: 'transparent',
+        shadow: getShadow('component.destructiveFocus', colors, { focusType: 'destructive' })
+      },
+      loading: {
+        backgroundColor: colors.bg.state.destructiveLoading,
+        color: colors.text.white.default,
+        borderColor: 'transparent',
+        shadow: shadows.component.default
+      },
+      disabled: {
+        backgroundColor: colors.bg.state.disabled,
+        color: colors.text.hint,
+        borderColor: colors.border.default,
+        shadow: 'none'
+      }
+    };
+
+    const styleConfigs = { primary: primaryConfig, secondary: secondaryConfig, dashed: dashedConfig, soft: softConfig, ghost: ghostConfig, ghostMuted: ghostMutedConfig, destructive: destructiveConfig };
     return styleConfigs[style] || primaryConfig;
   };
 
@@ -288,8 +445,12 @@ const Button = ({
     switch (style) {
       case 'secondary':
       case 'dashed':
+      case 'soft':
+      case 'ghost':
+      case 'ghostMuted':
         return colors.icon.muted;
       case 'primary':
+      case 'destructive':
       default:
         return colors.icon.white.default;
     }
@@ -297,10 +458,50 @@ const Button = ({
   
   const iconColor = getIconColor();
 
+  // Motion variants for different states
+  const buttonVariants = {
+    default: {
+      scale: 1,
+    },
+    hover: {
+      scale: disabled || loading ? 1 : 1.02,
+    },
+    tap: {
+      scale: disabled || loading ? 1 : 0.98,
+    }
+  };
+
+  // Smooth transitions for colors and scale
+  const transition = {
+    scale: {
+      type: "spring",
+      stiffness: 400,
+      damping: 25,
+    },
+    backgroundColor: {
+      duration: 0.15,
+      ease: "easeOut",
+    },
+    borderColor: {
+      duration: 0.15,
+      ease: "easeOut",
+    },
+    boxShadow: {
+      duration: 0.2,
+      ease: "easeOut",
+    }
+  };
+
   return (
-    <button
+    <motion.button
       style={buttonStyles}
       className={className}
+      variants={buttonVariants}
+      initial="default"
+      animate="default"
+      whileHover="hover"
+      whileTap="tap"
+      transition={transition}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -312,43 +513,80 @@ const Button = ({
       aria-disabled={disabled || loading}
       {...rest}
     >
-      {loading && (
-        <LoadingSpinner 
-          size={sizeStyles.iconSize} 
-          color={iconColor}
-        />
-      )}
-      
-      {!loading && leadIcon && (
-        <span style={{ color: iconColor, display: 'flex', alignItems: 'center' }}>
-          {typeof leadIcon === 'string' ? (
-            <svg width={sizeStyles.iconSize} height={sizeStyles.iconSize} viewBox="0 0 24 24" fill="currentColor">
-              <path d={leadIcon} />
-            </svg>
-          ) : (
-            leadIcon
-          )}
-        </span>
-      )}
+      <AnimatePresence mode="wait">
+        {loading && (
+          <motion.div
+            key="loading"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+          >
+            <LoadingSpinner 
+              size={sizeStyles.iconSize} 
+              color={iconColor}
+            />
+          </motion.div>
+        )}
+        
+        {!loading && leadIcon && (
+          <motion.span
+            key="leadIcon"
+            style={{ color: iconColor, display: 'flex', alignItems: 'center' }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            whileHover={{ scale: 1.1 }}
+            transition={{ 
+              scale: { type: "spring", stiffness: 400, damping: 25 },
+              opacity: { duration: 0.15 }
+            }}
+          >
+            {typeof leadIcon === 'string' ? (
+              <svg width={sizeStyles.iconSize} height={sizeStyles.iconSize} viewBox="0 0 24 24" fill="currentColor">
+                <path d={leadIcon} />
+              </svg>
+            ) : (
+              leadIcon
+            )}
+          </motion.span>
+        )}
+      </AnimatePresence>
       
       {shouldShowText && (
-        <span>
+        <motion.span
+          layout
+          transition={{ duration: 0.15 }}
+        >
           {loading ? 'Loading...' : label}
-        </span>
+        </motion.span>
       )}
       
-      {!loading && tailIcon && (
-        <span style={{ color: iconColor, display: 'flex', alignItems: 'center' }}>
-          {typeof tailIcon === 'string' ? (
-            <svg width={sizeStyles.iconSize} height={sizeStyles.iconSize} viewBox="0 0 24 24" fill="currentColor">
-              <path d={tailIcon} />
-            </svg>
-          ) : (
-            tailIcon
-          )}
-        </span>
-      )}
-    </button>
+      <AnimatePresence>
+        {!loading && tailIcon && (
+          <motion.span
+            key="tailIcon"
+            style={{ color: iconColor, display: 'flex', alignItems: 'center' }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            whileHover={{ scale: 1.1 }}
+            transition={{ 
+              scale: { type: "spring", stiffness: 400, damping: 25 },
+              opacity: { duration: 0.15 }
+            }}
+          >
+            {typeof tailIcon === 'string' ? (
+              <svg width={sizeStyles.iconSize} height={sizeStyles.iconSize} viewBox="0 0 24 24" fill="currentColor">
+                <path d={tailIcon} />
+              </svg>
+            ) : (
+              tailIcon
+            )}
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </motion.button>
   );
 };
 
