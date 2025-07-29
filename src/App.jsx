@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { ThemeProvider } from './services/theme-context.jsx';
 import ButtonPlayground from './ButtonPlayground.jsx';
 import ChipsPlayground from './ChipsPlayground.jsx';
+import TabsPlayground from './TabsPlayground.jsx';
 import Button from './design-system/components/Button.jsx';
 
 function App() {
-  const [currentView, setCurrentView] = useState('chips'); // Start with chips to showcase new component
+  const [currentView, setCurrentView] = useState('tabs'); // Start with tabs to showcase new component
 
   return (
     <ThemeProvider>
@@ -23,11 +24,18 @@ function App() {
             size="sm"
             onClick={() => setCurrentView('chips')}
           />
+          <Button
+            label="Tabs"
+            style={currentView === 'tabs' ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={() => setCurrentView('tabs')}
+          />
         </div>
       </div>
       
       {currentView === 'buttons' && <ButtonPlayground />}
       {currentView === 'chips' && <ChipsPlayground />}
+      {currentView === 'tabs' && <TabsPlayground />}
     </ThemeProvider>
   );
 }
