@@ -1,0 +1,447 @@
+# Pacelane Design System - Cursor Rules
+
+You are working on the Pacelane Design project, a React-based design system with comprehensive design tokens, theming, and component patterns. Always reference and use the existing design system instead of creating new styles or tokens.
+
+## Design System Structure
+
+The design system is located in `src/design-system/` with the following structure:
+- `tokens/` - All design tokens (colors, typography, spacing, etc.)
+- `components/` - Reusable design system components  
+- `styles/` - Pre-defined style combinations and utilities
+- `services/theme-context.jsx` - Theme management and switching
+
+## Design Tokens Reference
+
+### Import Design Tokens
+```javascript
+// Import all tokens
+import { tokens } from 'src/design-system/tokens/index.js';
+
+// Import specific token categories
+import { colors } from 'src/design-system/tokens/primitive-colors.js';
+import { themes } from 'src/design-system/tokens/semantic-colors.js';
+import { typography } from 'src/design-system/tokens/typography.js';
+import { spacing } from 'src/design-system/tokens/spacing.js';
+import { cornerRadius } from 'src/design-system/tokens/corner-radius.js';
+import { stroke } from 'src/design-system/tokens/stroke.js';
+import { shadows, getShadow } from 'src/design-system/tokens/shadows.js';
+
+// Import theme context
+import { useTheme, ThemeProvider } from 'src/services/theme-context.jsx';
+
+// Import text styles
+import { textStyles } from 'src/design-system/styles/typography/typography-styles.js';
+```
+
+### Color System
+
+#### Primitive Colors
+Use primitive colors from `colors` object with full color scales:
+- **Grayscale**: `colors.gray[0-1000]` (white to black)
+- **Brand Colors**: `colors.blue[50-950]`, `colors.teal[50-950]`
+- **Semantic Colors**: `colors.red[50-950]` (destructive), `colors.green[50-950]` (success), `colors.orange[50-950]` (warning)
+- **Extended Palette**: `colors.violet`, `colors.indigo`, `colors.cyan`, `colors.emerald`, `colors.rose`
+- **Transparent Variants**: `colors.transparentDark[0-90]`, `colors.transparentLight[0-90]`
+- **Transparent Colored**: `colors.transparentRed[10-90]`, `colors.transparentBlue[10-90]`, etc.
+
+#### Semantic Colors (Theme-Aware)
+Always use semantic colors for theme-compatible components:
+
+```javascript
+const { colors } = useTheme(); // Gets current theme colors
+
+// Text colors
+colors.text.default, colors.text.subtle, colors.text.muted, colors.text.hint
+colors.text.destructive, colors.text.success, colors.text.warning, colors.text.informative
+colors.text.accent // teal accent color
+colors.text.inverted.default, colors.text.white.default, colors.text.dark.default
+
+// Background colors
+colors.bg.default, colors.bg.subtle, colors.bg.muted, colors.bg.inverted
+colors.bg.card.default, colors.bg.card.subtle, colors.bg.card.inverted
+colors.bg.input.default, colors.bg.input.soft, colors.bg.input.disabled
+
+// Interactive states
+colors.bg.state.primary, colors.bg.state.primaryHover, colors.bg.state.primaryPress
+colors.bg.state.secondary, colors.bg.state.secondaryHover
+colors.bg.state.soft, colors.bg.state.softHover, colors.bg.state.ghost
+colors.bg.state.destructive, colors.bg.state.brand
+
+// Border colors
+colors.border.default, colors.border.darker, colors.border.strong
+colors.border.destructive, colors.border.success, colors.border.warning
+colors.border.highlight, colors.border.menuItem
+
+// Icon colors
+colors.icon.default, colors.icon.subtle, colors.icon.muted, colors.icon.disabled
+colors.icon.destructive, colors.icon.success, colors.icon.warning
+```
+
+### Typography System
+
+#### Font Families
+```javascript
+typography.fontFamily.inter        // ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
+typography.fontFamily.fraunces     // ['Fraunces', 'ui-serif', 'Georgia', 'serif'] 
+typography.fontFamily.jetbrains    // ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace']
+typography.fontFamily['awesome-serif'] // ['Awesome Serif VAR', 'ui-serif', 'Georgia', 'serif']
+
+// Semantic assignments
+typography.fontFamily.headline     // Inter
+typography.fontFamily.body         // Inter  
+typography.fontFamily.quote        // Fraunces
+typography.fontFamily.code         // JetBrains Mono
+```
+
+#### Text Sizes (Desktop/Mobile)
+```javascript
+// Desktop sizes
+typography.desktop.size.xs         // 12px
+typography.desktop.size.sm         // 14px  
+typography.desktop.size.md         // 16px
+typography.desktop.size.lg         // 18px
+typography.desktop.size.xl         // 20px
+typography.desktop.size['2xl']     // 24px
+typography.desktop.size['3xl']     // 30px
+typography.desktop.size['4xl']     // 36px
+typography.desktop.size['5xl']     // 48px
+typography.desktop.size['6xl']     // 60px
+typography.desktop.size['7xl']     // 72px
+typography.desktop.size['8xl']     // 96px
+typography.desktop.size['9xl']     // 128px
+
+// Mobile sizes (different scaling)
+typography.mobile.size.lg          // 16px (vs 18px desktop)
+typography.mobile.size.xl          // 18px (vs 20px desktop)
+// etc. - mobile sizes are smaller for better mobile UX
+```
+
+#### Font Weights
+```javascript
+typography.desktop.weight.light     // 300
+typography.desktop.weight.normal    // 400
+typography.desktop.weight.medium    // 500
+typography.desktop.weight.semibold  // 600
+typography.desktop.weight.bold      // 700
+typography.desktop.weight.extrabold // 800
+typography.desktop.weight.black     // 900
+```
+
+#### Pre-defined Text Styles
+Use `textStyles` for consistent typography combinations:
+
+```javascript
+// Available sizes: xs, sm, md, lg, xl, 2xl, 3xl, 4xl, 5xl, 6xl, 7xl, 8xl, 9xl
+// Available weights: light, normal, medium, semibold, bold, extrabold, black
+
+textStyles.md.semibold    // 16px, 600 weight, proper line height
+textStyles.xl.bold        // 20px, 700 weight, proper line height
+textStyles['2xl'].normal  // 24px, 400 weight, proper line height
+
+// Special styles
+textStyles.quote.normal   // Fraunces font for quotes
+textStyles.code.normal    // JetBrains Mono for code
+```
+
+### Spacing System
+```javascript
+spacing.spacing.none      // 0px
+spacing.spacing[4]        // 4px
+spacing.spacing[8]        // 8px
+spacing.spacing[12]       // 12px
+spacing.spacing[16]       // 16px
+spacing.spacing[20]       // 20px
+spacing.spacing[24]       // 24px
+spacing.spacing[32]       // 32px
+spacing.spacing[40]       // 40px
+spacing.spacing[48]       // 48px
+spacing.spacing[56]       // 56px
+spacing.spacing[64]       // 64px
+spacing.spacing[80]       // 80px
+spacing.spacing[96]       // 96px
+// ... up to 384px
+```
+
+### Border Radius
+```javascript
+cornerRadius.borderRadius.none      // 0px
+cornerRadius.borderRadius['2xs']    // 2px
+cornerRadius.borderRadius.xs        // 4px
+cornerRadius.borderRadius.sm        // 6px
+cornerRadius.borderRadius.md        // 8px
+cornerRadius.borderRadius.lg        // 12px
+cornerRadius.borderRadius.xl        // 16px
+cornerRadius.borderRadius['2xl']    // 24px
+cornerRadius.borderRadius['3xl']    // 28px
+cornerRadius.borderRadius.full      // 9999px
+```
+
+### Shadow System
+Always use the design system shadow tokens for consistent shadows across all components:
+
+```javascript
+// Import shadows
+import { shadows, getShadow } from 'src/design-system/tokens/shadows.js';
+import { useTheme } from 'src/services/theme-context.jsx';
+```
+
+#### Regular Shadows
+Use these for elevated surfaces like cards, modals, and overlays:
+
+```javascript
+// Card shadow - Inner + drop shadow combination
+shadows.regular.card        // Inner shadow (y:-1px, 10%) + Drop (y:1px, blur:2px, 5%)
+
+// Modal shadows - Multiple layered drop shadows
+shadows.regular.modalSm     // 4 layers with negative spreads (subtle elevation)
+shadows.regular.modalMd     // 4 layers with zero spreads (medium elevation)  
+shadows.regular.modalLg     // 5 layers with 16px layer (high elevation)
+```
+
+#### Component Shadows
+Use these for interactive elements like buttons, inputs, and switches:
+
+```javascript
+shadows.component.default         // Default component shadow (8% inner opacity)
+shadows.component.switchHandle    // Switch handle with stronger shadows
+shadows.component.focus          // Base focus shadow (without focus rings)
+shadows.component.destructiveFocus // Base destructive focus shadow
+```
+
+#### Shadow Usage Patterns
+
+**Direct Shadow Usage:**
+```jsx
+// Basic shadows
+<div style={{ boxShadow: shadows.regular.card }}>Card content</div>
+<div style={{ boxShadow: shadows.component.switchHandle }}>Switch handle</div>
+```
+
+**Shadows with Theme Borders:**
+```jsx
+const { colors } = useTheme();
+
+// Card with border
+<div style={{ boxShadow: getShadow('regular.card', colors, { withBorder: true }) }}>
+  Card with theme border
+</div>
+
+// Modal with border
+<div style={{ boxShadow: getShadow('regular.modalLg', colors, { withBorder: true }) }}>
+  Modal content
+</div>
+```
+
+**Focus States with Rings:**
+```jsx
+const { colors } = useTheme();
+
+// Default focus (blue ring)
+<div style={{ boxShadow: getShadow('component.focus', colors, { focusType: 'default' }) }}>
+  Focused element
+</div>
+
+// Destructive focus (red ring)
+<div style={{ boxShadow: getShadow('component.destructiveFocus', colors, { focusType: 'destructive' }) }}>
+  Error state element
+</div>
+
+// Input focus
+<div style={{ boxShadow: getShadow('', colors, { focusType: 'input' }) }}>
+  Input field
+</div>
+
+// Misc focus (general purpose)
+<div style={{ boxShadow: getShadow('', colors, { focusType: 'misc' }) }}>
+  Other focused element
+</div>
+```
+
+
+
+### Stroke/Border Widths
+```javascript
+stroke.sm                 // 0.5px
+stroke.default            // 1px
+stroke.md                 // 1.5px
+stroke.lg                 // 2px
+stroke.xl                 // 3px
+stroke['2xl']             // 4px
+```
+
+## Component Patterns
+
+### Theme-Aware Components
+Always create components that work with both light and dark themes:
+
+```jsx
+import React from 'react';
+import { useTheme } from 'src/services/theme-context.jsx';
+import { spacing } from 'src/design-system/tokens/spacing.js';
+import { cornerRadius } from 'src/design-system/tokens/corner-radius.js';
+import { getShadow } from 'src/design-system/tokens/shadows.js';
+
+const MyComponent = ({ children, variant = 'default', elevated = false }) => {
+  const { colors } = useTheme();
+  
+  return (
+    <div
+      style={{
+        backgroundColor: colors.bg.card.default,
+        color: colors.text.default,
+        padding: spacing.spacing[16],
+        borderRadius: cornerRadius.borderRadius.md,
+        boxShadow: elevated 
+          ? getShadow('regular.modalMd', colors, { withBorder: true })
+          : getShadow('regular.card', colors, { withBorder: true }),
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+```
+
+### Using Tailwind with Design Tokens
+The design tokens are integrated with Tailwind CSS:
+
+```jsx
+// Use Tailwind classes that map to design tokens
+<div className="bg-gray-50 text-gray-950 p-4 rounded-md border border-gray-200">
+  Content using primitive colors
+</div>
+
+// For theme-aware styling, use CSS-in-JS with semantic colors
+const { colors } = useTheme();
+<div 
+  className="p-4 rounded-md border"
+  style={{ 
+    backgroundColor: colors.bg.card.default,
+    color: colors.text.default,
+    borderColor: colors.border.default 
+  }}
+>
+  Theme-aware content
+</div>
+```
+
+### Typography Components
+```jsx
+// Using pre-defined text styles
+import { textStyles } from 'src/design-system/styles/typography/typography-styles.js';
+
+const Heading = ({ level = 1, children }) => {
+  const styles = {
+    1: textStyles['4xl'].bold,
+    2: textStyles['3xl'].semibold,
+    3: textStyles['2xl'].semibold,
+    4: textStyles.xl.medium,
+    5: textStyles.lg.medium,
+    6: textStyles.md.medium,
+  };
+  
+  return <h1 style={styles[level]}>{children}</h1>;
+};
+```
+
+## Design System Components
+
+### Available Components
+- `Bichaurinho`: Mascot illustrations with 32 variants
+- `Logo`: Auto-switching logo for light/dark themes
+
+```jsx
+import Bichaurinho from 'src/design-system/components/Bichaurinho.jsx';
+import Logo from 'src/design-system/components/Logo.jsx';
+
+// Bichaurinho usage
+<Bichaurinho variant={1-32} size={128} className="custom-class" />
+
+// Logo usage  
+<Logo width={120} className="custom-class" alt="Custom alt text" />
+```
+
+## Rules for Cursor
+
+### ALWAYS DO:
+1. **Import and use existing design tokens** instead of hardcoding values
+2. **Use semantic colors** (`colors.text.default`, `colors.bg.card.default`) for theme compatibility
+3. **Use the `useTheme()` hook** for theme-aware components
+4. **Reference `textStyles`** for typography instead of manual font/size combinations
+5. **Use spacing tokens** for consistent padding, margins, and gaps
+6. **Use cornerRadius tokens** for consistent border radius
+7. **Use design system shadow tokens** (`shadows.regular.card`, `shadows.component.default`) for all shadows
+8. **Use `getShadow()` helper** for theme-aware borders and focus rings
+9. **Use existing components** (`Bichaurinho`, `Logo`) when appropriate
+10. **Follow the established patterns** shown in existing components
+
+### NEVER DO:
+1. **Hardcode colors, fonts, spacing, or shadow values** - always use tokens
+2. **Create new design tokens** - use existing ones or ask for clarification
+3. **Use CSS color names or hex values directly** - use the color system
+4. **Ignore theme compatibility** - always consider light/dark mode
+5. **Create typography styles manually** - use `textStyles` or typography tokens
+6. **Use arbitrary Tailwind values** - use the extended theme values
+7. **Use Tailwind shadow classes** - use design system shadow tokens instead
+8. **Hardcode CSS box-shadow values** - use `shadows` tokens or `getShadow()` helper
+
+### Examples of Good vs Bad:
+
+❌ **DON'T**:
+```jsx
+<div style={{ 
+  backgroundColor: '#f4f4f5', 
+  color: '#18181b',
+  padding: '16px',
+  borderRadius: '8px'
+}}>
+```
+
+✅ **DO**:
+```jsx
+const { colors } = useTheme();
+<div style={{ 
+  backgroundColor: colors.bg.subtle, 
+  color: colors.text.default,
+  padding: spacing.spacing[16],
+  borderRadius: cornerRadius.borderRadius.md
+}}>
+```
+
+❌ **DON'T**:
+```jsx
+<h1 style={{ fontSize: '24px', fontWeight: 600, fontFamily: 'Inter' }}>
+```
+
+✅ **DO**:
+```jsx
+<h1 style={textStyles['2xl'].semibold}>
+```
+
+❌ **DON'T**:
+```jsx
+<div className="shadow-md">
+<div style={{ boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
+```
+
+✅ **DO**:
+```jsx
+<div style={{ boxShadow: shadows.regular.card }}>
+// Or with theme-aware borders
+const { colors } = useTheme();
+<div style={{ boxShadow: getShadow('regular.modalMd', colors, { withBorder: true }) }}>
+```
+
+### Component Creation Checklist:
+- [ ] Uses semantic colors for theme compatibility
+- [ ] Imports design tokens from the design system
+- [ ] Uses `useTheme()` hook if theme-aware
+- [ ] Uses `textStyles` for typography
+- [ ] Uses spacing tokens for layout
+- [ ] Uses cornerRadius tokens for rounded corners
+- [ ] Uses design system shadow tokens (`shadows.regular.*`, `shadows.component.*`)
+- [ ] Uses `getShadow()` helper for theme-aware shadows with borders/focus rings
+- [ ] Follows existing component patterns
+- [ ] Works in both light and dark themes
+
+Remember: The design system is comprehensive and battle-tested. Always use existing tokens and patterns rather than creating new ones. When in doubt, reference the existing components (`Bichaurinho.jsx`, `Logo.jsx`) for implementation patterns. 
