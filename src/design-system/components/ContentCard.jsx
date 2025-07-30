@@ -123,7 +123,6 @@ const ContentCard = ({
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={onClick}
       {...rest}
     >
       {/* Cover */}
@@ -140,8 +139,10 @@ const ContentCard = ({
           transition: 'box-shadow 0.2s ease-in-out',
           display: 'flex',
           justifyContent: 'center',
-          paddingTop: spacing.spacing[28]
+          paddingTop: spacing.spacing[28],
+          cursor: onClick ? 'pointer' : 'default'
         }}
+        onClick={onClick}
       >
         {/* Text Card */}
         <motion.div

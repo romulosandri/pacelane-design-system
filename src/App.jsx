@@ -8,6 +8,7 @@ import CheckboxPlayground from './CheckboxPlayground.jsx';
 import InputPlayground from './InputPlayground.jsx';
 import ProgressBarPlayground from './ProgressBarPlayground.jsx';
 import ContentCardPlayground from './ContentCardPlayground.jsx';
+import BadgePlayground from './BadgePlayground.jsx';
 import Button from './design-system/components/Button.jsx';
 
 function App() {
@@ -65,6 +66,12 @@ function App() {
             size="sm"
             onClick={() => setCurrentView('contentcard')}
           />
+          <Button
+            label="Badge"
+            style={currentView === 'badge' ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={() => setCurrentView('badge')}
+          />
         </div>
       </div>
       
@@ -76,6 +83,7 @@ function App() {
       {currentView === 'input' && <InputPlayground />}
       {currentView === 'progressbar' && <ProgressBarPlayground />}
       {currentView === 'contentcard' && <ContentCardPlayground />}
+      {currentView === 'badge' && <BadgePlayground />}
     </ThemeProvider>
   );
 }

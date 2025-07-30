@@ -19,6 +19,7 @@ const ContentCardPlayground = () => {
   // Handle card clicks
   const handleCardClick = (cardTitle) => {
     console.log(`Card clicked: ${cardTitle}`);
+    alert(`Navigating to content page for: ${cardTitle}`);
   };
 
   return (
