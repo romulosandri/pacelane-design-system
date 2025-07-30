@@ -14,6 +14,7 @@ import FileUploadPlayground from './FileUploadPlayground.jsx';
 import DividerPlayground from './DividerPlayground.jsx';
 import SidebarMenuItemPlayground from './SidebarMenuItemPlayground.jsx';
 import HomeSidebarPlayground from './HomeSidebarPlayground.jsx';
+import TemplateCardPlayground from './TemplateCardPlayground.jsx';
 import Button from './design-system/components/Button.jsx';
 
 function App() {
@@ -107,6 +108,12 @@ function App() {
             size="sm"
             onClick={() => setCurrentView('homesidebar')}
           />
+          <Button
+            label="TemplateCard"
+            style={currentView === 'templatecard' ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={() => setCurrentView('templatecard')}
+          />
         </div>
       </div>
       
@@ -124,6 +131,7 @@ function App() {
       {currentView === 'divider' && <DividerPlayground />}
       {currentView === 'sidebarmenuitem' && <SidebarMenuItemPlayground />}
       {currentView === 'homesidebar' && <HomeSidebarPlayground />}
+      {currentView === 'templatecard' && <TemplateCardPlayground />}
     </ThemeProvider>
   );
 }
