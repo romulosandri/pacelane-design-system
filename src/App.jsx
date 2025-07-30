@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from './services/theme-context.jsx';
 import StatsSummaryCardPlayground from './StatsSummaryCardPlayground.jsx';
+import StreakCardPlayground from './StreakCardPlayground.jsx';
 import ButtonPlayground from './ButtonPlayground.jsx';
 import ButtonGroupPlayground from './ButtonGroupPlayground.jsx';
 import Button from './design-system/components/Button.jsx';
@@ -30,12 +31,19 @@ function App() {
             size="sm"
             onClick={() => setCurrentView('buttongroup')}
           />
+          <Button
+            label="StreakCard"
+            style={currentView === 'streakcard' ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={() => setCurrentView('streakcard')}
+          />
         </div>
       </div>
       
       {currentView === 'statssummarycard' && <StatsSummaryCardPlayground />}
       {currentView === 'buttons' && <ButtonPlayground />}
       {currentView === 'buttongroup' && <ButtonGroupPlayground />}
+      {currentView === 'streakcard' && <StreakCardPlayground />}
     </ThemeProvider>
   );
 }
