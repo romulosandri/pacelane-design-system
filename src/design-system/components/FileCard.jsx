@@ -11,12 +11,14 @@ import DropdownMenu from './DropdownMenu.jsx';
 import Badge from './Badge.jsx';
 
 // File icon imports
-import FileIconCode from '../../assets/icons/File Icons-1.svg';
-import FileIconPDF from '../../assets/icons/File Icons-2.svg';
-import FileIconVideo from '../../assets/icons/File Icons-3.svg';
-import FileIconDesign from '../../assets/icons/File Icons-4.svg';
-import FileIconImage from '../../assets/icons/File Icons-5.svg';
-import FileIconDefault from '../../assets/icons/File Icons.svg';
+import FileIconCode from '../../assets/icons/file-code.svg';
+import FileIconPDF from '../../assets/icons/file-pdf.svg';
+import FileIconVideo from '../../assets/icons/file-video.svg';
+import FileIconImage from '../../assets/icons/file-image.svg';
+import FileIconAudio from '../../assets/icons/file-audio.svg';
+import FileIconLink from '../../assets/icons/file-link.svg';
+import FileIconZip from '../../assets/icons/file-zip.svg';
+import FileIconDefault from '../../assets/icons/file-default.svg';
 
 const FileCard = ({
   // Core variants
@@ -25,7 +27,7 @@ const FileCard = ({
   // Content
   title = 'File Name',
   subtitle = 'Last modified',
-  fileType = 'default',         // 'code' | 'pdf' | 'video' | 'design' | 'image' | 'default'
+  fileType = 'default',         // 'code' | 'pdf' | 'video' | 'image' | 'audio' | 'link' | 'zip' | 'default'
   status = 'ready',             // 'ready' | 'uploading' | 'error'
   fileSize,                     // Optional file size display
   image,                        // Image URL for image variant
@@ -49,8 +51,10 @@ const FileCard = ({
       code: FileIconCode,
       pdf: FileIconPDF,
       video: FileIconVideo,
-      design: FileIconDesign,
       image: FileIconImage,
+      audio: FileIconAudio,
+      link: FileIconLink,
+      zip: FileIconZip,
       default: FileIconDefault
     };
     return iconMap[fileType] || FileIconDefault;
@@ -203,6 +207,7 @@ const FileCard = ({
             size="sm"
             color={statusConfig.color}
             label={statusConfig.label}
+            border={true}
           />
         </div>
 
@@ -250,7 +255,8 @@ const FileCard = ({
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: spacing.spacing[4]
+          gap: spacing.spacing[4],
+          width: '360px'
         }}
       >
         {/* Title and File Size */}
@@ -258,7 +264,9 @@ const FileCard = ({
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center'
+            alignItems: 'center',
+            width: '100%',
+            minWidth: 0
           }}
         >
           <h3
@@ -267,6 +275,7 @@ const FileCard = ({
               color: colors.text.default,
               margin: 0,
               flex: 1,
+              minWidth: 0,
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap'

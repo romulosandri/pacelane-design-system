@@ -35,9 +35,9 @@ const FileCardPlayground = () => {
     },
     {
       id: 4,
-      title: 'ui-mockups.fig',
+      title: 'podcast-episode.mp3',
       subtitle: '3 days ago',
-      fileType: 'design',
+      fileType: 'audio',
       status: 'ready',
       fileSize: '8.3 MB'
     },
@@ -53,17 +53,17 @@ const FileCardPlayground = () => {
       id: 6,
       title: 'compressed-archive.zip',
       subtitle: '1 week ago',
-      fileType: 'default',
+      fileType: 'zip',
       status: 'ready',
       fileSize: '12.7 MB'
     },
     {
       id: 7,
-      title: 'component-library.js',
+      title: 'external-resource.url',
       subtitle: '30 minutes ago',
-      fileType: 'code',
-      status: 'uploading',
-      fileSize: '156 KB'
+      fileType: 'link',
+      status: 'ready',
+      fileSize: '2 KB'
     },
     {
       id: 8,
@@ -72,6 +72,14 @@ const FileCardPlayground = () => {
       fileType: 'image',
       status: 'ready',
       fileSize: '89 KB'
+    },
+    {
+      id: 9,
+      title: 'component-library.js',
+      subtitle: '45 minutes ago',
+      fileType: 'code',
+      status: 'uploading',
+      fileSize: '156 KB'
     }
   ];
 
@@ -217,7 +225,7 @@ const FileCardPlayground = () => {
   onMenuAction={handleMenuAction}
 />
 
-// File types: 'code' | 'pdf' | 'video' | 'design' | 'image' | 'default'
+// File types: 'code' | 'pdf' | 'video' | 'image' | 'audio' | 'link' | 'zip' | 'default'
 // Status: 'ready' | 'uploading' | 'error'`}</pre>
         </div>
       </div>
