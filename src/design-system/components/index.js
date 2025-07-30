@@ -5,4 +5,5 @@ export { default as LoadingSpinner } from './LoadingSpinner.jsx';
 export { default as Chips } from './Chips.jsx';
 export { default as Tabs } from './Tabs.jsx';
 export { default as ButtonGroup } from './ButtonGroup.jsx';
-export { default as Checkbox } from './Checkbox.jsx'; 
+export { default as Checkbox } from './Checkbox.jsx';
+export { default as Input } from './Input.jsx'; 
