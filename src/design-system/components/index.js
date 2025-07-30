@@ -17,4 +17,5 @@ export { default as Badge } from './Badge.jsx';
 export { default as FileUpload } from './FileUpload.jsx';
 export { default as Divider } from './Divider.jsx';
 export { default as SidebarMenuItem } from './SidebarMenuItem.jsx';
-export { default as HomeSidebar } from './HomeSidebar.jsx'; 
+export { default as HomeSidebar } from './HomeSidebar.jsx';
+export { default as StatsSummaryCard } from './StatsSummaryCard.jsx'; 
