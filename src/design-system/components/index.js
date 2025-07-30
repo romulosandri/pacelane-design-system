@@ -8,4 +8,5 @@ export { default as ButtonGroup } from './ButtonGroup.jsx';
 export { default as Checkbox } from './Checkbox.jsx';
 export { default as Input } from './Input.jsx';
 export { default as ProgressBar } from './ProgressBar.jsx';
-export { default as ContentCard } from './ContentCard.jsx'; 
+export { default as ContentCard } from './ContentCard.jsx';
+export { default as DropdownMenu } from './DropdownMenu.jsx'; 

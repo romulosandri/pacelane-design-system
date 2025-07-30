@@ -31,6 +31,9 @@ import { useTheme, ThemeProvider } from 'src/services/theme-context.jsx';
 
 // Import text styles
 import { textStyles } from 'src/design-system/styles/typography/typography-styles.js';
+
+// Import Lucide icons
+import { IconName } from 'lucide-react';
 ```
 
 ### Color System
@@ -269,6 +272,131 @@ stroke.xl                 // 3px
 stroke['2xl']             // 4px
 ```
 
+## Icons System
+
+### Lucide React Icons
+Always use Lucide React icons for consistent iconography across the design system. **NEVER create custom SVG icons** - use Lucide instead.
+
+#### Import and Usage
+```javascript
+// Import specific icons from lucide-react
+import { 
+  MoreHorizontal,    // Three dots menu
+  Plus,              // Add/create actions
+  X,                 // Close/cancel actions
+  Check,             // Confirm/success actions
+  ChevronDown,       // Dropdown indicators
+  ChevronUp,         // Collapse indicators  
+  ChevronLeft,       // Navigation back
+  ChevronRight,      // Navigation forward
+  Search,            // Search functionality
+  Settings,          // Settings/options
+  User,              // User profile
+  Bell,              // Notifications
+  Mail,              // Email/messaging
+  Calendar,          // Date/time
+  File,              // Documents
+  Folder,            // Directories
+  Download,          // Download actions
+  Upload,            // Upload actions
+  Edit,              // Edit actions
+  Trash2,            // Delete actions (preferred over Trash)
+  Eye,               // View/show actions
+  EyeOff,            // Hide actions
+  Copy,              // Copy actions
+  ExternalLink,      // External navigation
+  Info,              // Information
+  AlertCircle,       // Warning states
+  CheckCircle,       // Success states
+  XCircle,           // Error states
+  Heart,             // Like/favorite
+  Star,              // Rating/bookmark
+  Share,             // Share actions
+  Filter,            // Filter functionality
+  SortAsc,           // Sort ascending
+  SortDesc,          // Sort descending
+  Menu,              // Menu toggle
+  Home               // Home navigation
+} from 'lucide-react';
+
+// Usage in components
+<Button 
+  leadIcon={<Plus size={16} />}
+  label="Add Item"
+/>
+
+// For Button component, icons automatically inherit color
+<Button 
+  variant="iconOnly"
+  leadIcon={<MoreHorizontal size={12} />}
+  onClick={handleMenuToggle}
+/>
+
+// For standalone icons, use theme colors
+const { colors } = useTheme();
+<Search 
+  size={20} 
+  color={colors.icon.default}
+/>
+```
+
+#### Icon Sizing Guidelines
+- **Button icons**: Use size from Button component's size configuration (handled automatically)
+- **Standalone icons**: 
+  - Small: 16px (for compact UI elements)
+  - Medium: 20px (default for most interfaces)  
+  - Large: 24px (for headers and emphasis)
+  - Extra Large: 32px+ (for empty states and illustrations)
+
+#### Icon Color Guidelines
+- **In Button components**: Icons automatically inherit the correct color - use `<IconName size={x} />`
+- **Standalone icons**: Always use semantic icon colors from theme:
+  - `colors.icon.default` - Primary icon color
+  - `colors.icon.subtle` - Secondary/less important icons
+  - `colors.icon.muted` - Tertiary/background icons  
+  - `colors.icon.disabled` - Disabled state icons
+  - `colors.icon.destructive` - Error/delete action icons
+  - `colors.icon.success` - Success state icons
+  - `colors.icon.warning` - Warning state icons
+
+#### Common Icon Patterns
+```javascript
+// Dropdown trigger
+<Button 
+  leadIcon={<ChevronDown size={12} />}
+  label="Options"
+/>
+
+// Close button
+<Button 
+  variant="iconOnly"
+  style="ghost"
+  leadIcon={<X size={16} />}
+  onClick={onClose}
+/>
+
+// Search input
+<Input 
+  leadIcon={<Search size={16} />}
+  placeholder="Search..."
+/>
+
+// More options menu
+<Button 
+  variant="iconOnly" 
+  style="secondary"
+  leadIcon={<MoreHorizontal size={12} />}
+  onClick={toggleMenu}
+/>
+
+// Delete action  
+<Button 
+  style="destructive"
+  leadIcon={<Trash2 size={16} />}
+  label="Delete"
+/>
+```
+
 ## Component Patterns
 
 ### Theme-Aware Components
@@ -398,27 +526,29 @@ The Button component provides 7 complete styles for different use cases:
 
 ### ALWAYS DO:
 1. **Use the Button component** for ALL button needs - never create custom buttons or use HTML `<button>` elements
-2. **Import and use existing design tokens** instead of hardcoding values
-3. **Use semantic colors** (`colors.text.default`, `colors.bg.card.default`) for theme compatibility
-4. **Use the `useTheme()` hook** for theme-aware components
-5. **Reference `textStyles`** for typography instead of manual font/size combinations
-6. **Use spacing tokens** for consistent padding, margins, and gaps
-7. **Use cornerRadius tokens** for consistent border radius
-8. **Use design system shadow tokens** (`shadows.regular.card`, `shadows.component.default`) for all shadows
-9. **Use `getShadow()` helper** for theme-aware borders and focus rings
-10. **Use existing components** (`Button`, `Bichaurinho`, `Logo`) when appropriate
-11. **Follow the established patterns** shown in existing components
+2. **Use Lucide React icons** for ALL icon needs - never create custom SVG icons
+3. **Import and use existing design tokens** instead of hardcoding values
+4. **Use semantic colors** (`colors.text.default`, `colors.bg.card.default`) for theme compatibility
+5. **Use the `useTheme()` hook** for theme-aware components
+6. **Reference `textStyles`** for typography instead of manual font/size combinations
+7. **Use spacing tokens** for consistent padding, margins, and gaps
+8. **Use cornerRadius tokens** for consistent border radius
+9. **Use design system shadow tokens** (`shadows.regular.card`, `shadows.component.default`) for all shadows
+10. **Use `getShadow()` helper** for theme-aware borders and focus rings
+11. **Use existing components** (`Button`, `Bichaurinho`, `Logo`, `DropdownMenu`) when appropriate
+12. **Follow the established patterns** shown in existing components
 
 ### NEVER DO:
 1. **Create custom buttons or use HTML `<button>` elements** - always use the Button component
-2. **Hardcode colors, fonts, spacing, or shadow values** - always use tokens
-3. **Create new design tokens** - use existing ones or ask for clarification
-4. **Use CSS color names or hex values directly** - use the color system
-5. **Ignore theme compatibility** - always consider light/dark mode
-6. **Create typography styles manually** - use `textStyles` or typography tokens
-7. **Use arbitrary Tailwind values** - use the extended theme values
-8. **Use Tailwind shadow classes** - use design system shadow tokens instead
-9. **Hardcode CSS box-shadow values** - use `shadows` tokens or `getShadow()` helper
+2. **Create custom SVG icons** - always use Lucide React icons instead
+3. **Hardcode colors, fonts, spacing, or shadow values** - always use tokens
+4. **Create new design tokens** - use existing ones or ask for clarification
+5. **Use CSS color names or hex values directly** - use the color system
+6. **Ignore theme compatibility** - always consider light/dark mode
+7. **Create typography styles manually** - use `textStyles` or typography tokens
+8. **Use arbitrary Tailwind values** - use the extended theme values
+9. **Use Tailwind shadow classes** - use design system shadow tokens instead
+10. **Hardcode CSS box-shadow values** - use `shadows` tokens or `getShadow()` helper
 
 ### Examples of Good vs Bad:
 
@@ -493,8 +623,31 @@ const { colors } = useTheme();
 <div style={{ boxShadow: getShadow('regular.modalMd', colors, { withBorder: true }) }}>
 ```
 
+❌ **DON'T** (Custom Icons):
+```jsx
+const CustomIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16">
+    <circle cx="3" cy="8" r="1.5" fill="currentColor" />
+    <circle cx="8" cy="8" r="1.5" fill="currentColor" />
+    <circle cx="13" cy="8" r="1.5" fill="currentColor" />
+  </svg>
+);
+```
+
+✅ **DO** (Lucide Icons):
+```jsx
+import { MoreHorizontal } from 'lucide-react';
+
+<Button 
+  variant="iconOnly"
+  leadIcon={<MoreHorizontal size={12} />}
+  onClick={handleMenuToggle}
+/>
+```
+
 ### Component Creation Checklist:
 - [ ] Uses the Button component for ANY button needs (never create custom buttons)
+- [ ] Uses Lucide React icons for ANY icon needs (never create custom SVG icons)
 - [ ] Uses semantic colors for theme compatibility
 - [ ] Imports design tokens from the design system
 - [ ] Uses `useTheme()` hook if theme-aware

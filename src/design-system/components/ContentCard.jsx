@@ -1,26 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { MoreHorizontal } from 'lucide-react';
 import { useTheme } from '../../services/theme-context.jsx';
 import { spacing } from '../tokens/spacing.js';
 import { cornerRadius } from '../tokens/corner-radius.js';
 import { textStyles } from '../styles/typography/typography-styles.js';
 import { shadows, getShadow } from '../tokens/shadows.js';
 import Button from './Button.jsx';
-
-// Three dots (ellipsis) icon component
-const EllipsisIcon = ({ color, size = 16 }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <circle cx="3" cy="8" r="1.5" fill={color} />
-    <circle cx="8" cy="8" r="1.5" fill={color} />
-    <circle cx="13" cy="8" r="1.5" fill={color} />
-  </svg>
-);
+import DropdownMenu from './DropdownMenu.jsx';
 
 // Mock LinkedIn content for demonstration
 const mockContent = `🚀 Just launched a new feature that improves user engagement by 40%! 
@@ -60,36 +47,24 @@ const ContentCard = ({
   const { colors } = useTheme();
   const [isHovered, setIsHovered] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef(null);
-  const buttonRef = useRef(null);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current && 
-        !dropdownRef.current.contains(event.target) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target)
-      ) {
-        setShowDropdown(false);
-      }
-    };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   // Get first 5 lines of content
   const displayContent = content.split('\n').slice(0, 5).join('\n');
 
-  // Handle dropdown menu actions
-  const handleMenuAction = (action) => {
-    setShowDropdown(false);
-    if (onMenuAction) {
-      onMenuAction(action);
+  // Dropdown menu items
+  const dropdownItems = [
+    {
+      label: 'Move',
+      onClick: () => onMenuAction?.('move')
+    },
+    {
+      label: 'Delete',
+      type: 'destructive',
+      onClick: () => onMenuAction?.('delete')
     }
-  };
+  ];
 
   // Handle mouse events
   const handleMouseEnter = () => setIsHovered(true);
@@ -118,7 +93,8 @@ const ContentCard = ({
       }
     },
     hover: { 
-      rotateZ: -18,
+      rotateZ: 18,
+      scale: 0.90,
       transition: { 
         type: "spring",
         stiffness: 400,
@@ -127,10 +103,14 @@ const ContentCard = ({
     }
   };
 
-  // Shadow styles
+  // Shadow styles  
   const coverShadow = isHovered 
-    ? getShadow('regular.modalMd', colors, { withBorder: true })
-    : getShadow('regular.card', colors, { withBorder: true });
+    ? getShadow('regular.modalMd', colors, { withBorder: false })
+    : getShadow('regular.card', colors, { withBorder: false });
+
+  const textCardShadow = isHovered 
+    ? getShadow('regular.modalLg', colors, { withBorder: true })
+    : getShadow('regular.modalSm', colors, { withBorder: true });
 
   return (
     <motion.div
@@ -155,8 +135,12 @@ const ContentCard = ({
           borderRadius: cornerRadius.borderRadius.md,
           overflow: 'hidden',
           ...coverBackground,
+          border: `1px solid ${colors.border.darker}`,
           boxShadow: coverShadow,
-          transition: 'box-shadow 0.2s ease-in-out'
+          transition: 'box-shadow 0.2s ease-in-out',
+          display: 'flex',
+          justifyContent: 'center',
+          paddingTop: spacing.spacing[28]
         }}
       >
         {/* Text Card */}
@@ -164,20 +148,15 @@ const ContentCard = ({
           variants={textCardVariants}
           animate={isHovered ? 'hover' : 'default'}
           style={{
-            position: 'absolute',
-            top: spacing.spacing[20],
-            left: '50%',
-            transform: 'translateX(-50%)',
             width: '280px',
             height: '328px',
             padding: spacing.spacing[20],
             borderRadius: cornerRadius.borderRadius.lg,
             backgroundColor: colors.bg.default,
-            borderWidth: '1px',
-            borderStyle: 'solid',
-            borderColor: colors.border.default,
             color: colors.text.default,
-            overflow: 'hidden'
+            overflow: 'hidden',
+            boxShadow: textCardShadow,
+            transition: 'box-shadow 0.2s ease-in-out'
           }}
         >
           <div
@@ -207,97 +186,24 @@ const ContentCard = ({
               }}
             >
               <div style={{ position: 'relative' }}>
-                <div ref={buttonRef}>
-                  <Button
-                    variant="iconOnly"
-                    style="secondary"
-                    size="xs"
-                    leadIcon={<EllipsisIcon color="currentColor" size={12} />}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowDropdown(!showDropdown);
-                    }}
-                  />
-                </div>
+                <Button
+                  variant="iconOnly"
+                  style="secondary"
+                  size="xs"
+                  leadIcon={<MoreHorizontal size={12} />}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowDropdown(!showDropdown);
+                  }}
+                />
                 
                 {/* Dropdown Menu */}
-                <AnimatePresence>
-                  {showDropdown && (
-                    <motion.div
-                      ref={dropdownRef}
-                      initial={{ opacity: 0, y: -8, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -8, scale: 0.95 }}
-                      transition={{ duration: 0.15 }}
-                      style={{
-                        position: 'absolute',
-                        top: '100%',
-                        right: 0,
-                        marginTop: spacing.spacing[4],
-                        minWidth: '120px',
-                        backgroundColor: colors.bg.default,
-                        borderRadius: cornerRadius.borderRadius.md,
-                        boxShadow: getShadow('regular.modalMd', colors, { withBorder: true }),
-                        zIndex: 50,
-                        overflow: 'hidden'
-                      }}
-                    >
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleMenuAction('move');
-                        }}
-                        style={{
-                          width: '100%',
-                          padding: `${spacing.spacing[8]} ${spacing.spacing[12]}`,
-                          border: 'none',
-                          backgroundColor: 'transparent',
-                          color: colors.text.default,
-                          textAlign: 'left',
-                          cursor: 'pointer',
-                          ...textStyles.sm.normal,
-                          transition: 'background-color 0.15s ease-in-out',
-                          ':hover': {
-                            backgroundColor: colors.bg.subtle
-                          }
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.backgroundColor = colors.bg.subtle;
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.backgroundColor = 'transparent';
-                        }}
-                      >
-                        Move
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleMenuAction('delete');
-                        }}
-                        style={{
-                          width: '100%',
-                          padding: `${spacing.spacing[8]} ${spacing.spacing[12]}`,
-                          border: 'none',
-                          backgroundColor: 'transparent',
-                          color: colors.text.destructive,
-                          textAlign: 'left',
-                          cursor: 'pointer',
-                          ...textStyles.sm.normal,
-                          transition: 'background-color 0.15s ease-in-out'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.backgroundColor = colors.bg.subtle;
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.backgroundColor = 'transparent';
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <DropdownMenu
+                  isOpen={showDropdown}
+                  onClose={() => setShowDropdown(false)}
+                  items={dropdownItems}
+                  position="bottom-right"
+                />
               </div>
             </motion.div>
           )}

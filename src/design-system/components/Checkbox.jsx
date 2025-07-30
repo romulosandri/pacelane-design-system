@@ -1,48 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Check, Minus } from 'lucide-react';
 import { useTheme } from '../../services/theme-context.jsx';
 import { cornerRadius } from '../tokens/corner-radius.js';
 import { getShadow } from '../tokens/shadows.js';
-
-// Check icon SVG component
-const CheckIcon = ({ color, className = "" }) => (
-  <svg
-    width="12"
-    height="12"
-    viewBox="0 0 12 12"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <path
-      d="M9.5 3.5L4.5 8.5L2.5 6.5"
-      stroke={color}
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-// Minus icon SVG component
-const MinusIcon = ({ color, className = "" }) => (
-  <svg
-    width="12"
-    height="12"
-    viewBox="0 0 12 12"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <path
-      d="M3 6H9"
-      stroke={color}
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 const Checkbox = ({
   // Core props
@@ -283,12 +244,14 @@ const Checkbox = ({
           animate={getIconState()}
         >
           {indeterminate ? (
-            <MinusIcon 
+            <Minus 
+              size={12}
               color={styles.iconColor}
               className="flex-shrink-0"
             />
           ) : (
-            <CheckIcon 
+            <Check 
+              size={12}
               color={styles.iconColor}
               className="flex-shrink-0"
             />
