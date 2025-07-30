@@ -4,10 +4,11 @@ import ButtonPlayground from './ButtonPlayground.jsx';
 import ChipsPlayground from './ChipsPlayground.jsx';
 import TabsPlayground from './TabsPlayground.jsx';
 import ButtonGroupPlayground from './ButtonGroupPlayground.jsx';
+import CheckboxPlayground from './CheckboxPlayground.jsx';
 import Button from './design-system/components/Button.jsx';
 
 function App() {
-  const [currentView, setCurrentView] = useState('buttongroup'); // Start with buttongroup to showcase new component
+  const [currentView, setCurrentView] = useState('checkbox'); // Start with checkbox to showcase new component
 
   return (
     <ThemeProvider>
@@ -37,6 +38,12 @@ function App() {
             size="sm"
             onClick={() => setCurrentView('buttongroup')}
           />
+          <Button
+            label="Checkbox"
+            style={currentView === 'checkbox' ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={() => setCurrentView('checkbox')}
+          />
         </div>
       </div>
       
@@ -44,6 +51,7 @@ function App() {
       {currentView === 'chips' && <ChipsPlayground />}
       {currentView === 'tabs' && <TabsPlayground />}
       {currentView === 'buttongroup' && <ButtonGroupPlayground />}
+      {currentView === 'checkbox' && <CheckboxPlayground />}
     </ThemeProvider>
   );
 }

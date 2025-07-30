@@ -458,26 +458,8 @@ const Button = ({
   
   const iconColor = getIconColor();
 
-  // Motion variants for different states
-  const buttonVariants = {
-    default: {
-      scale: 1,
-    },
-    hover: {
-      scale: disabled || loading ? 1 : 1.02,
-    },
-    tap: {
-      scale: disabled || loading ? 1 : 0.98,
-    }
-  };
-
-  // Smooth transitions for colors and scale
+  // Simple transitions for colors only
   const transition = {
-    scale: {
-      type: "spring",
-      stiffness: 400,
-      damping: 25,
-    },
     backgroundColor: {
       duration: 0.15,
       ease: "easeOut",
@@ -487,7 +469,7 @@ const Button = ({
       ease: "easeOut",
     },
     boxShadow: {
-      duration: 0.2,
+      duration: 0.15,
       ease: "easeOut",
     }
   };
@@ -496,11 +478,6 @@ const Button = ({
     <motion.button
       style={buttonStyles}
       className={className}
-      variants={buttonVariants}
-      initial="default"
-      animate="default"
-      whileHover="hover"
-      whileTap="tap"
       transition={transition}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
@@ -517,10 +494,10 @@ const Button = ({
         {loading && (
           <motion.div
             key="loading"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
           >
             <LoadingSpinner 
               size={sizeStyles.iconSize} 
@@ -533,14 +510,10 @@ const Button = ({
           <motion.span
             key="leadIcon"
             style={{ color: iconColor, display: 'flex', alignItems: 'center' }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            whileHover={{ scale: 1.1 }}
-            transition={{ 
-              scale: { type: "spring", stiffness: 400, damping: 25 },
-              opacity: { duration: 0.15 }
-            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
           >
             {typeof leadIcon === 'string' ? (
               <svg width={sizeStyles.iconSize} height={sizeStyles.iconSize} viewBox="0 0 24 24" fill="currentColor">
@@ -554,12 +527,9 @@ const Button = ({
       </AnimatePresence>
       
       {shouldShowText && (
-        <motion.span
-          layout
-          transition={{ duration: 0.15 }}
-        >
+        <span>
           {loading ? 'Loading...' : label}
-        </motion.span>
+        </span>
       )}
       
       <AnimatePresence>
@@ -567,14 +537,10 @@ const Button = ({
           <motion.span
             key="tailIcon"
             style={{ color: iconColor, display: 'flex', alignItems: 'center' }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            whileHover={{ scale: 1.1 }}
-            transition={{ 
-              scale: { type: "spring", stiffness: 400, damping: 25 },
-              opacity: { duration: 0.15 }
-            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
           >
             {typeof tailIcon === 'string' ? (
               <svg width={sizeStyles.iconSize} height={sizeStyles.iconSize} viewBox="0 0 24 24" fill="currentColor">

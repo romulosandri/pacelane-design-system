@@ -21,7 +21,6 @@ const ButtonGroup = ({
   const { colors } = useTheme();
   const [hoveredItem, setHoveredItem] = useState(null);
   const [pressedItem, setPressedItem] = useState(null);
-  const [focusedItem, setFocusedItem] = useState(null);
 
   // Size configurations for button items
   const sizeConfig = {
@@ -74,7 +73,7 @@ const ButtonGroup = ({
   };
 
   // Get button item styles based on state
-  const getButtonItemStyles = (item, index, isHovered, isPressed, isFocused) => {
+  const getButtonItemStyles = (item, index, isHovered, isPressed) => {
     const isLastItem = index === items.length - 1;
     
     let backgroundColor = colors.bg.state.ghost;
@@ -153,8 +152,7 @@ const ButtonGroup = ({
       {items.map((item, index) => {
         const isHovered = hoveredItem === index;
         const isPressed = pressedItem === index;
-        const isFocused = focusedItem === index;
-        const buttonStyles = getButtonItemStyles(item, index, isHovered, isPressed, isFocused);
+        const buttonStyles = getButtonItemStyles(item, index, isHovered, isPressed);
         const isLastItem = index === items.length - 1;
 
         // Calculate icon color based on state
@@ -168,55 +166,40 @@ const ButtonGroup = ({
         }
 
         return (
-                    <React.Fragment key={item.id || index}>
+          <React.Fragment key={item.id || index}>
             <button
-            style={buttonStyles}
-            disabled={item.disabled}
-            onClick={() => handleItemClick(item, index)}
-            onKeyDown={(e) => handleKeyDown(e, item, index)}
-            onMouseEnter={() => !item.disabled && setHoveredItem(index)}
-            onMouseLeave={() => setHoveredItem(null)}
-            onMouseDown={() => !item.disabled && setPressedItem(index)}
-            onMouseUp={() => setPressedItem(null)}
-            onFocus={() => setFocusedItem(index)}
-            onBlur={() => setFocusedItem(null)}
-            tabIndex={item.disabled ? -1 : 0}
-            aria-label={item.label || `Button ${index + 1}`}
-            aria-disabled={item.disabled}
-          >
-            {/* Focus ring for accessibility */}
-            {isFocused && (
+              style={buttonStyles}
+              disabled={item.disabled}
+              onClick={() => handleItemClick(item, index)}
+              onKeyDown={(e) => handleKeyDown(e, item, index)}
+              onMouseEnter={() => !item.disabled && setHoveredItem(index)}
+              onMouseLeave={() => setHoveredItem(null)}
+              onMouseDown={() => !item.disabled && setPressedItem(index)}
+              onMouseUp={() => setPressedItem(null)}
+              tabIndex={item.disabled ? -1 : 0}
+              aria-label={item.label || `Button ${index + 1}`}
+              aria-disabled={item.disabled}
+            >
+              {/* Content */}
+              {item.leadIcon && renderIcon(item.leadIcon, iconColor)}
+              {type === 'default' && item.label && (
+                <span style={{ userSelect: 'none' }}>
+                  {item.label}
+                </span>
+              )}
+            </button>
+            
+            {/* Divider between items */}
+            {!isLastItem && (
               <div
                 style={{
-                  position: 'absolute',
-                  inset: '-2px',
-                  borderRadius: cornerRadius.borderRadius.sm,
-                  boxShadow: getShadow('component.focus', colors, { focusType: 'default' }),
-                  pointerEvents: 'none',
+                  width: stroke.default,
+                  backgroundColor: colors.border.default,
+                  alignSelf: 'stretch',
                 }}
               />
             )}
-
-            {/* Content */}
-            {item.leadIcon && renderIcon(item.leadIcon, iconColor)}
-            {type === 'default' && item.label && (
-              <span style={{ userSelect: 'none' }}>
-                {item.label}
-              </span>
-            )}
-          </button>
-          
-          {/* Divider between items */}
-          {!isLastItem && (
-            <div
-              style={{
-                width: stroke.default,
-                backgroundColor: colors.border.default,
-                alignSelf: 'stretch',
-              }}
-            />
-          )}
-        </React.Fragment>
+          </React.Fragment>
         );
       })}
     </div>
