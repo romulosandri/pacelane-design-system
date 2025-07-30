@@ -1,5 +1,6 @@
 export { default as Bichaurinho } from './Bichaurinho.jsx';
 export { default as Logo } from './Logo.jsx';
+export { default as LogoSymbol } from './LogoSymbol.jsx';
 export { default as Button } from './Button.jsx';
 export { default as LoadingSpinner } from './LoadingSpinner.jsx';
 export { default as Chips } from './Chips.jsx';
@@ -14,4 +15,5 @@ export { default as DropdownMenu } from './DropdownMenu.jsx';
 export { default as Badge } from './Badge.jsx';
 export { default as FileUpload } from './FileUpload.jsx';
 export { default as Divider } from './Divider.jsx';
-export { default as SidebarMenuItem } from './SidebarMenuItem.jsx'; 
+export { default as SidebarMenuItem } from './SidebarMenuItem.jsx';
+export { default as HomeSidebar } from './HomeSidebar.jsx'; 

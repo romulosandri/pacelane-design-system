@@ -13,10 +13,11 @@ import BadgePlayground from './BadgePlayground.jsx';
 import FileUploadPlayground from './FileUploadPlayground.jsx';
 import DividerPlayground from './DividerPlayground.jsx';
 import SidebarMenuItemPlayground from './SidebarMenuItemPlayground.jsx';
+import HomeSidebarPlayground from './HomeSidebarPlayground.jsx';
 import Button from './design-system/components/Button.jsx';
 
 function App() {
-  const [currentView, setCurrentView] = useState('sidebarmenuitem'); // Start with sidebarmenuitem to showcase new component
+  const [currentView, setCurrentView] = useState('homesidebar'); // Start with homesidebar to showcase new component
 
   return (
     <ThemeProvider>
@@ -100,6 +101,12 @@ function App() {
             size="sm"
             onClick={() => setCurrentView('sidebarmenuitem')}
           />
+          <Button
+            label="HomeSidebar"
+            style={currentView === 'homesidebar' ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={() => setCurrentView('homesidebar')}
+          />
         </div>
       </div>
       
@@ -116,6 +123,7 @@ function App() {
       {currentView === 'fileupload' && <FileUploadPlayground />}
       {currentView === 'divider' && <DividerPlayground />}
       {currentView === 'sidebarmenuitem' && <SidebarMenuItemPlayground />}
+      {currentView === 'homesidebar' && <HomeSidebarPlayground />}
     </ThemeProvider>
   );
 }
