@@ -8,11 +8,12 @@ import CheckboxPlayground from './CheckboxPlayground.jsx';
 import InputPlayground from './InputPlayground.jsx';
 import ProgressBarPlayground from './ProgressBarPlayground.jsx';
 import ContentCardPlayground from './ContentCardPlayground.jsx';
+import FileCardPlayground from './FileCardPlayground.jsx';
 import BadgePlayground from './BadgePlayground.jsx';
 import Button from './design-system/components/Button.jsx';
 
 function App() {
-  const [currentView, setCurrentView] = useState('contentcard'); // Start with contentcard to showcase new component
+  const [currentView, setCurrentView] = useState('filecard'); // Start with filecard to showcase new component
 
   return (
     <ThemeProvider>
@@ -67,6 +68,12 @@ function App() {
             onClick={() => setCurrentView('contentcard')}
           />
           <Button
+            label="FileCard"
+            style={currentView === 'filecard' ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={() => setCurrentView('filecard')}
+          />
+          <Button
             label="Badge"
             style={currentView === 'badge' ? 'primary' : 'secondary'}
             size="sm"
@@ -83,6 +90,7 @@ function App() {
       {currentView === 'input' && <InputPlayground />}
       {currentView === 'progressbar' && <ProgressBarPlayground />}
       {currentView === 'contentcard' && <ContentCardPlayground />}
+      {currentView === 'filecard' && <FileCardPlayground />}
       {currentView === 'badge' && <BadgePlayground />}
     </ThemeProvider>
   );
