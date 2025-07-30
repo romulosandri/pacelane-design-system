@@ -10,10 +10,12 @@ import ProgressBarPlayground from './ProgressBarPlayground.jsx';
 import ContentCardPlayground from './ContentCardPlayground.jsx';
 import FileCardPlayground from './FileCardPlayground.jsx';
 import BadgePlayground from './BadgePlayground.jsx';
+import FileUploadPlayground from './FileUploadPlayground.jsx';
+import DividerPlayground from './DividerPlayground.jsx';
 import Button from './design-system/components/Button.jsx';
 
 function App() {
-  const [currentView, setCurrentView] = useState('filecard'); // Start with filecard to showcase new component
+  const [currentView, setCurrentView] = useState('fileupload'); // Start with fileupload to showcase new component
 
   return (
     <ThemeProvider>
@@ -79,6 +81,18 @@ function App() {
             size="sm"
             onClick={() => setCurrentView('badge')}
           />
+          <Button
+            label="FileUpload"
+            style={currentView === 'fileupload' ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={() => setCurrentView('fileupload')}
+          />
+          <Button
+            label="Divider"
+            style={currentView === 'divider' ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={() => setCurrentView('divider')}
+          />
         </div>
       </div>
       
@@ -92,6 +106,8 @@ function App() {
       {currentView === 'contentcard' && <ContentCardPlayground />}
       {currentView === 'filecard' && <FileCardPlayground />}
       {currentView === 'badge' && <BadgePlayground />}
+      {currentView === 'fileupload' && <FileUploadPlayground />}
+      {currentView === 'divider' && <DividerPlayground />}
     </ThemeProvider>
   );
 }
