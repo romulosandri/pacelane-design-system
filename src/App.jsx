@@ -6,10 +6,12 @@ import TabsPlayground from './TabsPlayground.jsx';
 import ButtonGroupPlayground from './ButtonGroupPlayground.jsx';
 import CheckboxPlayground from './CheckboxPlayground.jsx';
 import InputPlayground from './InputPlayground.jsx';
+import ProgressBarPlayground from './ProgressBarPlayground.jsx';
+import ContentCardPlayground from './ContentCardPlayground.jsx';
 import Button from './design-system/components/Button.jsx';
 
 function App() {
-  const [currentView, setCurrentView] = useState('input'); // Start with input to showcase new component
+  const [currentView, setCurrentView] = useState('contentcard'); // Start with contentcard to showcase new component
 
   return (
     <ThemeProvider>
@@ -51,6 +53,18 @@ function App() {
             size="sm"
             onClick={() => setCurrentView('input')}
           />
+          <Button
+            label="ProgressBar"
+            style={currentView === 'progressbar' ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={() => setCurrentView('progressbar')}
+          />
+          <Button
+            label="ContentCard"
+            style={currentView === 'contentcard' ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={() => setCurrentView('contentcard')}
+          />
         </div>
       </div>
       
@@ -60,6 +74,8 @@ function App() {
       {currentView === 'buttongroup' && <ButtonGroupPlayground />}
       {currentView === 'checkbox' && <CheckboxPlayground />}
       {currentView === 'input' && <InputPlayground />}
+      {currentView === 'progressbar' && <ProgressBarPlayground />}
+      {currentView === 'contentcard' && <ContentCardPlayground />}
     </ThemeProvider>
   );
 }
