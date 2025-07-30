@@ -13,4 +13,5 @@ export { default as FileCard } from './FileCard.jsx';
 export { default as DropdownMenu } from './DropdownMenu.jsx';
 export { default as Badge } from './Badge.jsx';
 export { default as FileUpload } from './FileUpload.jsx';
-export { default as Divider } from './Divider.jsx'; 
+export { default as Divider } from './Divider.jsx';
+export { default as SidebarMenuItem } from './SidebarMenuItem.jsx'; 
