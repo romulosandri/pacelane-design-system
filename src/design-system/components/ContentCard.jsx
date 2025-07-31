@@ -129,7 +129,7 @@ const ContentCard = ({
       <motion.div
         style={{
           position: 'relative',
-          width: '360px',
+          width: '100%',
           height: '240px',
           borderRadius: cornerRadius.borderRadius.md,
           overflow: 'hidden',
@@ -149,7 +149,9 @@ const ContentCard = ({
           variants={textCardVariants}
           animate={isHovered ? 'hover' : 'default'}
           style={{
-            width: '280px',
+            width: 'calc(100% - 80px)',
+            maxWidth: '280px',
+            minWidth: '200px',
             height: '328px',
             padding: spacing.spacing[20],
             borderRadius: cornerRadius.borderRadius.lg,
@@ -216,7 +218,8 @@ const ContentCard = ({
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: spacing.spacing[4]
+          gap: spacing.spacing[4],
+          width: '100%'
         }}
       >
         {/* Title */}

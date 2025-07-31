@@ -4,6 +4,7 @@ import StatsSummaryCardPlayground from './StatsSummaryCardPlayground.jsx';
 import StreakCardPlayground from './StreakCardPlayground.jsx';
 import ButtonPlayground from './ButtonPlayground.jsx';
 import ButtonGroupPlayground from './ButtonGroupPlayground.jsx';
+import SuggestionCardPlayground from './SuggestionCardPlayground.jsx';
 import Button from './design-system/components/Button.jsx';
 
 function App() {
@@ -37,6 +38,12 @@ function App() {
             size="sm"
             onClick={() => setCurrentView('streakcard')}
           />
+          <Button
+            label="SuggestionCard"
+            style={currentView === 'suggestioncard' ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={() => setCurrentView('suggestioncard')}
+          />
         </div>
       </div>
       
@@ -44,6 +51,7 @@ function App() {
       {currentView === 'buttons' && <ButtonPlayground />}
       {currentView === 'buttongroup' && <ButtonGroupPlayground />}
       {currentView === 'streakcard' && <StreakCardPlayground />}
+      {currentView === 'suggestioncard' && <SuggestionCardPlayground />}
     </ThemeProvider>
   );
 }
