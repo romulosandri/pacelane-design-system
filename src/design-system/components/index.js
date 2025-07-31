@@ -19,4 +19,6 @@ export { default as Divider } from './Divider.jsx';
 export { default as SidebarMenuItem } from './SidebarMenuItem.jsx';
 export { default as HomeSidebar } from './HomeSidebar.jsx';
 export { default as StatsSummaryCard } from './StatsSummaryCard.jsx';
-export { default as StreakCard } from './StreakCard.jsx'; 
+export { default as StreakCard } from './StreakCard.jsx';
+export { default as TopNav } from './TopNav.jsx';
+export { default as EditorNav } from './EditorNav.jsx'; 
