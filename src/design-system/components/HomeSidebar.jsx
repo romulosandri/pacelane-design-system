@@ -14,8 +14,8 @@ import LogoSymbol from './LogoSymbol.jsx';
 
 // Icons
 import {
-  Menu,
-  X,
+  ChevronRight,
+  ChevronLeft,
   ChevronDown,
   Plus,
   Home,
@@ -66,10 +66,17 @@ const HomeSidebar = ({
 
   // Handle theme selection
   const handleThemeSelect = (item, index) => {
-    const themes = ['light', 'dark', 'system'];
+    const themes = isCollapsed ? ['light', 'dark'] : ['light', 'dark', 'system'];
     const selectedTheme = themes[index];
     setTheme(selectedTheme);
     onThemeChange?.(selectedTheme);
+  };
+
+  // Handle theme toggle for collapsed state
+  const handleThemeToggle = () => {
+    const newTheme = themePreference === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    onThemeChange?.(newTheme);
   };
 
   // Menu items configuration
@@ -86,8 +93,11 @@ const HomeSidebar = ({
     { id: 'settings', label: 'Settings', icon: <Settings />, section: 'secondary' },
   ];
 
-  // Theme selector items
-  const themeItems = [
+  // Theme selector items (conditional based on collapsed state)
+  const themeItems = isCollapsed ? [
+    { id: 'light', leadIcon: <Sun />, onClick: handleThemeSelect },
+    { id: 'dark', leadIcon: <Moon />, onClick: handleThemeSelect },
+  ] : [
     { id: 'light', leadIcon: <Sun />, onClick: handleThemeSelect },
     { id: 'dark', leadIcon: <Moon />, onClick: handleThemeSelect },
     { id: 'system', leadIcon: <Monitor />, onClick: handleThemeSelect },
@@ -98,35 +108,51 @@ const HomeSidebar = ({
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
-    width: isCollapsed ? 'fit-content' : '280px',
-    backgroundColor: colors.bg.state.ghost,
+    width: isCollapsed ? '72px' : '280px',
+    backgroundColor: colors.bg.sidebar.subtle,
     borderRight: `${stroke.default} solid ${colors.border.default}`,
-    transition: 'none', // No motion as requested
+    transition: 'width 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)', // Smooth width transition
+    position: 'relative', // For floating toggle button positioning
   };
 
-  // Header container (Logo + Toggle)
+  // Header container (Logo only)
   const headerContainerStyles = {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 'auto',
+    justifyContent: isCollapsed ? 'center' : 'flex-start',
     padding: `${spacing.spacing[12]} ${spacing.spacing[16]}`,
-    backgroundColor: colors.bg.state.ghost,
+    backgroundColor: colors.bg.sidebar.subtle,
     borderBottom: `${stroke.default} solid ${colors.border.default}`,
+    transition: 'justify-content 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)',
+  };
+
+  // Floating toggle button styles
+  const floatingToggleStyles = {
+    position: 'absolute',
+    top: spacing.spacing[12],
+    right: `-${spacing.spacing[16]}`, // Half outside the sidebar
+    zIndex: 10,
+    backgroundColor: colors.bg.default,
+    border: `${stroke.default} solid ${colors.border.default}`,
+    borderRadius: cornerRadius.borderRadius.full,
+    padding: spacing.spacing[8],
+    cursor: 'pointer',
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
   };
 
   // Avatar container styles (clickable button)
   const avatarContainerStyles = {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: isCollapsed ? 'center' : 'flex-start',
     gap: isCollapsed ? 0 : spacing.spacing[12],
     padding: `${spacing.spacing[12]} ${spacing.spacing[16]}`,
-    backgroundColor: isAvatarHovered ? colors.bg.state.ghostHover : colors.bg.state.ghost,
+    backgroundColor: isAvatarHovered ? colors.bg.state.ghostHover : colors.bg.sidebar.subtle,
     border: 'none',
     borderBottom: `${stroke.default} solid ${colors.border.default}`,
     width: '100%',
     cursor: 'pointer',
-    transition: 'background-color 0.15s ease-out',
+    transition: 'background-color 0.15s ease-out, justify-content 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), gap 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)',
     outline: 'none', // Remove focus outline as requested
   };
 
@@ -143,9 +169,12 @@ const HomeSidebar = ({
   const buttonContainerStyles = {
     display: 'flex',
     flexDirection: 'column',
+    alignItems: isCollapsed ? 'center' : 'stretch',
     gap: spacing.spacing[2],
-    padding: `${spacing.spacing[12]} ${spacing.spacing[16]} 0`,
-    backgroundColor: colors.bg.state.ghost,
+    padding: `${spacing.spacing[12]} ${spacing.spacing[16]} ${spacing.spacing[12]}`,
+    backgroundColor: colors.bg.sidebar.subtle,
+    overflow: 'visible',
+    transition: 'align-items 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)',
   };
 
   // Menu container styles
@@ -153,20 +182,22 @@ const HomeSidebar = ({
     display: 'flex',
     flexDirection: 'column',
     gap: spacing.spacing[4],
-    padding: spacing.spacing[16],
-    backgroundColor: colors.bg.state.ghost,
+    padding: `${spacing.spacing[8]} ${spacing.spacing[16]} ${spacing.spacing[16]}`,
+    backgroundColor: colors.bg.sidebar.subtle,
     flex: 1,
+    overflow: 'visible',
   };
 
   // Actions container styles
   const actionsContainerStyles = {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 'auto',
+    justifyContent: isCollapsed ? 'center' : 'space-between',
+    gap: isCollapsed ? 0 : 'auto',
     padding: spacing.spacing[16],
-    backgroundColor: colors.bg.state.ghost,
+    backgroundColor: colors.bg.sidebar.subtle,
     borderTop: `${stroke.default} solid ${colors.border.default}`,
+    transition: 'justify-content 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)',
   };
 
   return (
@@ -177,23 +208,24 @@ const HomeSidebar = ({
       aria-label="Main navigation"
       {...rest}
     >
-      {/* Header Container - Logo + Toggle */}
+      {/* Header Container - Logo Only */}
       <div style={headerContainerStyles}>
         {isCollapsed ? (
           <LogoSymbol size={24} />
         ) : (
           <Logo width={120} />
         )}
-        
-        <Button
-          variant="iconOnly"
-          style="ghost"
-          size="sm"
-          leadIcon={isCollapsed ? <Menu size={16} /> : <X size={16} />}
-          onClick={onToggleCollapsed}
-          aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        />
       </div>
+
+      {/* Floating Toggle Button */}
+      <button
+        style={floatingToggleStyles}
+        onClick={onToggleCollapsed}
+        aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        type="button"
+      >
+        {isCollapsed ? <ChevronRight size={16} color={colors.icon.default} /> : <ChevronLeft size={16} color={colors.icon.default} />}
+      </button>
 
       {/* Avatar Container */}
       <button
@@ -219,27 +251,36 @@ const HomeSidebar = ({
               textAlign: 'left',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              opacity: isCollapsed ? 0 : 1,
+              transition: 'opacity 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)',
             }}>
               {userName}
             </span>
-            <ChevronDown size={16} color={colors.icon.muted} />
+            <ChevronDown 
+              size={16} 
+              color={colors.icon.muted}
+              style={{
+                opacity: isCollapsed ? 0 : 1,
+                transition: 'opacity 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)',
+              }}
+            />
           </>
         )}
       </button>
 
       {/* Button Container - Create New */}
-      {!isCollapsed && (
-        <div style={buttonContainerStyles}>
-          <Button
-            label="Create New"
-            style="secondary"
-            size="sm"
-            leadIcon={<Plus size={16} />}
-            onClick={onCreateNewClick}
-          />
-        </div>
-      )}
+      <div style={buttonContainerStyles}>
+        <Button
+          label={isCollapsed ? undefined : "Create New"}
+          variant={isCollapsed ? "iconOnly" : "default"}
+          style="secondary"
+          size="sm"
+          leadIcon={<Plus size={16} />}
+          onClick={onCreateNewClick}
+          aria-label={isCollapsed ? "Create New" : undefined}
+        />
+      </div>
 
       {/* Sidebar Menu Items Container */}
       <div style={menuContainerStyles}>
@@ -275,24 +316,26 @@ const HomeSidebar = ({
 
       {/* Actions Container */}
       <div style={actionsContainerStyles}>
-        {/* Theme Selector Button Group */}
-        <ButtonGroup
-          type="iconOnly"
-          size={isCollapsed ? "sm" : "xs"}
-          items={themeItems}
-        />
-
-        {/* Help Button */}
+        {/* Theme Selector */}
         {isCollapsed ? (
           <Button
             variant="iconOnly"
             style="ghost"
             size="xs"
-            leadIcon={<HelpCircle size={12} />}
-            onClick={onHelpClick}
-            aria-label="Help"
+            leadIcon={themePreference === 'light' ? <Moon size={12} /> : <Sun size={12} />}
+            onClick={handleThemeToggle}
+            aria-label={themePreference === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}
           />
         ) : (
+          <ButtonGroup
+            type="iconOnly"
+            size="xs"
+            items={themeItems}
+          />
+        )}
+
+        {/* Help Button - Only show when expanded */}
+        {!isCollapsed && (
           <Button
             label="Help"
             style="dashed"
