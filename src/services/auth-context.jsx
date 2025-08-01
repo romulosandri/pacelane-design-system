@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
-  const signIn = (email) => {
+  const signIn = (email, password) => {
     // Mock sign in logic - for now just set as authenticated
     setIsAuthenticated(true);
     setUser({ email });
@@ -25,6 +25,18 @@ export const AuthProvider = ({ children }) => {
     // Mock Google sign in logic
     setIsAuthenticated(true);
     setUser({ email: 'user@gmail.com', provider: 'google' });
+  };
+
+  const signUp = (name, email, password) => {
+    // Mock sign up logic - for now just set as authenticated
+    setIsAuthenticated(true);
+    setUser({ name, email });
+  };
+
+  const signUpWithGoogle = () => {
+    // Mock Google sign up logic
+    setIsAuthenticated(true);
+    setUser({ name: 'User', email: 'user@gmail.com', provider: 'google' });
   };
 
   const signOut = () => {
@@ -37,6 +49,8 @@ export const AuthProvider = ({ children }) => {
     user,
     signIn,
     signInWithGoogle,
+    signUp,
+    signUpWithGoogle,
     signOut,
   };
 

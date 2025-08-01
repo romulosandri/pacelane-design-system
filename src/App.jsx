@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ThemeProvider } from './services/theme-context.jsx';
 import { AuthProvider, useAuth } from './services/auth-context.jsx';
 import MainAppChrome from './design-system/components/MainAppChrome.jsx';
 import SignInPage from './pages/SignInPage.jsx';
+import SignUpPage from './pages/SignUpPage.jsx';
 
 // Inner component that uses auth context
 const AppContent = () => {
   const { isAuthenticated } = useAuth();
+  const [showSignUp, setShowSignUp] = useState(false);
   
-  return isAuthenticated ? <MainAppChrome /> : <SignInPage />;
+  if (isAuthenticated) {
+    return <MainAppChrome />;
+  }
+  
+  return showSignUp ? 
+    <SignUpPage onSwitchToSignIn={() => setShowSignUp(false)} /> : 
+    <SignInPage onSwitchToSignUp={() => setShowSignUp(true)} />;
 };
 
 function App() {
