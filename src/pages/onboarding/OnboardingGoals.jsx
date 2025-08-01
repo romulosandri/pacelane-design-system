@@ -243,7 +243,7 @@ const OnboardingGoals = ({ onBack, onContinue }) => {
           <div style={{ width: '400px' }}>
             <ProgressBar
               currentStep={3}
-              totalSteps={5}
+              totalSteps={7}
               showPercentage={false}
             />
           </div>

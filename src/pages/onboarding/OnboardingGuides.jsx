@@ -257,8 +257,8 @@ const OnboardingGuides = ({ onBack, onContinue }) => {
           {/* Progress Bar */}
           <div style={{ width: '400px' }}>
             <ProgressBar
-              currentStep={4}
-              totalSteps={5}
+              currentStep={5}
+              totalSteps={7}
               showPercentage={false}
             />
           </div>

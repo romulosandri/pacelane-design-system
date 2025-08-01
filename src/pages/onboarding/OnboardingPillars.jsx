@@ -6,56 +6,59 @@ import { getShadow } from '../../design-system/tokens/shadows.js';
 import { typography } from '../../design-system/tokens/typography.js';
 import TopNav from '../../design-system/components/TopNav.jsx';
 import Button from '../../design-system/components/Button.jsx';
-import Input from '../../design-system/components/Input.jsx';
+import Chips from '../../design-system/components/Chips.jsx';
 import ProgressBar from '../../design-system/components/ProgressBar.jsx';
 import Bichaurinho from '../../design-system/components/Bichaurinho.jsx';
-import { ArrowLeft, ArrowRight, Plus, Trash2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-const OnboardingInspirations = ({ onBack, onContinue }) => {
+const OnboardingPillars = ({ onBack, onContinue }) => {
   const { colors } = useTheme();
+  
+  // Available pillar options
+  const pillarOptions = [
+    'Insights',
+    'Trends', 
+    'Reflections On News',
+    'How-Tos',
+    'Opinions',
+    'Personal Stories',
+    'Career Lessons',
+    'BTS',
+    'Culture & Teamwork',
+    'Strategies',
+    'Innovation',
+    'Networking',
+    'Client Stories',
+    'Work Hacks',
+    'Lifelong Learning',
+    'Memes & Humor'
+  ];
 
-  // Initialize with one required benchmark field
-  const [benchmarks, setBenchmarks] = useState([
-    { id: 1, value: '', isRequired: true }
-  ]);
+  const [selectedPillars, setSelectedPillars] = useState([]);
 
-  const addBenchmark = () => {
-    const newId = Math.max(...benchmarks.map(b => b.id)) + 1;
-    setBenchmarks(prev => [...prev, { id: newId, value: '', isRequired: false }]);
-  };
-
-  const removeBenchmark = (id) => {
-    setBenchmarks(prev => prev.filter(benchmark => benchmark.id !== id));
-  };
-
-  const updateBenchmark = (id, value) => {
-    setBenchmarks(prev =>
-      prev.map(benchmark =>
-        benchmark.id === id ? { ...benchmark, value } : benchmark
-      )
-    );
-  };
-
-  const handleContinue = () => {
-    // Validate required field (first benchmark)
-    const requiredBenchmark = benchmarks.find(b => b.isRequired);
-    if (!requiredBenchmark?.value.trim()) {
-      return; // Don't proceed if required field is empty
-    }
-
-    // Filter out empty benchmarks and trim values
-    const validBenchmarks = benchmarks
-      .filter(b => b.value.trim())
-      .map(b => b.value.trim());
-
-    onContinue({
-      inspirations: validBenchmarks,
+  const togglePillar = (pillar) => {
+    setSelectedPillars(prev => {
+      if (prev.includes(pillar)) {
+        return prev.filter(p => p !== pillar);
+      } else {
+        return [...prev, pillar];
+      }
     });
   };
 
-  // Check if required field is filled
-  const requiredBenchmark = benchmarks.find(b => b.isRequired);
-  const canContinue = requiredBenchmark?.value.trim();
+  const handleContinue = () => {
+    // At least one pillar should be selected
+    if (selectedPillars.length === 0) {
+      return; // Don't proceed if no pillars are selected
+    }
+    
+    onContinue({
+      pillars: selectedPillars,
+    });
+  };
+
+  // Check if at least one pillar is selected
+  const canContinue = selectedPillars.length > 0;
 
   return (
     <div
@@ -128,6 +131,8 @@ const OnboardingInspirations = ({ onBack, onContinue }) => {
               boxShadow: getShadow('regular.card', colors, { withBorder: true }),
               width: '400px',
               overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
             }}
           >
             {/* Main Container */}
@@ -147,20 +152,19 @@ const OnboardingInspirations = ({ onBack, onContinue }) => {
                   flexDirection: 'column',
                   alignItems: 'flex-start',
                   gap: spacing.spacing[16],
-                  marginBottom: spacing.spacing[32],
                 }}
               >
                 {/* Bichaurinho */}
                 <div>
-                  <Bichaurinho variant={6} size={48} />
+                  <Bichaurinho variant={26} size={48} />
                 </div>
 
-                {/* Title and Subtitle Container - 0px gap between title and subtitle */}
+                {/* Title and Subtitle Container - 8px gap between title and subtitle */}
                 <div
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: spacing.spacing[0],
+                    gap: spacing.spacing[8],
                     alignItems: 'flex-start',
                   }}
                 >
@@ -176,7 +180,7 @@ const OnboardingInspirations = ({ onBack, onContinue }) => {
                       textAlign: 'left',
                     }}
                   >
-                    Inspirations
+                    Content Pillars
                   </h1>
 
                   {/* Subtitle */}
@@ -191,47 +195,31 @@ const OnboardingInspirations = ({ onBack, onContinue }) => {
                       textAlign: 'left',
                     }}
                   >
-                    Tell us what are the profiles on LinkedIn that you admire, and want to be more like
+                    These pillars will help us create your content plan so we stay on formats you like to use
                   </p>
                 </div>
               </div>
 
-              {/* Benchmark Fields Container */}
+              {/* Pillars Chips Container */}
               <div
                 style={{
                   display: 'flex',
-                  flexDirection: 'column',
-                  gap: spacing.spacing[16],
+                  flexWrap: 'wrap',
+                  gap: spacing.spacing[8],
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
+                  marginTop: spacing.spacing[24],
                 }}
               >
-                {/* Dynamic Benchmark Input Fields */}
-                {benchmarks.map((benchmark, index) => (
-                  <Input
-                    key={benchmark.id}
-                    label={index === 0 ? "LinkedIn Profile" : `LinkedIn Profile ${index + 1}`}
-                    placeholder="https://linkedin.com/in/profile-name"
-                    value={benchmark.value}
-                    onChange={(e) => updateBenchmark(benchmark.id, e.target.value)}
-                    required={benchmark.isRequired}
-                    style={!benchmark.isRequired ? "tail-action" : "default"}
-                    tailAction={!benchmark.isRequired ? {
-                      icon: <Trash2 size={14} />,
-                      onClick: () => removeBenchmark(benchmark.id)
-                    } : undefined}
+                {pillarOptions.map((pillar) => (
+                  <Chips
+                    key={pillar}
+                    label={pillar}
+                    size="lg"
+                    selected={selectedPillars.includes(pillar)}
+                    onClick={() => togglePillar(pillar)}
                   />
                 ))}
-
-                {/* Add Benchmark Button */}
-                <div style={{ marginTop: spacing.spacing[8] }}>
-                  <Button
-                    label="Add Benchmark"
-                    style="secondary"
-                    size="sm"
-                    leadIcon={<Plus size={14} />}
-                    onClick={addBenchmark}
-                    className="w-full"
-                  />
-                </div>
               </div>
             </div>
 
@@ -264,7 +252,7 @@ const OnboardingInspirations = ({ onBack, onContinue }) => {
           {/* Progress Bar */}
           <div style={{ width: '400px' }}>
             <ProgressBar
-              currentStep={2}
+              currentStep={6}
               totalSteps={7}
               showPercentage={false}
             />
@@ -305,4 +293,4 @@ const OnboardingInspirations = ({ onBack, onContinue }) => {
   );
 };
 
-export default OnboardingInspirations;
+export default OnboardingPillars;
