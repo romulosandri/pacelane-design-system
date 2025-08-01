@@ -9,27 +9,53 @@ import Button from '../../design-system/components/Button.jsx';
 import Input from '../../design-system/components/Input.jsx';
 import ProgressBar from '../../design-system/components/ProgressBar.jsx';
 import Bichaurinho from '../../design-system/components/Bichaurinho.jsx';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Plus, Trash2 } from 'lucide-react';
 
-const OnboardingProfile = ({ onBack, onContinue }) => {
+const OnboardingInspirations = ({ onBack, onContinue }) => {
   const { colors } = useTheme();
-  const [linkedinProfile, setLinkedinProfile] = useState('');
-  const [companyProfile, setCompanyProfile] = useState('');
+
+  // Initialize with one required benchmark field
+  const [benchmarks, setBenchmarks] = useState([
+    { id: 1, value: '', isRequired: true }
+  ]);
+
+  const addBenchmark = () => {
+    const newId = Math.max(...benchmarks.map(b => b.id)) + 1;
+    setBenchmarks(prev => [...prev, { id: newId, value: '', isRequired: false }]);
+  };
+
+  const removeBenchmark = (id) => {
+    setBenchmarks(prev => prev.filter(benchmark => benchmark.id !== id));
+  };
+
+  const updateBenchmark = (id, value) => {
+    setBenchmarks(prev =>
+      prev.map(benchmark =>
+        benchmark.id === id ? { ...benchmark, value } : benchmark
+      )
+    );
+  };
 
   const handleContinue = () => {
-    // Validate required fields
-    if (!linkedinProfile.trim() || !companyProfile.trim()) {
-      return; // Don't proceed if required fields are empty
+    // Validate required field (first benchmark)
+    const requiredBenchmark = benchmarks.find(b => b.isRequired);
+    if (!requiredBenchmark?.value.trim()) {
+      return; // Don't proceed if required field is empty
     }
-    
+
+    // Filter out empty benchmarks and trim values
+    const validBenchmarks = benchmarks
+      .filter(b => b.value.trim())
+      .map(b => b.value.trim());
+
     onContinue({
-      linkedinProfile: linkedinProfile.trim(),
-      companyProfile: companyProfile.trim(),
+      inspirations: validBenchmarks,
     });
   };
 
-  // Check if both required fields are filled
-  const canContinue = linkedinProfile.trim() && companyProfile.trim();
+  // Check if required field is filled
+  const requiredBenchmark = benchmarks.find(b => b.isRequired);
+  const canContinue = requiredBenchmark?.value.trim();
 
   return (
     <div
@@ -74,8 +100,8 @@ const OnboardingProfile = ({ onBack, onContinue }) => {
         />
 
         {/* Content Column */}
-        <div style={{ 
-          position: 'relative', 
+        <div style={{
+          position: 'relative',
           zIndex: 1,
           display: 'flex',
           flexDirection: 'column',
@@ -126,7 +152,7 @@ const OnboardingProfile = ({ onBack, onContinue }) => {
               >
                 {/* Bichaurinho */}
                 <div>
-                  <Bichaurinho variant={12} size={48} />
+                  <Bichaurinho variant={6} size={48} />
                 </div>
 
                 {/* Title and Subtitle Container - 0px gap between title and subtitle */}
@@ -150,7 +176,7 @@ const OnboardingProfile = ({ onBack, onContinue }) => {
                       textAlign: 'left',
                     }}
                   >
-                    First Things First
+                    Inspirations
                   </h1>
 
                   {/* Subtitle */}
@@ -165,36 +191,47 @@ const OnboardingProfile = ({ onBack, onContinue }) => {
                       textAlign: 'left',
                     }}
                   >
-                    Tell Us About You. We'll use this to analyze your LinkedIn and match your style.
+                    Tell us what are the profiles on LinkedIn that you admire, and want to be more like
                   </p>
                 </div>
               </div>
 
-              {/* Input Fields */}
+              {/* Benchmark Fields Container */}
               <div
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: spacing.spacing[20],
+                  gap: spacing.spacing[16],
                 }}
               >
-                {/* LinkedIn Profile Input */}
-                <Input
-                  label="Your LinkedIn Profile"
-                  placeholder="https://linkedin.com/in/your-profile"
-                  value={linkedinProfile}
-                  onChange={(e) => setLinkedinProfile(e.target.value)}
-                  required
-                />
+                {/* Dynamic Benchmark Input Fields */}
+                {benchmarks.map((benchmark, index) => (
+                  <Input
+                    key={benchmark.id}
+                    label={index === 0 ? "LinkedIn Profile" : `LinkedIn Profile ${index + 1}`}
+                    placeholder="https://linkedin.com/in/profile-name"
+                    value={benchmark.value}
+                    onChange={(e) => updateBenchmark(benchmark.id, e.target.value)}
+                    required={benchmark.isRequired}
+                    style={!benchmark.isRequired ? "tail-action" : "default"}
+                    tailAction={!benchmark.isRequired ? {
+                      icon: <Trash2 size={14} />,
+                      onClick: () => removeBenchmark(benchmark.id)
+                    } : undefined}
+                  />
+                ))}
 
-                {/* Company LinkedIn Profile Input */}
-                <Input
-                  label="Your Company's LinkedIn Profile"
-                  placeholder="https://linkedin.com/company/your-company"
-                  value={companyProfile}
-                  onChange={(e) => setCompanyProfile(e.target.value)}
-                  required
-                />
+                {/* Add Benchmark Button */}
+                <div style={{ marginTop: spacing.spacing[8] }}>
+                  <Button
+                    label="Add Benchmark"
+                    style="secondary"
+                    size="sm"
+                    leadIcon={<Plus size={14} />}
+                    onClick={addBenchmark}
+                    className="w-full"
+                  />
+                </div>
               </div>
             </div>
 
@@ -226,8 +263,8 @@ const OnboardingProfile = ({ onBack, onContinue }) => {
 
           {/* Progress Bar */}
           <div style={{ width: '400px' }}>
-            <ProgressBar 
-              currentStep={1}
+            <ProgressBar
+              currentStep={2}
               totalSteps={4}
               showPercentage={false}
             />
@@ -268,4 +305,4 @@ const OnboardingProfile = ({ onBack, onContinue }) => {
   );
 };
 
-export default OnboardingProfile;
+export default OnboardingInspirations;

@@ -6,30 +6,51 @@ import { getShadow } from '../../design-system/tokens/shadows.js';
 import { typography } from '../../design-system/tokens/typography.js';
 import TopNav from '../../design-system/components/TopNav.jsx';
 import Button from '../../design-system/components/Button.jsx';
-import Input from '../../design-system/components/Input.jsx';
+import Chips from '../../design-system/components/Chips.jsx';
 import ProgressBar from '../../design-system/components/ProgressBar.jsx';
 import Bichaurinho from '../../design-system/components/Bichaurinho.jsx';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-const OnboardingProfile = ({ onBack, onContinue }) => {
+const OnboardingGoals = ({ onBack, onContinue }) => {
   const { colors } = useTheme();
-  const [linkedinProfile, setLinkedinProfile] = useState('');
-  const [companyProfile, setCompanyProfile] = useState('');
+  
+  // Available goal options
+  const goalOptions = [
+    'Build Authority',
+    'Grow Network', 
+    'Attract Clients',
+    'Share Ideas',
+    'Attract Opportunities',
+    'Stay Visible',
+    'Stay Relevant',
+    'Become a Thought Leader'
+  ];
 
-  const handleContinue = () => {
-    // Validate required fields
-    if (!linkedinProfile.trim() || !companyProfile.trim()) {
-      return; // Don't proceed if required fields are empty
-    }
-    
-    onContinue({
-      linkedinProfile: linkedinProfile.trim(),
-      companyProfile: companyProfile.trim(),
+  const [selectedGoals, setSelectedGoals] = useState([]);
+
+  const toggleGoal = (goal) => {
+    setSelectedGoals(prev => {
+      if (prev.includes(goal)) {
+        return prev.filter(g => g !== goal);
+      } else {
+        return [...prev, goal];
+      }
     });
   };
 
-  // Check if both required fields are filled
-  const canContinue = linkedinProfile.trim() && companyProfile.trim();
+  const handleContinue = () => {
+    // At least one goal should be selected
+    if (selectedGoals.length === 0) {
+      return; // Don't proceed if no goals are selected
+    }
+    
+    onContinue({
+      goals: selectedGoals,
+    });
+  };
+
+  // Check if at least one goal is selected
+  const canContinue = selectedGoals.length > 0;
 
   return (
     <div
@@ -74,8 +95,8 @@ const OnboardingProfile = ({ onBack, onContinue }) => {
         />
 
         {/* Content Column */}
-        <div style={{ 
-          position: 'relative', 
+        <div style={{
+          position: 'relative',
           zIndex: 1,
           display: 'flex',
           flexDirection: 'column',
@@ -126,15 +147,15 @@ const OnboardingProfile = ({ onBack, onContinue }) => {
               >
                 {/* Bichaurinho */}
                 <div>
-                  <Bichaurinho variant={12} size={48} />
+                  <Bichaurinho variant={5} size={48} />
                 </div>
 
-                {/* Title and Subtitle Container - 0px gap between title and subtitle */}
+                {/* Title and Subtitle Container - 12px gap between title and subtitle */}
                 <div
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: spacing.spacing[0],
+                    gap: spacing.spacing[12],
                     alignItems: 'flex-start',
                   }}
                 >
@@ -144,13 +165,13 @@ const OnboardingProfile = ({ onBack, onContinue }) => {
                       fontFamily: typography.fontFamily['awesome-serif'],
                       fontSize: typography.desktop.size['5xl'],
                       fontWeight: typography.desktop.weight.semibold,
-                      lineHeight: typography.desktop.lineHeight['5xl'],
+                      lineHeight: '0.9',
                       color: colors.text.default,
                       margin: 0,
                       textAlign: 'left',
                     }}
                   >
-                    First Things First
+                    What Are<br />Your Goals?
                   </h1>
 
                   {/* Subtitle */}
@@ -165,36 +186,30 @@ const OnboardingProfile = ({ onBack, onContinue }) => {
                       textAlign: 'left',
                     }}
                   >
-                    Tell Us About You. We'll use this to analyze your LinkedIn and match your style.
+                    Why Do You Want to Share Content? We'll tailor your plan to help you reach your goals.
                   </p>
                 </div>
               </div>
 
-              {/* Input Fields */}
+              {/* Goals Chips Container */}
               <div
                 style={{
                   display: 'flex',
-                  flexDirection: 'column',
-                  gap: spacing.spacing[20],
+                  flexWrap: 'wrap',
+                  gap: spacing.spacing[8],
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
                 }}
               >
-                {/* LinkedIn Profile Input */}
-                <Input
-                  label="Your LinkedIn Profile"
-                  placeholder="https://linkedin.com/in/your-profile"
-                  value={linkedinProfile}
-                  onChange={(e) => setLinkedinProfile(e.target.value)}
-                  required
-                />
-
-                {/* Company LinkedIn Profile Input */}
-                <Input
-                  label="Your Company's LinkedIn Profile"
-                  placeholder="https://linkedin.com/company/your-company"
-                  value={companyProfile}
-                  onChange={(e) => setCompanyProfile(e.target.value)}
-                  required
-                />
+                {goalOptions.map((goal) => (
+                  <Chips
+                    key={goal}
+                    label={goal}
+                    size="lg"
+                    selected={selectedGoals.includes(goal)}
+                    onClick={() => toggleGoal(goal)}
+                  />
+                ))}
               </div>
             </div>
 
@@ -226,8 +241,8 @@ const OnboardingProfile = ({ onBack, onContinue }) => {
 
           {/* Progress Bar */}
           <div style={{ width: '400px' }}>
-            <ProgressBar 
-              currentStep={1}
+            <ProgressBar
+              currentStep={3}
               totalSteps={4}
               showPercentage={false}
             />
@@ -268,4 +283,4 @@ const OnboardingProfile = ({ onBack, onContinue }) => {
   );
 };
 
-export default OnboardingProfile;
+export default OnboardingGoals;

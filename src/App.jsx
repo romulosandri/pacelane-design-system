@@ -4,7 +4,7 @@ import { AuthProvider, useAuth } from './services/auth-context.jsx';
 import MainAppChrome from './design-system/components/MainAppChrome.jsx';
 import SignInPage from './pages/SignInPage.jsx';
 import SignUpPage from './pages/SignUpPage.jsx';
-import { OnboardingWelcome, OnboardingProfile } from './pages/onboarding/index.js';
+import { OnboardingWelcome, OnboardingProfile, OnboardingInspirations, OnboardingGoals } from './pages/onboarding/index.js';
 
 // Inner component that uses auth context
 const AppContent = () => {
@@ -38,6 +38,22 @@ const AppContent = () => {
           <OnboardingProfile 
             key="onboarding-profile"
             onBack={previousOnboardingStep}
+            onContinue={(data) => nextOnboardingStep(data)}
+          />
+        );
+      case 3:
+        return (
+          <OnboardingInspirations 
+            key="onboarding-inspirations"
+            onBack={previousOnboardingStep}
+            onContinue={(data) => nextOnboardingStep(data)}
+          />
+        );
+      case 4:
+        return (
+          <OnboardingGoals 
+            key="onboarding-goals"
+            onBack={previousOnboardingStep}
             onContinue={(data) => completeOnboarding(data)}
           />
         );
@@ -45,6 +61,7 @@ const AppContent = () => {
         // If somehow we get to an invalid step, go back to step 1
         return (
           <OnboardingWelcome 
+            key="onboarding-welcome-fallback"
             onContinue={() => nextOnboardingStep()} 
           />
         );
