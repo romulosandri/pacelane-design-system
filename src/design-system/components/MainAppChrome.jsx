@@ -104,14 +104,15 @@ const MainAppChrome = ({
 
   // Main container styles
   const containerStyles = {
-    display: 'flex',
+    position: 'relative',
     height: '100vh',
     backgroundColor: colors.bg.subtle,
   };
 
   // Content area styles
   const contentStyles = {
-    flex: 1,
+    width: '100%',
+    height: '100vh',
     backgroundColor: colors.bg.subtle,
     overflow: 'auto',
   };

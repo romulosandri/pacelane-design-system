@@ -107,12 +107,15 @@ const HomeSidebar = ({
   const sidebarStyles = {
     display: 'flex',
     flexDirection: 'column',
+    position: 'absolute',
+    top: 0,
+    left: 0,
     height: '100vh',
-    width: isCollapsed ? '72px' : '280px',
+    width: isCollapsed ? '72px' : '240px',
     backgroundColor: colors.bg.sidebar.subtle,
     borderRight: `${stroke.default} solid ${colors.border.default}`,
     transition: 'width 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)', // Smooth width transition
-    position: 'relative', // For floating toggle button positioning
+    zIndex: 1000, // Ensure sidebar is above content
   };
 
   // Header container (Logo only)
