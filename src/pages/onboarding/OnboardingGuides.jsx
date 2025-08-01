@@ -11,51 +11,46 @@ import ProgressBar from '../../design-system/components/ProgressBar.jsx';
 import Bichaurinho from '../../design-system/components/Bichaurinho.jsx';
 import { ArrowLeft, ArrowRight, Plus, Trash2 } from 'lucide-react';
 
-const OnboardingInspirations = ({ onBack, onContinue }) => {
+const OnboardingGuides = ({ onBack, onContinue }) => {
   const { colors } = useTheme();
-
-  // Initialize with one required benchmark field
-  const [benchmarks, setBenchmarks] = useState([
-    { id: 1, value: '', isRequired: true }
+  
+  // Initialize with three pre-filled principles
+  const [principles, setPrinciples] = useState([
+    { id: 1, value: 'Be Honest About Your Challenges' },
+    { id: 2, value: 'Promote Ideas, Not Just Myself' },
+    { id: 3, value: 'Avoid Buzzwords, and Empty Phrases' }
   ]);
 
-  const addBenchmark = () => {
-    const newId = Math.max(...benchmarks.map(b => b.id)) + 1;
-    setBenchmarks(prev => [...prev, { id: newId, value: '', isRequired: false }]);
+  const addPrinciple = () => {
+    const newId = Math.max(...principles.map(p => p.id)) + 1;
+    setPrinciples(prev => [...prev, { id: newId, value: '' }]);
   };
 
-  const removeBenchmark = (id) => {
-    setBenchmarks(prev => prev.filter(benchmark => benchmark.id !== id));
+  const removePrinciple = (id) => {
+    setPrinciples(prev => prev.filter(principle => principle.id !== id));
   };
 
-  const updateBenchmark = (id, value) => {
-    setBenchmarks(prev =>
-      prev.map(benchmark =>
-        benchmark.id === id ? { ...benchmark, value } : benchmark
+  const updatePrinciple = (id, value) => {
+    setPrinciples(prev => 
+      prev.map(principle => 
+        principle.id === id ? { ...principle, value } : principle
       )
     );
   };
 
   const handleContinue = () => {
-    // Validate required field (first benchmark)
-    const requiredBenchmark = benchmarks.find(b => b.isRequired);
-    if (!requiredBenchmark?.value.trim()) {
-      return; // Don't proceed if required field is empty
-    }
-
-    // Filter out empty benchmarks and trim values
-    const validBenchmarks = benchmarks
-      .filter(b => b.value.trim())
-      .map(b => b.value.trim());
-
+    // Filter out empty principles and trim values
+    const validPrinciples = principles
+      .filter(p => p.value.trim())
+      .map(p => p.value.trim());
+    
     onContinue({
-      inspirations: validBenchmarks,
+      guides: validPrinciples,
     });
   };
 
-  // Check if required field is filled
-  const requiredBenchmark = benchmarks.find(b => b.isRequired);
-  const canContinue = requiredBenchmark?.value.trim();
+  // No validation needed - all fields are optional
+  const canContinue = true;
 
   return (
     <div
@@ -152,15 +147,15 @@ const OnboardingInspirations = ({ onBack, onContinue }) => {
               >
                 {/* Bichaurinho */}
                 <div>
-                  <Bichaurinho variant={6} size={48} />
+                  <Bichaurinho variant={30} size={48} />
                 </div>
 
-                {/* Title and Subtitle Container - 0px gap between title and subtitle */}
+                {/* Title and Subtitle Container - 12px gap between title and subtitle */}
                 <div
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: spacing.spacing[0],
+                    gap: spacing.spacing[12],
                     alignItems: 'flex-start',
                   }}
                 >
@@ -170,13 +165,13 @@ const OnboardingInspirations = ({ onBack, onContinue }) => {
                       fontFamily: typography.fontFamily['awesome-serif'],
                       fontSize: typography.desktop.size['5xl'],
                       fontWeight: typography.desktop.weight.semibold,
-                      lineHeight: typography.desktop.lineHeight['5xl'],
+                      lineHeight: '0.9',
                       color: colors.text.default,
                       margin: 0,
                       textAlign: 'left',
                     }}
                   >
-                    Inspirations
+                    What Are<br />Your Guides?
                   </h1>
 
                   {/* Subtitle */}
@@ -191,12 +186,12 @@ const OnboardingInspirations = ({ onBack, onContinue }) => {
                       textAlign: 'left',
                     }}
                   >
-                    Tell us what are the profiles on LinkedIn that you admire, and want to be more like
+                    What values guide the way you want to create content? (For example: be authentic, share your experience, avoid hype)
                   </p>
                 </div>
               </div>
 
-              {/* Benchmark Fields Container */}
+              {/* Principles Fields Container */}
               <div
                 style={{
                   display: 'flex',
@@ -204,31 +199,29 @@ const OnboardingInspirations = ({ onBack, onContinue }) => {
                   gap: spacing.spacing[16],
                 }}
               >
-                {/* Dynamic Benchmark Input Fields */}
-                {benchmarks.map((benchmark, index) => (
+                {/* Dynamic Principle Input Fields */}
+                {principles.map((principle, index) => (
                   <Input
-                    key={benchmark.id}
-                    label={index === 0 ? "LinkedIn Profile" : `LinkedIn Profile ${index + 1}`}
-                    placeholder="https://linkedin.com/in/profile-name"
-                    value={benchmark.value}
-                    onChange={(e) => updateBenchmark(benchmark.id, e.target.value)}
-                    required={benchmark.isRequired}
-                    style={!benchmark.isRequired ? "tail-action" : "default"}
-                    tailAction={!benchmark.isRequired ? {
+                    key={principle.id}
+                    placeholder="Enter a guiding principle..."
+                    value={principle.value}
+                    onChange={(e) => updatePrinciple(principle.id, e.target.value)}
+                    style="tail-action"
+                    tailAction={{
                       icon: <Trash2 size={14} />,
-                      onClick: () => removeBenchmark(benchmark.id)
-                    } : undefined}
+                      onClick: () => removePrinciple(principle.id)
+                    }}
                   />
                 ))}
 
-                {/* Add Benchmark Button */}
+                {/* Add Principles Button */}
                 <div style={{ marginTop: spacing.spacing[8] }}>
                   <Button
-                    label="Add Benchmark"
+                    label="Add Principles"
                     style="secondary"
                     size="sm"
                     leadIcon={<Plus size={14} />}
-                    onClick={addBenchmark}
+                    onClick={addPrinciple}
                     className="w-full"
                   />
                 </div>
@@ -264,7 +257,7 @@ const OnboardingInspirations = ({ onBack, onContinue }) => {
           {/* Progress Bar */}
           <div style={{ width: '400px' }}>
             <ProgressBar
-              currentStep={2}
+              currentStep={4}
               totalSteps={5}
               showPercentage={false}
             />
@@ -305,4 +298,4 @@ const OnboardingInspirations = ({ onBack, onContinue }) => {
   );
 };
 
-export default OnboardingInspirations;
+export default OnboardingGuides;

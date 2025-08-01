@@ -4,7 +4,7 @@ import { AuthProvider, useAuth } from './services/auth-context.jsx';
 import MainAppChrome from './design-system/components/MainAppChrome.jsx';
 import SignInPage from './pages/SignInPage.jsx';
 import SignUpPage from './pages/SignUpPage.jsx';
-import { OnboardingWelcome, OnboardingProfile, OnboardingInspirations, OnboardingGoals } from './pages/onboarding/index.js';
+import { OnboardingWelcome, OnboardingProfile, OnboardingInspirations, OnboardingGoals, OnboardingGuides } from './pages/onboarding/index.js';
 
 // Inner component that uses auth context
 const AppContent = () => {
@@ -53,6 +53,14 @@ const AppContent = () => {
         return (
           <OnboardingGoals 
             key="onboarding-goals"
+            onBack={previousOnboardingStep}
+            onContinue={(data) => nextOnboardingStep(data)}
+          />
+        );
+      case 5:
+        return (
+          <OnboardingGuides 
+            key="onboarding-guides"
             onBack={previousOnboardingStep}
             onContinue={(data) => completeOnboarding(data)}
           />
