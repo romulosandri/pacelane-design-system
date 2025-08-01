@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../../services/theme-context.jsx';
+import { useAuth } from '../../services/auth-context.jsx';
 import { spacing } from '../tokens/spacing.js';
 import { textStyles } from '../styles/typography/typography-styles.js';
 import { 
@@ -28,6 +29,7 @@ const MainAppChrome = ({
   ...rest
 }) => {
   const { colors } = useTheme();
+  const { signOut, user } = useAuth();
   const [activeMenuItem, setActiveMenuItem] = useState('home');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [currentPage, setCurrentPage] = useState(getCurrentPage());
@@ -67,7 +69,9 @@ const MainAppChrome = ({
   };
 
   const handleAvatarClick = () => {
-    console.log('Avatar clicked');
+    // For now, just sign out when avatar is clicked
+    // Later this could show a dropdown menu with profile options
+    signOut();
   };
 
   // Render content based on current page or active menu item
@@ -153,7 +157,7 @@ const MainAppChrome = ({
           onThemeChange={handleThemeChange}
           onHelpClick={handleHelpClick}
           onAvatarClick={handleAvatarClick}
-          userName="John Doe"
+          userName={user?.email || "User"}
           userAvatar="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop&crop=face"
         />
       )}
