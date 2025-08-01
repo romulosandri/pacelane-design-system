@@ -14,6 +14,7 @@ import HomeSidebar from './HomeSidebar.jsx';
 // Pages
 import HomePage from '../../pages/HomePage.jsx';
 import ContentEditorPage from '../../pages/ContentEditorPage.jsx';
+import KnowledgeBasePage from '../../pages/KnowledgeBasePage.jsx';
 
 /**
  * MainAppChrome component - Main application layout with sidebar navigation and content area
@@ -87,12 +88,7 @@ const MainAppChrome = ({
           </div>
         );
       case 'knowledge':
-        return (
-          <div style={{ padding: spacing.spacing[32] }}>
-            <h1 style={textStyles['2xl'].bold}>Knowledge</h1>
-            <p style={textStyles.md.normal}>Knowledge base content coming soon...</p>
-          </div>
-        );
+        return <KnowledgeBasePage />;
       case 'calendar':
         return (
           <div style={{ padding: spacing.spacing[32] }}>

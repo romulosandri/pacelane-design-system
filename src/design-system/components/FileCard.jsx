@@ -158,7 +158,7 @@ const FileCard = ({
       <motion.div
         style={{
           position: 'relative',
-          width: '360px',
+          width: '100%',
           height: '240px',
           borderRadius: cornerRadius.borderRadius.md,
           overflow: 'hidden',
@@ -256,7 +256,7 @@ const FileCard = ({
           display: 'flex',
           flexDirection: 'column',
           gap: spacing.spacing[4],
-          width: '360px'
+          width: '100%'
         }}
       >
         {/* Title and File Size */}
