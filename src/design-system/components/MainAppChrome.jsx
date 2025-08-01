@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '../../services/theme-context.jsx';
 import { spacing } from '../tokens/spacing.js';
 import { textStyles } from '../styles/typography/typography-styles.js';
+import { 
+  subscribeToNavigation, 
+  getCurrentPage, 
+  getCurrentContent 
+} from '../../services/navigation.js';
 
 // Design System Components
 import HomeSidebar from './HomeSidebar.jsx';
 
 // Pages
 import HomePage from '../../pages/HomePage.jsx';
+import ContentEditorPage from '../../pages/ContentEditorPage.jsx';
 
 /**
  * MainAppChrome component - Main application layout with sidebar navigation and content area
@@ -22,6 +28,18 @@ const MainAppChrome = ({
   const { colors } = useTheme();
   const [activeMenuItem, setActiveMenuItem] = useState('home');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [currentPage, setCurrentPage] = useState(getCurrentPage());
+  const [currentContent, setCurrentContent] = useState(getCurrentContent());
+
+  // Listen for navigation changes
+  useEffect(() => {
+    const unsubscribe = subscribeToNavigation(({ page, content }) => {
+      setCurrentPage(page);
+      setCurrentContent(content);
+    });
+    
+    return unsubscribe;
+  }, []);
 
   // Handle menu item clicks from sidebar
   const handleMenuItemClick = (menuId) => {
@@ -50,8 +68,14 @@ const MainAppChrome = ({
     console.log('Avatar clicked');
   };
 
-  // Render content based on active menu item
+  // Render content based on current page or active menu item
   const renderContent = () => {
+    // If we're on the content editor page, render that instead of sidebar content
+    if (currentPage === 'content-editor') {
+      return <ContentEditorPage />;
+    }
+    
+    // Otherwise, render based on active menu item
     switch (activeMenuItem) {
       case 'home':
         return <HomePage />;
@@ -102,6 +126,9 @@ const MainAppChrome = ({
     }
   };
 
+  // Determine if sidebar should be shown
+  const showSidebar = currentPage !== 'content-editor';
+
   // Main container styles
   const containerStyles = {
     position: 'relative',
@@ -123,19 +150,21 @@ const MainAppChrome = ({
       className={className}
       {...rest}
     >
-      {/* Fixed Sidebar */}
-      <HomeSidebar
-        isCollapsed={isSidebarCollapsed}
-        onToggleCollapsed={handleSidebarToggle}
-        activeMenuItem={activeMenuItem}
-        onMenuItemClick={handleMenuItemClick}
-        onCreateNewClick={handleCreateNewClick}
-        onThemeChange={handleThemeChange}
-        onHelpClick={handleHelpClick}
-        onAvatarClick={handleAvatarClick}
-        userName="John Doe"
-        userAvatar="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop&crop=face"
-      />
+      {/* Fixed Sidebar - Only show when not on content editor page */}
+      {showSidebar && (
+        <HomeSidebar
+          isCollapsed={isSidebarCollapsed}
+          onToggleCollapsed={handleSidebarToggle}
+          activeMenuItem={activeMenuItem}
+          onMenuItemClick={handleMenuItemClick}
+          onCreateNewClick={handleCreateNewClick}
+          onThemeChange={handleThemeChange}
+          onHelpClick={handleHelpClick}
+          onAvatarClick={handleAvatarClick}
+          userName="John Doe"
+          userAvatar="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop&crop=face"
+        />
+      )}
 
       {/* Content Area */}
       <main style={contentStyles} role="main">

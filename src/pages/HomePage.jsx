@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTheme } from '../services/theme-context.jsx';
+import { navigateToContentEditor } from '../services/navigation.js';
 import { spacing } from '../design-system/tokens/spacing.js';
 import { textStyles } from '../design-system/styles/typography/typography-styles.js';
 import { typography } from '../design-system/tokens/typography.js';
@@ -98,13 +99,13 @@ const HomePage = () => {
             variant: 'gradient',
             title: 'Daily Standup Notes',
             subtitle: 'Suggested for today',
-            onClick: () => console.log('Daily standup clicked')
+            onClick: () => navigateToContentEditor('team-meeting-notes')
           },
           {
             variant: 'image', 
             title: 'Project Review',
             subtitle: 'Due today',
-            onClick: () => console.log('Project review clicked')
+            onClick: () => navigateToContentEditor('product-roadmap')
           }
         ]}
         onCalendarClick={() => console.log('Calendar clicked')}
@@ -176,37 +177,37 @@ const HomePage = () => {
           variant="gradient"
           title="Marketing Strategy"
           subtitle="Last edited 2 hours ago"
-          onClick={() => console.log('Marketing strategy clicked')}
+          onClick={() => navigateToContentEditor('marketing-strategy')}
         />
         <ContentCard 
           variant="image"
           title="Design System"
           subtitle="Last edited yesterday"
-          onClick={() => console.log('Design system clicked')}
+          onClick={() => navigateToContentEditor('design-system')}
         />
         <ContentCard 
           variant="gradient"
           title="User Research"
           subtitle="Last edited 3 days ago"
-          onClick={() => console.log('User research clicked')}
+          onClick={() => navigateToContentEditor('user-research')}
         />
         <ContentCard 
           variant="image"
           title="Product Roadmap"
           subtitle="Last edited 1 week ago"
-          onClick={() => console.log('Product roadmap clicked')}
+          onClick={() => navigateToContentEditor('product-roadmap')}
         />
         <ContentCard 
           variant="gradient"
           title="Team Meeting Notes"
           subtitle="Last edited 2 weeks ago"
-          onClick={() => console.log('Team meeting notes clicked')}
+          onClick={() => navigateToContentEditor('team-meeting-notes')}
         />
         <ContentCard 
           variant="image"
           title="Competitive Analysis"
           subtitle="Last edited 1 month ago"
-          onClick={() => console.log('Competitive analysis clicked')}
+          onClick={() => navigateToContentEditor('competitive-analysis')}
         />
       </div>
     </div>
