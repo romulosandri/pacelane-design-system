@@ -396,6 +396,7 @@ const Button = ({
     userSelect: 'none',
     transition: 'all 0.15s ease-in-out',
     textDecoration: 'none',
+    boxSizing: 'border-box',
     ...sizeStyles.textStyle,
     // Add text shadow for the "small drop shadow" requirement
     textShadow: currentState !== 'disabled' ? '0 1px 2px rgba(0, 0, 0, 0.1)' : 'none',

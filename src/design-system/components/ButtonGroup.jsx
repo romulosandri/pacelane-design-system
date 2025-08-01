@@ -64,12 +64,14 @@ const ButtonGroup = ({
     border: `${stroke.default} solid ${colors.border.darker}`,
     borderRadius: cornerRadius.borderRadius.md,
     boxShadow: shadows.component.default,
-    display: 'flex',
+    display: 'inline-flex',
     alignItems: 'center',
     gap: 0,
     padding: 0,
     overflow: 'hidden',
-    width: 'fit-content'
+    width: 'fit-content',
+    height: 'fit-content',
+    boxSizing: 'border-box'
   };
 
   // Get button item styles based on state
@@ -108,6 +110,8 @@ const ButtonGroup = ({
       outline: 'none',
       position: 'relative',
       transition: 'all 0.15s ease-out',
+      boxSizing: 'border-box',
+      height: 'fit-content',
       ...currentSizeConfig.textStyle,
     };
   };
