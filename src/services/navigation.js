@@ -52,6 +52,13 @@ export const navigateToHome = () => {
 };
 
 /**
+ * Navigate to notifications page
+ */
+export const navigateToNotifications = () => {
+  navigateTo('notifications', null);
+};
+
+/**
  * Subscribe to navigation changes
  */
 export const subscribeToNavigation = (listener) => {

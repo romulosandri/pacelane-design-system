@@ -15,6 +15,7 @@ import HomeSidebar from './HomeSidebar.jsx';
 import HomePage from '../../pages/HomePage.jsx';
 import ContentEditorPage from '../../pages/ContentEditorPage.jsx';
 import KnowledgeBasePage from '../../pages/KnowledgeBasePage.jsx';
+import NotificationsPage from '../../pages/NotificationsPage.jsx';
 
 /**
  * MainAppChrome component - Main application layout with sidebar navigation and content area
@@ -104,12 +105,7 @@ const MainAppChrome = ({
           </div>
         );
       case 'notifications':
-        return (
-          <div style={{ padding: spacing.spacing[32] }}>
-            <h1 style={textStyles['2xl'].bold}>Notifications</h1>
-            <p style={textStyles.md.normal}>Notifications content coming soon...</p>
-          </div>
-        );
+        return <NotificationsPage />;
       case 'settings':
         return (
           <div style={{ padding: spacing.spacing[32] }}>

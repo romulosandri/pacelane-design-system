@@ -24,6 +24,7 @@ export { default as TopNav } from './TopNav.jsx';
 export { default as EditorNav } from './EditorNav.jsx';
 export { default as MainAppChrome } from './MainAppChrome.jsx';
 export { default as SuggestionCard } from './SuggestionCard.jsx';
+export { default as NotificationItem } from './NotificationItem.jsx';
 
 // Pages
 export { default as HomePage } from './pages/HomePage.jsx'; 
