@@ -17,6 +17,7 @@ const TemplateCard = ({
   bichaurinhoVariant = 1,
   onClick,
   className = '',
+  style = {},
   ...props
 }) => {
   const { colors } = useTheme();
@@ -92,7 +93,7 @@ const TemplateCard = ({
   if (variant === 'empty') {
     return (
       <div
-        style={getVariantStyles()}
+        style={{...getVariantStyles(), ...style}}
         onClick={onClick}
         className={className}
         onMouseEnter={(e) => {
@@ -171,6 +172,7 @@ const TemplateCard = ({
     <div
       style={{
         ...getVariantStyles(),
+        ...style,
         ...(onClick && {
           ':hover': {
             boxShadow: getShadow('regular.modalSm', colors, { withBorder: false }),
