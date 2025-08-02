@@ -252,7 +252,7 @@ const OnboardingPillars = ({ onBack, onContinue }) => {
           {/* Progress Bar */}
           <div style={{ width: '400px' }}>
             <ProgressBar
-              currentStep={6}
+              currentStep={5}
               totalSteps={7}
               showPercentage={false}
             />

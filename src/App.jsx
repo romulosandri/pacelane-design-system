@@ -4,7 +4,7 @@ import { AuthProvider, useAuth } from './services/auth-context.jsx';
 import MainAppChrome from './design-system/components/MainAppChrome.jsx';
 import SignInPage from './pages/SignInPage.jsx';
 import SignUpPage from './pages/SignUpPage.jsx';
-import { OnboardingWelcome, OnboardingProfile, OnboardingInspirations, OnboardingGoals, OnboardingPillars, OnboardingGuides, OnboardingPacing } from './pages/onboarding/index.js';
+import { OnboardingWelcome, OnboardingProfile, OnboardingInspirations, OnboardingGoals, OnboardingPillars, OnboardingGuides, OnboardingPacing, OnboardingKeepingContact, OnboardingReady } from './pages/onboarding/index.js';
 
 // Inner component that uses auth context
 const AppContent = () => {
@@ -78,7 +78,22 @@ const AppContent = () => {
           <OnboardingPacing 
             key="onboarding-pacing"
             onBack={previousOnboardingStep}
-            onContinue={(data) => completeOnboarding(data)}
+            onContinue={(data) => nextOnboardingStep(data)}
+          />
+        );
+      case 8:
+        return (
+          <OnboardingKeepingContact 
+            key="onboarding-keeping-contact"
+            onBack={previousOnboardingStep}
+            onContinue={(data) => nextOnboardingStep(data)}
+          />
+        );
+      case 9:
+        return (
+          <OnboardingReady 
+            key="onboarding-ready"
+            onContinue={() => completeOnboarding()}
           />
         );
       default:

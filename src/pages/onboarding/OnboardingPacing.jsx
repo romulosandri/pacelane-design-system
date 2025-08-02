@@ -452,7 +452,7 @@ const OnboardingPacing = ({ onBack, onContinue }) => {
           {/* Progress Bar */}
           <div style={{ width: '400px' }}>
             <ProgressBar
-              currentStep={7}
+              currentStep={6}
               totalSteps={7}
               showPercentage={false}
             />
@@ -479,7 +479,7 @@ const OnboardingPacing = ({ onBack, onContinue }) => {
       >
         <div style={{ width: '280px' }}>
           <Button
-            label="Complete Setup"
+            label="Continue"
             style="primary"
             size="lg"
             tailIcon={<ArrowRight size={16} />}

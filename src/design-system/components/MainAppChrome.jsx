@@ -17,6 +17,7 @@ import HomePage from '../../pages/HomePage.jsx';
 import ContentEditorPage from '../../pages/ContentEditorPage.jsx';
 import KnowledgeBasePage from '../../pages/KnowledgeBasePage.jsx';
 import NotificationsPage from '../../pages/NotificationsPage.jsx';
+import PacingPage from '../../pages/PacingPage.jsx';
 
 /**
  * MainAppChrome component - Main application layout with sidebar navigation and content area
@@ -102,12 +103,7 @@ const MainAppChrome = ({
           </div>
         );
       case 'pacing':
-        return (
-          <div style={{ padding: spacing.spacing[32] }}>
-            <h1 style={textStyles['2xl'].bold}>Pacing</h1>
-            <p style={textStyles.md.normal}>Pacing tools content coming soon...</p>
-          </div>
-        );
+        return <PacingPage />;
       case 'notifications':
         return <NotificationsPage />;
       case 'settings':
