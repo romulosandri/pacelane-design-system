@@ -21,10 +21,10 @@ import {
   Home,
   User,
   BookOpen,
-  Calendar,
+  History,
   Clock,
   Bell,
-  Settings,
+  CreditCard,
   Sun,
   Moon,
   Monitor,
@@ -84,13 +84,13 @@ const HomeSidebar = ({
     { id: 'home', label: 'Home', icon: <Home />, section: 'main' },
     { id: 'profile', label: 'Profile', icon: <User />, section: 'main' },
     { id: 'knowledge', label: 'Knowledge', icon: <BookOpen />, section: 'main' },
-    { id: 'calendar', label: 'Calendar', icon: <Calendar />, section: 'main' },
+    { id: 'history', label: 'History', icon: <History />, section: 'main' },
     { id: 'pacing', label: 'Pacing', icon: <Clock />, section: 'main' },
   ];
 
   const secondaryMenuItems = [
     { id: 'notifications', label: 'Notifications', icon: <Bell />, section: 'secondary' },
-    { id: 'settings', label: 'Settings', icon: <Settings />, section: 'secondary' },
+    { id: 'plan-billing', label: 'Plan & Billing', icon: <CreditCard />, section: 'secondary' },
   ];
 
   // Theme selector items (conditional based on collapsed state)

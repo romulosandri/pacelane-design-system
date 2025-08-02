@@ -134,7 +134,6 @@ const PacingPage = () => {
           const nextIndex = (currentIndex + 1) % options.length;
           onChange(options[nextIndex]);
         }}
-        className="w-full"
       />
     </div>
   );
@@ -147,10 +146,10 @@ const PacingPage = () => {
         return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.spacing[20] }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.spacing[4] }}>
-              <h3 style={{ ...textStyles.lg.semibold, color: colors.text.default, margin: 0 }}>
+              <h3 style={{ ...textStyles.sm.semibold, color: colors.text.default, margin: 0 }}>
                 Frequency
               </h3>
-              <p style={{ ...textStyles.sm.normal, color: colors.text.subtle, margin: 0 }}>
+              <p style={{ ...textStyles.xs.normal, color: colors.text.subtle, margin: 0 }}>
                 Define when you want to post
               </p>
             </div>
@@ -195,10 +194,10 @@ const PacingPage = () => {
         return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.spacing[20] }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.spacing[4] }}>
-              <h3 style={{ ...textStyles.lg.semibold, color: colors.text.default, margin: 0 }}>
+              <h3 style={{ ...textStyles.sm.semibold, color: colors.text.default, margin: 0 }}>
                 Daily Summary
               </h3>
-              <p style={{ ...textStyles.sm.normal, color: colors.text.subtle, margin: 0 }}>
+              <p style={{ ...textStyles.xs.normal, color: colors.text.subtle, margin: 0 }}>
                 Define when you want us to ask you about your day
               </p>
             </div>
@@ -242,10 +241,10 @@ const PacingPage = () => {
         return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.spacing[20] }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.spacing[4] }}>
-              <h3 style={{ ...textStyles.lg.semibold, color: colors.text.default, margin: 0 }}>
+              <h3 style={{ ...textStyles.sm.semibold, color: colors.text.default, margin: 0 }}>
                 Recommendations
               </h3>
-              <p style={{ ...textStyles.sm.normal, color: colors.text.subtle, margin: 0 }}>
+              <p style={{ ...textStyles.xs.normal, color: colors.text.subtle, margin: 0 }}>
                 Define when you want us to send you your content recommendations
               </p>
             </div>
@@ -273,10 +272,10 @@ const PacingPage = () => {
         return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.spacing[20] }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.spacing[4] }}>
-              <h3 style={{ ...textStyles.lg.semibold, color: colors.text.default, margin: 0 }}>
+              <h3 style={{ ...textStyles.sm.semibold, color: colors.text.default, margin: 0 }}>
                 Context Sessions
               </h3>
-              <p style={{ ...textStyles.sm.normal, color: colors.text.subtle, margin: 0 }}>
+              <p style={{ ...textStyles.xs.normal, color: colors.text.subtle, margin: 0 }}>
                 We will ask you a few questions to tailor your strategy and get more context around some topics
               </p>
             </div>
@@ -376,20 +375,28 @@ const PacingPage = () => {
           ))}
         </div>
 
-        {/* Right Content Card - max 400px width */}
+        {/* Right Content Area - matching ProfilePage structure */}
         <div
           style={{
-            maxWidth: '400px',
-            width: '100%',
-            backgroundColor: colors.bg.card.default,
-            border: `1px solid ${colors.border.default}`,
-            borderRadius: cornerRadius.borderRadius.lg,
-            boxShadow: getShadow('regular.card', colors, { withBorder: true }),
-            padding: spacing.spacing[24],
-            height: 'fit-content',
+            flex: 1,
+            maxWidth: '480px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: spacing.spacing[20],
           }}
         >
-          {renderSectionContent()}
+          <div
+            style={{
+              backgroundColor: colors.bg.card.default,
+              border: `1px solid ${colors.border.default}`,
+              borderRadius: cornerRadius.borderRadius.lg,
+              boxShadow: getShadow('regular.card', colors, { withBorder: true }),
+              padding: spacing.spacing[20],
+              height: 'fit-content',
+            }}
+          >
+            {renderSectionContent()}
+          </div>
         </div>
       </div>
     </div>

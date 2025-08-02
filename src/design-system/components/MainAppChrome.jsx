@@ -19,6 +19,8 @@ import KnowledgeBasePage from '../../pages/KnowledgeBasePage.jsx';
 import NotificationsPage from '../../pages/NotificationsPage.jsx';
 import PacingPage from '../../pages/PacingPage.jsx';
 import ProfilePage from '../../pages/ProfilePage.jsx';
+import HistoryPage from '../../pages/HistoryPage.jsx';
+import PlanBillingPage from '../../pages/PlanBillingPage.jsx';
 
 /**
  * MainAppChrome component - Main application layout with sidebar navigation and content area
@@ -91,24 +93,14 @@ const MainAppChrome = ({
         return <ProfilePage />;
       case 'knowledge':
         return <KnowledgeBasePage />;
-      case 'calendar':
-        return (
-          <div style={{ padding: spacing.spacing[32] }}>
-            <h1 style={textStyles['2xl'].bold}>Calendar</h1>
-            <p style={textStyles.md.normal}>Calendar content coming soon...</p>
-          </div>
-        );
+      case 'history':
+        return <HistoryPage />;
       case 'pacing':
         return <PacingPage />;
       case 'notifications':
         return <NotificationsPage />;
-      case 'settings':
-        return (
-          <div style={{ padding: spacing.spacing[32] }}>
-            <h1 style={textStyles['2xl'].bold}>Settings</h1>
-            <p style={textStyles.md.normal}>Settings content coming soon...</p>
-          </div>
-        );
+      case 'plan-billing':
+        return <PlanBillingPage />;
       default:
         return <HomePage />;
     }
@@ -126,10 +118,13 @@ const MainAppChrome = ({
 
   // Content area styles
   const contentStyles = {
-    width: '100%',
+    marginLeft: isSidebarCollapsed ? '72px' : '240px',
+    width: isSidebarCollapsed ? 'calc(100% - 72px)' : 'calc(100% - 240px)',
     height: '100vh',
     backgroundColor: colors.bg.subtle,
-    overflow: 'auto',
+    overflowY: 'scroll',
+    scrollbarGutter: 'stable',
+    transition: 'margin-left 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)',
   };
 
   return (
