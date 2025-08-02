@@ -116,13 +116,11 @@ const MainAppChrome = ({
 
   // Content area styles
   const contentStyles = {
-    marginLeft: isSidebarCollapsed ? '72px' : '240px',
-    width: isSidebarCollapsed ? 'calc(100% - 72px)' : 'calc(100% - 240px)',
+    width: '100%',
     height: '100vh',
     backgroundColor: colors.bg.subtle,
     overflowY: 'scroll',
     scrollbarGutter: 'stable',
-    transition: 'margin-left 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)',
   };
 
   return (

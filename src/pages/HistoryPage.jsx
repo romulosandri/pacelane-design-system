@@ -326,16 +326,6 @@ Monthly reviews on the 15th to assess:
     }
   ];
 
-  // Filter tabs configuration
-  const filterTabs = [
-    { id: 'all', label: 'All' },
-    { id: 'social', label: 'Social' },
-    { id: 'blog', label: 'Blog' },
-    { id: 'template', label: 'Templates' },
-    { id: 'research', label: 'Research' },
-    { id: 'meeting', label: 'Meetings' },
-  ];
-
   // Sort dropdown options  
   const sortOptions = [
     { label: 'Last Edited', onClick: () => setSortBy('lastEdited') },
@@ -348,15 +338,12 @@ Monthly reviews on the 15th to assess:
   // Filter and sort items
   const getFilteredAndSortedItems = () => {
     let filtered = historyItems.filter(item => {
-      // Filter by tab
-      const matchesTab = activeTab === 'all' || item.type === activeTab;
-      
       // Filter by search  
       const matchesSearch = searchQuery === '' || 
         item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.content.toLowerCase().includes(searchQuery.toLowerCase());
         
-      return matchesTab && matchesSearch;
+      return matchesSearch;
     });
 
     // Sort items
@@ -420,20 +407,13 @@ Monthly reviews on the 15th to assess:
     marginTop: spacing.spacing[8],
   };
 
-  // Controls row styles for tabs and search
+  // Controls row styles for search and sort
   const controlRowStyles = {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: spacing.spacing[24],
-    width: '100%',
-  };
-
-  // Right section styles for search and dropdown
-  const rightSectionStyles = {
-    display: 'flex',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
     gap: spacing.spacing[12],
+    width: '100%',
   };
 
   // Content grid styles (2 columns)
@@ -453,61 +433,49 @@ Monthly reviews on the 15th to assess:
         </p>
       </div>
 
-      {/* Controls Row - Tabs and Search/Sort */}
+      {/* Controls Row - Search and Sort */}
       <div style={controlRowStyles}>
-        {/* Left: Tab Bar */}
-        <Tabs
-          style="segmented"
-          type="default"
-          tabs={filterTabs}
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-        />
+        {/* Search Input */}
+        <div style={{ width: '280px' }}>
+          <Input
+            size="lg"
+            style="default"
+            placeholder="Search content..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            leadIcon={<Search size={16} />}
+          />
+        </div>
 
-        {/* Right: Search and Sort */}
-        <div style={rightSectionStyles}>
-          {/* Search Input */}
-          <div style={{ width: '280px' }}>
-            <Input
-              size="lg"
-              style="default"
-              placeholder="Search content..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              leadIcon={<Search size={16} />}
+        {/* Sort Dropdown */}
+        <div style={{ position: 'relative' }}>
+          <Button
+            label={`${sortOptions.find(opt => 
+              (sortBy === 'lastEdited' && opt.label === 'Last Edited') ||
+              (sortBy === 'newest' && opt.label === 'Newest First') ||
+              (sortBy === 'oldest' && opt.label === 'Oldest First') ||
+              (sortBy === 'nameAsc' && opt.label === 'A-Z') ||
+              (sortBy === 'nameDesc' && opt.label === 'Z-A')
+            )?.label || 'Last Edited'}`}
+            style="secondary"
+            size="sm"
+            tailIcon={<ChevronDown size={12} />}
+            onClick={() => setShowSortDropdown(!showSortDropdown)}
+          />
+          
+          {showSortDropdown && (
+            <DropdownMenu
+              items={sortOptions}
+              onClose={() => setShowSortDropdown(false)}
+              style={{
+                position: 'absolute',
+                top: '100%',
+                right: 0,
+                marginTop: spacing.spacing[4],
+                zIndex: 10
+              }}
             />
-          </div>
-
-          {/* Sort Dropdown */}
-          <div style={{ position: 'relative' }}>
-            <Button
-              label={`${sortOptions.find(opt => 
-                (sortBy === 'lastEdited' && opt.label === 'Last Edited') ||
-                (sortBy === 'newest' && opt.label === 'Newest First') ||
-                (sortBy === 'oldest' && opt.label === 'Oldest First') ||
-                (sortBy === 'nameAsc' && opt.label === 'A-Z') ||
-                (sortBy === 'nameDesc' && opt.label === 'Z-A')
-              )?.label || 'Last Edited'}`}
-              style="secondary"
-              size="sm"
-              tailIcon={<ChevronDown size={12} />}
-              onClick={() => setShowSortDropdown(!showSortDropdown)}
-            />
-            
-            {showSortDropdown && (
-              <DropdownMenu
-                items={sortOptions}
-                onClose={() => setShowSortDropdown(false)}
-                style={{
-                  position: 'absolute',
-                  top: '100%',
-                  right: 0,
-                  marginTop: spacing.spacing[4],
-                  zIndex: 10
-                }}
-              />
-            )}
-          </div>
+          )}
         </div>
       </div>
 

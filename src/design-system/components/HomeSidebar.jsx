@@ -21,8 +21,8 @@ import {
   Home,
   User,
   BookOpen,
-  History,
-  Clock,
+  RotateCcw,
+  Gauge,
   Bell,
   CreditCard,
   Sun,
@@ -84,8 +84,8 @@ const HomeSidebar = ({
     { id: 'home', label: 'Home', icon: <Home />, section: 'main' },
     { id: 'profile', label: 'Profile', icon: <User />, section: 'main' },
     { id: 'knowledge', label: 'Knowledge', icon: <BookOpen />, section: 'main' },
-    { id: 'history', label: 'History', icon: <History />, section: 'main' },
-    { id: 'pacing', label: 'Pacing', icon: <Clock />, section: 'main' },
+    { id: 'history', label: 'History', icon: <RotateCcw />, section: 'main' },
+    { id: 'pacing', label: 'Pacing', icon: <Gauge />, section: 'main' },
   ];
 
   const secondaryMenuItems = [
