@@ -121,13 +121,6 @@ const PlanBillingPage = () => {
   // Row styles for two-column layout
   const rowStyles = {
     display: 'flex',
-    gap: spacing.spacing[24],
-    alignItems: 'stretch',
-  };
-
-  // Pricing cards row with smaller gap
-  const pricingRowStyles = {
-    display: 'flex',
     gap: spacing.spacing[16],
     alignItems: 'stretch',
   };
@@ -144,7 +137,7 @@ const PlanBillingPage = () => {
         borderRadius: cornerRadius.borderRadius.xl,
         backgroundColor: colors.bg.card.default,
         border: `1px solid ${colors.border.default}`,
-        boxShadow: getShadow('regular.card', colors, { withBorder: true }),
+        boxShadow: getShadow('regular.card', colors, { withBorder: false }),
       }}
     >
       {/* Card Header */}
@@ -177,18 +170,13 @@ const PlanBillingPage = () => {
           border: `1px solid ${colors.border.default}`,
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <h3 style={{ ...textStyles.lg.semibold, color: colors.text.default, margin: 0 }}>
-              {currentPlan.name}
-            </h3>
-            <p style={{ ...textStyles.sm.normal, color: colors.text.subtle, margin: `${spacing.spacing[4]} 0 0 0` }}>
-              Next billing: {currentPlan.nextBilling}
-            </p>
-          </div>
-          <div style={{ ...textStyles.xl.bold, color: colors.text.default }}>
-            {currentPlan.price}
-          </div>
+        <div>
+          <h3 style={{ ...textStyles.lg.semibold, color: colors.text.default, margin: 0 }}>
+            {currentPlan.name}
+          </h3>
+          <p style={{ ...textStyles.sm.normal, color: colors.text.subtle, margin: `${spacing.spacing[4]} 0 0 0` }}>
+            Next billing: {currentPlan.nextBilling}
+          </p>
         </div>
 
         <Button
@@ -218,7 +206,7 @@ const PlanBillingPage = () => {
           borderRadius: cornerRadius.borderRadius.xl,
           backgroundColor: colors.bg.card.default,
           border: `1px solid ${colors.border.default}`,
-          boxShadow: getShadow('regular.card', colors, { withBorder: true }),
+          boxShadow: getShadow('regular.card', colors, { withBorder: false }),
         }}
       >
         {/* Card Header */}
@@ -302,48 +290,18 @@ const PlanBillingPage = () => {
         gap: spacing.spacing[20],
         padding: spacing.spacing[24],
         borderRadius: cornerRadius.borderRadius.xl,
-        backgroundColor: plan.popular ? colors.bg.card.default : colors.bg.card.subtle,
-        border: plan.popular 
-          ? `2px solid ${colors.border.highlight}` 
-          : `1px solid ${colors.border.default}`,
-        boxShadow: plan.popular 
-          ? getShadow('regular.modalMd', colors, { withBorder: true })
-          : getShadow('regular.card', colors, { withBorder: true }),
+        backgroundColor: colors.bg.card.default,
+        border: `1px solid ${colors.border.default}`,
+        boxShadow: getShadow('regular.card', colors, { withBorder: false }),
         position: 'relative',
       }}
     >
-      {/* Popular Badge */}
-      {plan.popular && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '-12px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-          }}
-        >
-          <Badge
-            variant="default"
-            size="sm"
-            color="green"
-            label="Most Popular"
-          />
-        </div>
-      )}
+
 
       {/* Plan Header */}
       <div>
         <h3 style={{ ...textStyles.lg.semibold, color: colors.text.default, margin: 0 }}>
           {plan.name}
-          {plan.current && (
-            <Badge
-              variant="default"
-              size="sm"
-              color="green"
-              label="Current"
-              style={{ marginLeft: spacing.spacing[8] }}
-            />
-          )}
         </h3>
         <p style={{ ...textStyles.sm.normal, color: colors.text.subtle, margin: `${spacing.spacing[4]} 0 0 0` }}>
           {plan.description}
@@ -399,7 +357,7 @@ const PlanBillingPage = () => {
           <Button
             label={plan.id === 'enterprise' ? 'Upgrade to Enterprise' : 
                    plan.id === 'starter' ? 'Downgrade to Starter' : 'Select Plan'}
-            style={plan.popular ? 'primary' : 'secondary'}
+            style="secondary"
             size="md"
             leadIcon={<CreditCard size={16} />}
             onClick={() => console.log(`Selected ${plan.name} plan`)}
@@ -425,7 +383,7 @@ const PlanBillingPage = () => {
         <h2 style={{ ...textStyles['2xl'].semibold, color: colors.text.default, marginBottom: spacing.spacing[24] }}>
           Choose Your Plan
         </h2>
-        <div style={pricingRowStyles}>
+        <div style={rowStyles}>
           {pricingPlans.map((plan) => (
             <PricingPlanCard key={plan.id} plan={plan} />
           ))}

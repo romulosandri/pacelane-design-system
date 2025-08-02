@@ -17,9 +17,6 @@ import Divider from '../design-system/components/Divider.jsx';
 // Icons
 import { FcGoogle } from 'react-icons/fc';
 
-// Background
-import gradientBg from '../assets/images/gradient-bg.svg';
-
 /**
  * SignInPage component - Authentication page with two-column layout
  * 
@@ -27,7 +24,7 @@ import gradientBg from '../assets/images/gradient-bg.svg';
  * - Left column: Logo and sign in form
  * - Right column: Decorative background
  * - Email/password and Google sign in options
- * - Gradient background with 4% opacity
+ * - Solid background using design system tokens
  * - Responsive design using design system tokens
  */
 const SignInPage = ({ onSwitchToSignUp }) => {
@@ -63,27 +60,7 @@ const SignInPage = ({ onSwitchToSignUp }) => {
         width: '100%',
         display: 'flex',
         position: 'relative',
-    };
-
-    // Background gradient container - full screen behind content
-    const backgroundStyles = {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        zIndex: 1,
-        overflow: 'hidden',
-        pointerEvents: 'none',
-    };
-
-    // Background image styles
-    const backgroundImageStyles = {
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        objectPosition: 'center',
-        opacity: 0.04,
+        backgroundColor: colors.bg.default,
     };
 
     // Left column styles (50% width, 720px container)
@@ -165,16 +142,6 @@ const SignInPage = ({ onSwitchToSignUp }) => {
 
     return (
         <div style={pageContainerStyles}>
-            {/* Background Gradient */}
-            <div style={backgroundStyles}>
-                <img 
-                    src={gradientBg} 
-                    alt="" 
-                    style={backgroundImageStyles}
-                    aria-hidden="true"
-                />
-            </div>
-            
             {/* Left Column */}
             <div style={leftColumnStyles}>
                 <div style={contentContainerStyles}>

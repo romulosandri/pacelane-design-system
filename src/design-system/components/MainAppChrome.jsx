@@ -6,7 +6,8 @@ import { textStyles } from '../styles/typography/typography-styles.js';
 import { 
   subscribeToNavigation, 
   getCurrentPage, 
-  getCurrentContent 
+  getCurrentContent,
+  navigateTo
 } from '../../services/navigation.js';
 
 // Design System Components
@@ -34,7 +35,6 @@ const MainAppChrome = ({
 }) => {
   const { colors } = useTheme();
   const { signOut, user } = useAuth();
-  const [activeMenuItem, setActiveMenuItem] = useState('home');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [currentPage, setCurrentPage] = useState(getCurrentPage());
   const [currentContent, setCurrentContent] = useState(getCurrentContent());
@@ -51,7 +51,8 @@ const MainAppChrome = ({
 
   // Handle menu item clicks from sidebar
   const handleMenuItemClick = (menuId) => {
-    setActiveMenuItem(menuId);
+    // Use navigation service for proper page state management
+    navigateTo(menuId);
   };
 
   // Handle sidebar toggle
@@ -78,15 +79,12 @@ const MainAppChrome = ({
     signOut();
   };
 
-  // Render content based on current page or active menu item
+  // Render content based on current page
   const renderContent = () => {
-    // If we're on the content editor page, render that instead of sidebar content
-    if (currentPage === 'content-editor') {
-      return <ContentEditorPage />;
-    }
-    
-    // Otherwise, render based on active menu item
-    switch (activeMenuItem) {
+    // Render based on current page from navigation service
+    switch (currentPage) {
+      case 'content-editor':
+        return <ContentEditorPage />;
       case 'home':
         return <HomePage />;
       case 'profile':
@@ -138,7 +136,7 @@ const MainAppChrome = ({
         <HomeSidebar
           isCollapsed={isSidebarCollapsed}
           onToggleCollapsed={handleSidebarToggle}
-          activeMenuItem={activeMenuItem}
+          activeMenuItem={currentPage}
           onMenuItemClick={handleMenuItemClick}
           onCreateNewClick={handleCreateNewClick}
           onThemeChange={handleThemeChange}

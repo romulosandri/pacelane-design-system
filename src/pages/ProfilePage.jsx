@@ -91,7 +91,7 @@ const ProfilePage = () => {
     { id: 3, url: 'https://firstround.com' }
   ]);
   
-  const [newCompetitor, setNewCompetitor] = useState('');
+
 
   // Saved states for each section
   const [savedStates, setSavedStates] = useState({
@@ -232,23 +232,8 @@ const ProfilePage = () => {
   };
 
   // Competitors management functions
-  const addCompetitor = () => {
-    if (newCompetitor.trim()) {
-      const newId = Math.max(...competitors.map(comp => comp.id), 0) + 1;
-      setCompetitors(prev => [...prev, { id: newId, url: newCompetitor.trim() }]);
-      setNewCompetitor('');
-    }
-  };
-
   const removeCompetitor = (competitorId) => {
     setCompetitors(prev => prev.filter(comp => comp.id !== competitorId));
-  };
-
-  const handleCompetitorKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      addCompetitor();
-    }
   };
 
   // Guides chips specific functions
@@ -485,6 +470,7 @@ const ProfilePage = () => {
                 {competitors.map((competitor) => (
                   <Input
                     key={competitor.id}
+                    placeholder="Enter competitor website URL..."
                     value={competitor.url}
                     onChange={(e) => {
                       setCompetitors(prev => 
@@ -500,21 +486,21 @@ const ProfilePage = () => {
                     }}
                   />
                 ))}
+                
+                <div style={{ marginTop: spacing.spacing[8] }}>
+                  <Button
+                    label="Add Competitors"
+                    style="secondary"
+                    size="sm"
+                    leadIcon={<Plus size={14} />}
+                    onClick={() => {
+                      const newId = Math.max(...competitors.map(comp => comp.id), 0) + 1;
+                      setCompetitors(prev => [...prev, { id: newId, url: '' }]);
+                    }}
+                    className="w-full"
+                  />
+                </div>
               </div>
-
-              {/* Add New Competitor Input */}
-              <Input
-                placeholder="Enter competitor website URL..."
-                value={newCompetitor}
-                onChange={(e) => setNewCompetitor(e.target.value)}
-                onKeyPress={handleCompetitorKeyPress}
-                style="tail-action"
-                tailAction={{
-                  icon: <Plus size={14} />,
-                  onClick: addCompetitor,
-                  disabled: !newCompetitor.trim()
-                }}
-              />
 
               {/* Save Button */}
               <div style={{ alignSelf: 'flex-start' }}>

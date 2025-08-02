@@ -1,162 +1,396 @@
 import React, { useState } from 'react';
 import { useTheme } from '../services/theme-context.jsx';
+import { navigateToContentEditor } from '../services/navigation.js';
 import { spacing } from '../design-system/tokens/spacing.js';
-import { cornerRadius } from '../design-system/tokens/corner-radius.js';
-import { getShadow } from '../design-system/tokens/shadows.js';
 import { textStyles } from '../design-system/styles/typography/typography-styles.js';
 import { typography } from '../design-system/tokens/typography.js';
 
 // Design System Components
 import Button from '../design-system/components/Button.jsx';
-import ButtonGroup from '../design-system/components/ButtonGroup.jsx';
 import Input from '../design-system/components/Input.jsx';
-import Badge from '../design-system/components/Badge.jsx';
-import Bichaurinho from '../design-system/components/Bichaurinho.jsx';
+import ContentCard from '../design-system/components/ContentCard.jsx';
+import DropdownMenu from '../design-system/components/DropdownMenu.jsx';
 
 // Icons
 import { 
   Search, 
-  Filter, 
-  Calendar,
-  Clock,
-  FileText,
-  Trash2,
-  MoreHorizontal,
-  Download,
-  Eye
+  ChevronDown
 } from 'lucide-react';
 
+/**
+ * HistoryPage - Shows user's content creation history with search, filtering, and sorting
+ */
 const HistoryPage = () => {
   const { colors } = useTheme();
   
-  // State for search and filters
+  // State management
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [sortBy, setSortBy] = useState('lastEdited');
+  const [showSortDropdown, setShowSortDropdown] = useState(false);
 
-  // Mock history data
+  // Mock history data - following ContentCard structure
   const historyItems = [
     {
-      id: 1,
-      type: 'content',
-      title: 'LinkedIn Post - Product Launch Announcement',
-      description: 'Created announcement post for new AI features launch',
+      id: 'linkedin-product-launch',
+      title: 'Product Launch Announcement',
+      subtitle: 'Last edited 2 hours ago',
+      content: `🚀 Excited to announce the launch of our new AI-powered content creation platform!
+
+After months of development and user testing, we're thrilled to share this revolutionary tool that helps content creators:
+
+• Generate high-quality content 10x faster
+• Maintain consistent brand voice across all platforms  
+• Optimize content for maximum engagement
+• Scale content production effortlessly
+
+The beta testing results have been incredible - early users are seeing 40% higher engagement rates and saving 75% of their content creation time.
+
+Ready to transform your content strategy? Link in comments to join the early access program.
+
+#ProductLaunch #ContentCreation #AI #Productivity`,
+      type: 'social',
       date: '2024-01-15',
-      time: '2:30 PM',
       status: 'published',
-      engagement: { views: 1247, likes: 89, comments: 23 }
+      variant: 'gradient'
     },
     {
-      id: 2,
-      type: 'content',
-      title: 'Blog Article - "The Future of Remote Work"',
-      description: 'Comprehensive guide on remote work trends and best practices',
+      id: 'remote-work-guide',
+      title: 'The Future of Remote Work',
+      subtitle: 'Last edited yesterday',
+      content: `# The Future of Remote Work: A Comprehensive Guide
+
+## Introduction
+The landscape of work has fundamentally shifted. Remote work isn't just a temporary solution—it's the future of how we collaborate, create, and innovate.
+
+## Key Trends Shaping Remote Work
+
+### 1. Hybrid Models Become Standard
+- Flexible schedules that prioritize outcomes over hours
+- Office spaces reimagined as collaboration hubs
+- Technology that seamlessly bridges physical and digital workspaces
+
+### 2. Mental Health Takes Center Stage
+- Burnout prevention through better work-life boundaries
+- Regular check-ins and wellness programs
+- Flexible time off and mental health days
+
+### 3. Global Talent Access
+- Companies hiring from anywhere in the world
+- Diverse teams bringing fresh perspectives
+- Cost optimization through strategic location independence
+
+## Tools for Success
+The right technology stack makes all the difference:
+- Communication: Slack, Microsoft Teams, Discord
+- Collaboration: Figma, Miro, Notion
+- Project Management: Asana, Monday, Linear
+- Video Conferencing: Zoom, Google Meet, Loom
+
+## Building Remote Culture
+Culture isn't about ping pong tables—it's about connection:
+- Regular virtual coffee chats and social events
+- Clear communication protocols and expectations  
+- Recognition and celebration of achievements
+- Mentorship and professional development opportunities
+
+## The Bottom Line
+Remote work requires intentional design. Companies that embrace this shift and invest in the right processes, tools, and culture will attract the best talent and build the most innovative teams.
+
+What's your experience with remote work? Share your thoughts in the comments.`,
+      type: 'blog',
       date: '2024-01-12',
-      time: '10:15 AM',
       status: 'draft',
-      wordCount: 2340
+      variant: 'image'
     },
     {
-      id: 3,
+      id: 'newsletter-template',
+      title: 'Weekly Product Update Template',
+      subtitle: 'Last edited 3 days ago',
+      content: `# Weekly Product Update - [Week of DATE]
+
+## 🎯 This Week's Highlights
+
+### New Features Shipped
+- **[Feature Name]**: Brief description of what it does and why it matters
+- **[Feature Name]**: Brief description of what it does and why it matters
+
+### Bug Fixes & Improvements
+- Fixed issue with [specific problem]
+- Improved performance of [specific area]
+- Enhanced accessibility in [specific component]
+
+## 📈 Key Metrics
+- **Active Users**: [Number] ([+/-]% from last week)
+- **Feature Adoption**: [Percentage] of users trying new feature
+- **Customer Satisfaction**: [Score]/10 based on recent surveys
+
+## 🔜 Coming Next Week
+- Launch of [upcoming feature]
+- A/B testing for [specific improvement]
+- User interviews for [research focus]
+
+## 💡 Team Spotlight
+Shoutout to [Team Member] for [specific achievement]. Their work on [project] helped us [impact/result].
+
+## 📣 Company News
+- [Relevant company announcement]
+- [Team update or hiring news]
+- [Industry recognition or press coverage]
+
+---
+*Have feedback on this update? Reply to this email or drop a message in #product-feedback*`,
       type: 'template',
-      title: 'Email Newsletter Template',
-      description: 'Created reusable template for weekly product updates',
       date: '2024-01-10',
-      time: '4:45 PM',
       status: 'saved',
-      usageCount: 7
+      variant: 'gradient'
     },
     {
-      id: 4,
-      type: 'knowledge',
-      title: 'Competitor Analysis - Q1 2024',
-      description: 'Research document on market competitors and positioning',
+      id: 'competitor-analysis',
+      title: 'Q1 Competitive Analysis Report',
+      subtitle: 'Last edited 1 week ago',
+      content: `# Q1 2024 Competitive Landscape Analysis
+
+## Executive Summary
+The competitive landscape in our market segment continues to evolve rapidly. This analysis covers key players, emerging trends, and strategic opportunities for Q2 planning.
+
+## Market Overview
+- **Market Size**: $2.4B globally, growing at 15% YoY
+- **Key Growth Drivers**: AI adoption, remote work trends, content marketing expansion
+- **Geographic Expansion**: Strong growth in APAC and European markets
+
+## Competitive Analysis
+
+### Direct Competitors
+
+#### Competitor A
+- **Strengths**: Strong brand recognition, enterprise sales team
+- **Weaknesses**: Limited API capabilities, slow innovation cycle
+- **Recent Moves**: Acquired startup for $50M, launched mobile app
+- **Market Share**: 23%
+
+#### Competitor B  
+- **Strengths**: Technical innovation, developer-friendly platform
+- **Weaknesses**: Poor customer support, complex pricing
+- **Recent Moves**: Raised Series C, expanded European presence
+- **Market Share**: 18%
+
+### Emerging Players
+- **Startup C**: AI-first approach, gaining traction with SMBs
+- **Startup D**: Vertical-specific solution for healthcare industry
+
+## Strategic Opportunities
+1. **API-First Development**: Competitors lag in developer experience
+2. **Customer Success**: Opportunity to differentiate through support quality
+3. **Pricing Transparency**: Market demands simpler pricing models
+4. **Mobile Experience**: Underserved market segment
+
+## Recommendations
+- Accelerate API development roadmap
+- Invest in customer success team expansion  
+- Simplify pricing structure for Q2 launch
+- Begin mobile app development
+
+## Threat Assessment
+**High Risk**: New entrant with significant VC backing
+**Medium Risk**: Established player expanding into our segment
+**Low Risk**: Current competitors maintaining status quo
+
+## Next Steps
+- Monthly competitive intelligence updates
+- Customer interview program to understand switching factors
+- Product gap analysis based on competitor feature comparison`,
+      type: 'research',
       date: '2024-01-08',
-      time: '11:20 AM',
-      status: 'archived',
-      pages: 15
-    },
-    {
-      id: 5,
-      type: 'content',
-      title: 'Twitter Thread - Industry Insights',
-      description: '8-part thread about emerging technology trends',
-      date: '2024-01-05',
-      time: '3:15 PM',
-      status: 'published',
-      engagement: { views: 3401, likes: 156, retweets: 42 }
-    },
-    {
-      id: 6,
-      type: 'session',
-      title: 'Content Planning Session',
-      description: 'Brainstorming session for Q1 content calendar',
-      date: '2024-01-03',
-      time: '9:00 AM',
       status: 'completed',
-      duration: '45 min'
+      variant: 'image'
+    },
+    {
+      id: 'twitter-industry-insights',
+      title: 'Tech Industry Insights Thread',
+      subtitle: 'Last edited 2 weeks ago',
+      content: `🧵 8 key insights about the future of technology that every founder should know:
+
+1/ AI won't replace humans, but humans with AI will replace humans without AI.
+
+The companies winning today aren't those with the best AI—they're the ones that best integrate AI into human workflows.
+
+2/ The API economy is exploding.
+
+Every company is becoming a platform. If you're not thinking about how to make your product programmable, you're missing a massive opportunity.
+
+3/ Remote-first isn't just about location—it's about async-first thinking.
+
+The best remote companies optimize for asynchronous communication. This makes them faster and more thoughtful than traditional companies.
+
+4/ Developer experience is the new user experience.
+
+Products with great DX get adopted faster, retained longer, and become more defensible. Invest in your docs, APIs, and onboarding.
+
+5/ Content is the new customer acquisition channel.
+
+Paid ads are getting expensive. Content marketing (done right) compounds over time and builds trust at scale.
+
+6/ Community-led growth is replacing traditional sales.
+
+The strongest companies are building communities where customers become advocates, support each other, and drive product development.
+
+7/ Data privacy isn't just compliance—it's competitive advantage.
+
+Users are increasingly conscious about their data. Privacy-first companies will win long-term trust and loyalty.
+
+8/ Sustainability is becoming table stakes.
+
+Gen Z and younger millennials factor environmental impact into purchase decisions. Green tech isn't just nice-to-have—it's essential.
+
+What trends are you seeing in your industry? Drop your thoughts below 👇`,
+      type: 'social',
+      date: '2024-01-05',
+      status: 'published',
+      variant: 'gradient'
+    },
+    {
+      id: 'content-planning-session',
+      title: 'Q1 Content Calendar Planning',
+      subtitle: 'Last edited 3 weeks ago',
+      content: `# Q1 2024 Content Calendar Planning Session
+
+## Session Overview
+**Date**: January 3, 2024
+**Participants**: Marketing Team, Product Team, Leadership
+**Duration**: 2 hours
+**Objective**: Plan comprehensive content strategy for Q1
+
+## Content Themes by Month
+
+### January: "New Beginnings"
+- Focus on goal-setting and productivity
+- Feature customer success stories from 2023
+- Introduce new team members and company updates
+
+### February: "Building Momentum"  
+- Deep-dive into product features and use cases
+- Educational content about industry trends
+- Behind-the-scenes content showing company culture
+
+### March: "Spring Growth"
+- Preparation for Q2 product launches
+- Thought leadership about future of industry
+- Community building and user-generated content
+
+## Content Types & Distribution
+
+### Blog Content (2 posts/week)
+- **Monday**: Industry insights and thought leadership
+- **Thursday**: How-to guides and product tutorials
+
+### Social Media (Daily)
+- **LinkedIn**: Professional insights and company updates
+- **Twitter**: Quick tips and industry commentary  
+- **Instagram**: Behind-the-scenes and company culture
+
+### Video Content (Weekly)
+- **Product demos**: Feature walkthroughs and tutorials
+- **Expert interviews**: Conversations with industry leaders
+- **Company updates**: Monthly recap videos
+
+## Key Performance Indicators
+- **Blog Traffic**: 25% increase over Q4
+- **Social Engagement**: 40% improvement in engagement rate
+- **Lead Generation**: 30% increase in content-driven leads
+- **Brand Awareness**: 20% lift in unaided brand recognition
+
+## Resource Allocation
+- **Content Creation**: 60% of marketing budget
+- **Distribution & Promotion**: 30% of marketing budget  
+- **Tools & Technology**: 10% of marketing budget
+
+## Action Items
+1. **Week 1**: Finalize editorial calendar with specific topics
+2. **Week 2**: Create content brief templates and style guide
+3. **Week 3**: Set up tracking and analytics dashboards
+4. **Week 4**: Launch Q1 content production
+
+## Success Metrics Review
+Monthly reviews on the 15th to assess:
+- Content performance against KPIs
+- Audience engagement and feedback
+- Competitive landscape changes
+- Adjustments needed for remaining quarter
+
+---
+*Next planning session scheduled for March 15th to prepare Q2 content strategy*`,
+      type: 'meeting',
+      date: '2024-01-03',
+      status: 'completed',
+      variant: 'image'
     }
   ];
 
-  // Filter options
-  const filterOptions = [
-    { id: 'all', label: 'All', leadIcon: <FileText size={12} /> },
-    { id: 'content', label: 'Content', leadIcon: <FileText size={12} /> },
-    { id: 'template', label: 'Templates', leadIcon: <FileText size={12} /> },
-    { id: 'knowledge', label: 'Knowledge', leadIcon: <FileText size={12} /> },
-    { id: 'session', label: 'Sessions', leadIcon: <Clock size={12} /> }
+  // Filter tabs configuration
+  const filterTabs = [
+    { id: 'all', label: 'All' },
+    { id: 'social', label: 'Social' },
+    { id: 'blog', label: 'Blog' },
+    { id: 'template', label: 'Templates' },
+    { id: 'research', label: 'Research' },
+    { id: 'meeting', label: 'Meetings' },
   ];
 
-  // Filter items based on active filter and search
-  const filteredItems = historyItems.filter(item => {
-    const matchesFilter = activeFilter === 'all' || item.type === activeFilter;
-    const matchesSearch = searchQuery === '' || 
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesFilter && matchesSearch;
-  });
+  // Sort dropdown options  
+  const sortOptions = [
+    { label: 'Last Edited', onClick: () => setSortBy('lastEdited') },
+    { label: 'Newest First', onClick: () => setSortBy('newest') },
+    { label: 'Oldest First', onClick: () => setSortBy('oldest') },
+    { label: 'A-Z', onClick: () => setSortBy('nameAsc') },
+    { label: 'Z-A', onClick: () => setSortBy('nameDesc') },
+  ];
 
-  // Handle filter selection
-  const handleFilterSelect = (item, index) => {
-    setActiveFilter(filterOptions[index].id);
-  };
-
-  // Get type badge variant
-  const getTypeBadgeVariant = (type) => {
-    switch (type) {
-      case 'content': return 'blue';
-      case 'template': return 'teal';
-      case 'knowledge': return 'purple';
-      case 'session': return 'orange';
-      default: return 'gray';
-    }
-  };
-
-  // Get status badge variant
-  const getStatusBadgeVariant = (status) => {
-    switch (status) {
-      case 'published': return 'green';
-      case 'draft': return 'yellow';
-      case 'saved': return 'blue';
-      case 'archived': return 'gray';
-      case 'completed': return 'green';
-      default: return 'gray';
-    }
-  };
-
-  // Format date
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      month: 'short', 
-      day: 'numeric',
-      year: 'numeric'
+  // Filter and sort items
+  const getFilteredAndSortedItems = () => {
+    let filtered = historyItems.filter(item => {
+      // Filter by tab
+      const matchesTab = activeTab === 'all' || item.type === activeTab;
+      
+      // Filter by search  
+      const matchesSearch = searchQuery === '' || 
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.content.toLowerCase().includes(searchQuery.toLowerCase());
+        
+      return matchesTab && matchesSearch;
     });
+
+    // Sort items
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'newest':
+          return new Date(b.date) - new Date(a.date);
+        case 'oldest':
+          return new Date(a.date) - new Date(b.date);
+        case 'nameAsc':
+          return a.title.localeCompare(b.title);
+        case 'nameDesc':
+          return b.title.localeCompare(a.title);
+        case 'lastEdited':
+        default:
+          // For demo, use the order they appear (most recent edits first)
+          return 0;
+      }
+    });
+
+    return filtered;
   };
 
-  // Main container styles
+  const filteredItems = getFilteredAndSortedItems();
+
+  // Handle menu actions for ContentCard
+  const handleMenuAction = (action, itemId) => {
+    console.log(`Action: ${action} on item: ${itemId}`);
+    // Handle delete, move, etc.
+  };
+
+  // Main container styles - following established pattern
   const containerStyles = {
-    paddingTop: spacing.spacing[40],
+    paddingTop: spacing.spacing[80],
     paddingBottom: spacing.spacing[160],
     paddingLeft: spacing.spacing[32],
     paddingRight: spacing.spacing[32],
@@ -164,319 +398,153 @@ const HistoryPage = () => {
     margin: '0 auto',
     display: 'flex',
     flexDirection: 'column',
-    gap: spacing.spacing[32],
-  };
-
-  // Header styles
-  const headerStyles = {
-    display: 'flex',
-    flexDirection: 'column',
     gap: spacing.spacing[24],
   };
 
-  // Page title style
-  const pageTitleStyle = {
+  // Title style using awesome serif font, 4xl semi bold
+  const titleStyle = {
     fontFamily: typography.fontFamily['awesome-serif'],
     fontSize: typography.desktop.size['4xl'],
     fontWeight: typography.desktop.weight.semibold,
-    lineHeight: typography.desktop.lineHeight.leading9,
+    lineHeight: typography.desktop.lineHeight.leading7,
+    letterSpacing: typography.desktop.letterSpacing.normal,
     color: colors.text.default,
     margin: 0,
   };
 
-  // Controls row styles
-  const controlsRowStyles = {
+  // Subtitle style - sm medium, text subtle
+  const subtitleStyle = {
+    ...textStyles.sm.medium,
+    color: colors.text.subtle,
+    margin: 0,
+    marginTop: spacing.spacing[8],
+  };
+
+  // Controls row styles for tabs and search
+  const controlRowStyles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: spacing.spacing[16],
-  };
-
-  // Search container styles
-  const searchContainerStyles = {
-    flex: 1,
-    maxWidth: '400px',
-  };
-
-  // History item card styles
-  const historyItemStyles = {
-    backgroundColor: colors.bg.card.default,
-    border: `1px solid ${colors.border.default}`,
-    borderRadius: cornerRadius.borderRadius.lg,
-    padding: spacing.spacing[20],
-    boxShadow: getShadow('regular.card', colors, { withBorder: true }),
-    display: 'flex',
-    flexDirection: 'column',
-    gap: spacing.spacing[16],
-    transition: 'all 0.15s ease-out',
-    cursor: 'pointer',
-  };
-
-  // History item header styles
-  const itemHeaderStyles = {
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    gap: spacing.spacing[12],
-  };
-
-  // History item content styles
-  const itemContentStyles = {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: spacing.spacing[8],
-    flex: 1,
-  };
-
-  // History item metadata styles
-  const itemMetadataStyles = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: spacing.spacing[12],
-    marginTop: spacing.spacing[4],
-  };
-
-  // Empty state styles
-  const emptyStateStyles = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
     gap: spacing.spacing[24],
-    padding: spacing.spacing[80],
-    textAlign: 'center',
+    width: '100%',
+  };
+
+  // Right section styles for search and dropdown
+  const rightSectionStyles = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: spacing.spacing[12],
+  };
+
+  // Content grid styles (2 columns)
+  const contentGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: spacing.spacing[24],
   };
 
   return (
     <div style={containerStyles}>
-      {/* Header */}
-      <div style={headerStyles}>
-        <h1 style={pageTitleStyle}>
-          History
-        </h1>
-        
-        {/* Controls Row */}
-        <div style={controlsRowStyles}>
-          {/* Search */}
-          <div style={searchContainerStyles}>
+      {/* Header Section */}
+      <div>
+        <h1 style={titleStyle}>Content History</h1>
+        <p style={subtitleStyle}>
+          View, search, and manage all your created content in one place
+        </p>
+      </div>
+
+      {/* Controls Row - Tabs and Search/Sort */}
+      <div style={controlRowStyles}>
+        {/* Left: Tab Bar */}
+        <Tabs
+          style="segmented"
+          type="default"
+          tabs={filterTabs}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
+
+        {/* Right: Search and Sort */}
+        <div style={rightSectionStyles}>
+          {/* Search Input */}
+          <div style={{ width: '280px' }}>
             <Input
-              placeholder="Search your history..."
+              size="lg"
+              style="default"
+              placeholder="Search content..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               leadIcon={<Search size={16} />}
-              size="md"
             />
           </div>
-          
-          {/* Filter Buttons */}
-          <ButtonGroup
-            type="default"
-            size="sm"
-            items={filterOptions.map(filter => ({
-              ...filter,
-              onClick: handleFilterSelect
-            }))}
-          />
+
+          {/* Sort Dropdown */}
+          <div style={{ position: 'relative' }}>
+            <Button
+              label={`${sortOptions.find(opt => 
+                (sortBy === 'lastEdited' && opt.label === 'Last Edited') ||
+                (sortBy === 'newest' && opt.label === 'Newest First') ||
+                (sortBy === 'oldest' && opt.label === 'Oldest First') ||
+                (sortBy === 'nameAsc' && opt.label === 'A-Z') ||
+                (sortBy === 'nameDesc' && opt.label === 'Z-A')
+              )?.label || 'Last Edited'}`}
+              style="secondary"
+              size="sm"
+              tailIcon={<ChevronDown size={12} />}
+              onClick={() => setShowSortDropdown(!showSortDropdown)}
+            />
+            
+            {showSortDropdown && (
+              <DropdownMenu
+                items={sortOptions}
+                onClose={() => setShowSortDropdown(false)}
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  right: 0,
+                  marginTop: spacing.spacing[4],
+                  zIndex: 10
+                }}
+              />
+            )}
+          </div>
         </div>
       </div>
 
       {/* Results Count */}
       <div style={{ 
         ...textStyles.sm.medium, 
-        color: colors.text.subtle,
-        margin: `${spacing.spacing[4]} 0`
+        color: colors.text.subtle 
       }}>
-        {filteredItems.length} {filteredItems.length === 1 ? 'item' : 'items'} found
+        {filteredItems.length} {filteredItems.length === 1 ? 'item' : 'items'}
       </div>
 
-      {/* History Items */}
-      {filteredItems.length > 0 ? (
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          gap: spacing.spacing[16] 
-        }}>
-          {filteredItems.map((item) => (
-            <div
-              key={item.id}
-              style={historyItemStyles}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-1px)';
-                e.currentTarget.style.boxShadow = getShadow('regular.modalSm', colors, { withBorder: true });
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = getShadow('regular.card', colors, { withBorder: true });
-              }}
-            >
-              {/* Item Header */}
-              <div style={itemHeaderStyles}>
-                <div style={itemContentStyles}>
-                  {/* Title and Badges */}
-                  <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: spacing.spacing[8],
-                    flexWrap: 'wrap'
-                  }}>
-                    <h3 style={{ 
-                      ...textStyles.md.semibold, 
-                      color: colors.text.default, 
-                      margin: 0,
-                      flex: 1,
-                      minWidth: 0
-                    }}>
-                      {item.title}
-                    </h3>
-                    <Badge 
-                      label={item.type.charAt(0).toUpperCase() + item.type.slice(1)}
-                      variant={getTypeBadgeVariant(item.type)}
-                      size="sm"
-                    />
-                    <Badge 
-                      label={item.status.charAt(0).toUpperCase() + item.status.slice(1)}
-                      variant={getStatusBadgeVariant(item.status)}
-                      size="sm"
-                    />
-                  </div>
-                  
-                  {/* Description */}
-                  <p style={{ 
-                    ...textStyles.sm.normal, 
-                    color: colors.text.subtle, 
-                    margin: 0,
-                    lineHeight: '1.5'
-                  }}>
-                    {item.description}
-                  </p>
-                  
-                  {/* Metadata */}
-                  <div style={itemMetadataStyles}>
-                    <div style={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      gap: spacing.spacing[4] 
-                    }}>
-                      <Calendar size={12} color={colors.icon.muted} />
-                      <span style={{ 
-                        ...textStyles.xs.normal, 
-                        color: colors.text.muted 
-                      }}>
-                        {formatDate(item.date)}
-                      </span>
-                    </div>
-                    
-                    <div style={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      gap: spacing.spacing[4] 
-                    }}>
-                      <Clock size={12} color={colors.icon.muted} />
-                      <span style={{ 
-                        ...textStyles.xs.normal, 
-                        color: colors.text.muted 
-                      }}>
-                        {item.time}
-                      </span>
-                    </div>
+      {/* Content Cards Grid */}
+      <div style={contentGridStyles}>
+        {filteredItems.map((item) => (
+          <ContentCard
+            key={item.id}
+            variant={item.variant}
+            title={item.title}
+            subtitle={item.subtitle}
+            content={item.content}
+            onClick={() => navigateToContentEditor(item.id)}
+            onMenuAction={(action) => handleMenuAction(action, item.id)}
+          />
+        ))}
+      </div>
 
-                    {/* Type-specific metadata */}
-                    {item.engagement && (
-                      <div style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: spacing.spacing[8] 
-                      }}>
-                        <span style={{ 
-                          ...textStyles.xs.normal, 
-                          color: colors.text.muted 
-                        }}>
-                          {item.engagement.views} views • {item.engagement.likes} likes
-                        </span>
-                      </div>
-                    )}
-                    
-                    {item.wordCount && (
-                      <span style={{ 
-                        ...textStyles.xs.normal, 
-                        color: colors.text.muted 
-                      }}>
-                        {item.wordCount.toLocaleString()} words
-                      </span>
-                    )}
-                    
-                    {item.usageCount && (
-                      <span style={{ 
-                        ...textStyles.xs.normal, 
-                        color: colors.text.muted 
-                      }}>
-                        Used {item.usageCount} times
-                      </span>
-                    )}
-                    
-                    {item.duration && (
-                      <span style={{ 
-                        ...textStyles.xs.normal, 
-                        color: colors.text.muted 
-                      }}>
-                        {item.duration}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                
-                {/* Actions */}
-                <Button
-                  variant="iconOnly"
-                  style="ghost"
-                  size="sm"
-                  leadIcon={<MoreHorizontal size={16} />}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    // Handle actions menu
-                  }}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        /* Empty State */
-        <div style={emptyStateStyles}>
-          <Bichaurinho variant={9} size={120} />
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            gap: spacing.spacing[8],
-            alignItems: 'center'
-          }}>
-            <h3 style={{ 
-              ...textStyles.lg.semibold, 
-              color: colors.text.default, 
-              margin: 0 
-            }}>
-              No history found
-            </h3>
-            <p style={{ 
-              ...textStyles.md.normal, 
-              color: colors.text.subtle, 
-              margin: 0,
-              maxWidth: '400px'
-            }}>
-              {searchQuery 
-                ? `No items match "${searchQuery}". Try adjusting your search or filters.`
-                : 'Start creating content to see your history here.'
-              }
-            </p>
-          </div>
-          {searchQuery && (
-            <Button
-              label="Clear Search"
-              style="secondary"
-              size="sm"
-              onClick={() => setSearchQuery('')}
-            />
-          )}
+      {/* Empty State */}
+      {filteredItems.length === 0 && (
+        <div style={{
+          textAlign: 'center',
+          padding: spacing.spacing[48],
+          color: colors.text.subtle
+        }}>
+          <p style={textStyles.lg.medium}>No content found</p>
+          <p style={textStyles.sm.normal}>
+            {searchQuery ? 'Try adjusting your search terms' : 'Start creating content to see your history here'}
+          </p>
         </div>
       )}
     </div>
