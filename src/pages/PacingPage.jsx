@@ -10,6 +10,7 @@ import { textStyles } from '../design-system/styles/typography/typography-styles
 import Button from '../design-system/components/Button.jsx';
 import ButtonGroup from '../design-system/components/ButtonGroup.jsx';
 import Checkbox from '../design-system/components/Checkbox.jsx';
+import SidebarMenuItem from '../design-system/components/SidebarMenuItem.jsx';
 
 // Icons
 import { ChevronDown, Clock, Calendar, Bell, MessageSquare, Check } from 'lucide-react';
@@ -146,52 +147,7 @@ const PacingPage = () => {
     </div>
   );
 
-  const SideMenuItem = ({ item, isActive, onClick }) => (
-    <button
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: spacing.spacing[12],
-        padding: spacing.spacing[16],
-        backgroundColor: isActive ? colors.bg.state.ghost : 'transparent',
-        border: 'none',
-        borderRadius: cornerRadius.borderRadius.md,
-        width: '100%',
-        textAlign: 'left',
-        cursor: 'pointer',
-        transition: 'background-color 0.15s ease-out',
-      }}
-      onClick={() => onClick(item.id)}
-      onMouseEnter={(e) => {
-        if (!isActive) {
-          e.target.style.backgroundColor = colors.bg.state.ghostHover;
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (!isActive) {
-          e.target.style.backgroundColor = 'transparent';
-        }
-      }}
-    >
-      <div style={{ color: isActive ? colors.icon.default : colors.icon.muted }}>
-        {item.icon}
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.spacing[2], flex: 1 }}>
-        <span style={{ 
-          ...textStyles.sm.medium, 
-          color: isActive ? colors.text.default : colors.text.subtle 
-        }}>
-          {item.label}
-        </span>
-        <span style={{ 
-          ...textStyles.xs.normal, 
-          color: colors.text.muted 
-        }}>
-          {item.description}
-        </span>
-      </div>
-    </button>
-  );
+
 
   const renderSectionContent = () => {
     switch (activeSection) {
@@ -349,50 +305,54 @@ const PacingPage = () => {
     }
   };
 
+  // Main container styles - 840px width, center aligned, gap: 48 for more space between sections
+  const containerStyles = {
+    paddingTop: spacing.spacing[80],
+    paddingBottom: spacing.spacing[160],
+    paddingLeft: spacing.spacing[32],
+    paddingRight: spacing.spacing[32],
+    width: '840px',
+    margin: '0 auto',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: spacing.spacing[48],
+  };
+
+  // Title style using awesome serif font, 4xl semi bold (following KnowledgeBasePage pattern)
+  const titleStyle = {
+    fontFamily: typography.fontFamily['awesome-serif'],
+    fontSize: typography.desktop.size['4xl'],
+    fontWeight: typography.desktop.weight.semibold,
+    lineHeight: typography.desktop.lineHeight.leading7,
+    letterSpacing: typography.desktop.letterSpacing.normal,
+    color: colors.text.default,
+    margin: 0,
+  };
+
+  // Subtitle style - sm medium, text subtle (following KnowledgeBasePage pattern)
+  const subtitleStyle = {
+    ...textStyles.sm.medium,
+    color: colors.text.subtle,
+    margin: 0,
+    marginTop: spacing.spacing[8],
+  };
+
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        backgroundColor: colors.bg.subtle,
-        marginLeft: '240px', // Account for sidebar width
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      {/* Header */}
-      <div
-        style={{
-          padding: spacing.spacing[32],
-          paddingBottom: spacing.spacing[20],
-          borderBottom: `1px solid ${colors.border.default}`,
-          backgroundColor: colors.bg.default,
-        }}
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.spacing[8] }}>
-          <h1 style={{ 
-            ...textStyles['3xl'].bold, 
-            color: colors.text.default, 
-            margin: 0 
-          }}>
-            Pacing Settings
-          </h1>
-          <p style={{ 
-            ...textStyles.lg.normal, 
-            color: colors.text.muted, 
-            margin: 0 
-          }}>
-            Customize when and how often we engage with you for optimal productivity
-          </p>
-        </div>
+    <div style={containerStyles}>
+      {/* Header Section */}
+      <div>
+        <h1 style={titleStyle}>Pacing Settings</h1>
+        <p style={subtitleStyle}>
+          Customize when and how often we engage with you for optimal productivity
+        </p>
       </div>
 
-      {/* Main Content */}
+      {/* Main Content Layout */}
       <div
         style={{
-          flex: 1,
           display: 'flex',
           gap: spacing.spacing[32],
-          padding: spacing.spacing[32],
+          width: '100%',
         }}
       >
         {/* Left Side Menu */}
@@ -402,31 +362,26 @@ const PacingPage = () => {
             display: 'flex',
             flexDirection: 'column',
             gap: spacing.spacing[8],
+            flex: 'none', // Prevent shrinking
           }}
         >
-          <h2 style={{ 
-            ...textStyles.sm.semibold, 
-            color: colors.text.default, 
-            margin: 0,
-            marginBottom: spacing.spacing[8]
-          }}>
-            Settings Categories
-          </h2>
-          
           {menuItems.map((item) => (
-            <SideMenuItem
+            <SidebarMenuItem
               key={item.id}
-              item={item}
-              isActive={activeSection === item.id}
-              onClick={setActiveSection}
+              variant="default"
+              state={activeSection === item.id ? 'active' : 'default'}
+              label={item.label}
+              leadIcon={item.icon}
+              onClick={() => setActiveSection(item.id)}
             />
           ))}
         </div>
 
-        {/* Right Content Card */}
+        {/* Right Content Card - max 400px width */}
         <div
           style={{
-            flex: 1,
+            maxWidth: '400px',
+            width: '100%',
             backgroundColor: colors.bg.card.default,
             border: `1px solid ${colors.border.default}`,
             borderRadius: cornerRadius.borderRadius.lg,
