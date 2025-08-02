@@ -18,6 +18,7 @@ import ContentEditorPage from '../../pages/ContentEditorPage.jsx';
 import KnowledgeBasePage from '../../pages/KnowledgeBasePage.jsx';
 import NotificationsPage from '../../pages/NotificationsPage.jsx';
 import PacingPage from '../../pages/PacingPage.jsx';
+import ProfilePage from '../../pages/ProfilePage.jsx';
 
 /**
  * MainAppChrome component - Main application layout with sidebar navigation and content area
@@ -87,12 +88,7 @@ const MainAppChrome = ({
       case 'home':
         return <HomePage />;
       case 'profile':
-        return (
-          <div style={{ padding: spacing.spacing[32] }}>
-            <h1 style={textStyles['2xl'].bold}>Profile</h1>
-            <p style={textStyles.md.normal}>Profile page content coming soon...</p>
-          </div>
-        );
+        return <ProfilePage />;
       case 'knowledge':
         return <KnowledgeBasePage />;
       case 'calendar':

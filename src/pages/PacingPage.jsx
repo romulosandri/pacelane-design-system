@@ -13,7 +13,7 @@ import Checkbox from '../design-system/components/Checkbox.jsx';
 import SidebarMenuItem from '../design-system/components/SidebarMenuItem.jsx';
 
 // Icons
-import { ChevronDown, Clock, Calendar, Bell, MessageSquare, Check } from 'lucide-react';
+import { ChevronDown, Check } from 'lucide-react';
 
 const PacingPage = () => {
   const { colors } = useTheme();
@@ -79,27 +79,19 @@ const PacingPage = () => {
   const menuItems = [
     { 
       id: 'frequency', 
-      label: 'Frequency', 
-      icon: <Calendar size={16} />,
-      description: 'Define when you want to post'
+      label: 'Frequency'
     },
     { 
       id: 'dailySummary', 
-      label: 'Daily Summary', 
-      icon: <MessageSquare size={16} />,
-      description: 'Set when we ask about your day'
+      label: 'Daily Summary'
     },
     { 
       id: 'recommendations', 
-      label: 'Recommendations', 
-      icon: <Bell size={16} />,
-      description: 'Schedule content suggestions'
+      label: 'Recommendations'
     },
     { 
       id: 'contextSessions', 
-      label: 'Context Sessions', 
-      icon: <Clock size={16} />,
-      description: 'Set strategy review frequency'
+      label: 'Context Sessions'
     }
   ];
 
@@ -186,14 +178,16 @@ const PacingPage = () => {
               ))}
             </div>
 
-            <Button
-              label={savedStates.frequency ? "Saved!" : "Save Changes"}
-              style="primary"
-              size="sm"
-              leadIcon={savedStates.frequency ? <Check size={16} /> : undefined}
-              onClick={() => handleSave('frequency')}
-              disabled={savedStates.frequency}
-            />
+            <div style={{ alignSelf: 'flex-start' }}>
+              <Button
+                label={savedStates.frequency ? "Saved!" : "Save"}
+                style="primary"
+                size="sm"
+                leadIcon={savedStates.frequency ? <Check size={16} /> : undefined}
+                onClick={() => handleSave('frequency')}
+                disabled={savedStates.frequency}
+              />
+            </div>
           </div>
         );
 
@@ -231,14 +225,16 @@ const PacingPage = () => {
               </div>
             </div>
 
-            <Button
-              label={savedStates.dailySummary ? "Saved!" : "Save Changes"}
-              style="primary"
-              size="sm"
-              leadIcon={savedStates.dailySummary ? <Check size={16} /> : undefined}
-              onClick={() => handleSave('dailySummary')}
-              disabled={savedStates.dailySummary}
-            />
+            <div style={{ alignSelf: 'flex-start' }}>
+              <Button
+                label={savedStates.dailySummary ? "Saved!" : "Save"}
+                style="primary"
+                size="sm"
+                leadIcon={savedStates.dailySummary ? <Check size={16} /> : undefined}
+                onClick={() => handleSave('dailySummary')}
+                disabled={savedStates.dailySummary}
+              />
+            </div>
           </div>
         );
 
@@ -260,14 +256,16 @@ const PacingPage = () => {
               onChange={setRecommendationsTime}
             />
 
-            <Button
-              label={savedStates.recommendations ? "Saved!" : "Save Changes"}
-              style="primary"
-              size="sm"
-              leadIcon={savedStates.recommendations ? <Check size={16} /> : undefined}
-              onClick={() => handleSave('recommendations')}
-              disabled={savedStates.recommendations}
-            />
+            <div style={{ alignSelf: 'flex-start' }}>
+              <Button
+                label={savedStates.recommendations ? "Saved!" : "Save"}
+                style="primary"
+                size="sm"
+                leadIcon={savedStates.recommendations ? <Check size={16} /> : undefined}
+                onClick={() => handleSave('recommendations')}
+                disabled={savedStates.recommendations}
+              />
+            </div>
           </div>
         );
 
@@ -289,14 +287,16 @@ const PacingPage = () => {
               onChange={setContextSessionsTime}
             />
 
-            <Button
-              label={savedStates.contextSessions ? "Saved!" : "Save Changes"}
-              style="primary"
-              size="sm"
-              leadIcon={savedStates.contextSessions ? <Check size={16} /> : undefined}
-              onClick={() => handleSave('contextSessions')}
-              disabled={savedStates.contextSessions}
-            />
+            <div style={{ alignSelf: 'flex-start' }}>
+              <Button
+                label={savedStates.contextSessions ? "Saved!" : "Save"}
+                style="primary"
+                size="sm"
+                leadIcon={savedStates.contextSessions ? <Check size={16} /> : undefined}
+                onClick={() => handleSave('contextSessions')}
+                disabled={savedStates.contextSessions}
+              />
+            </div>
           </div>
         );
 
@@ -371,7 +371,6 @@ const PacingPage = () => {
               variant="default"
               state={activeSection === item.id ? 'active' : 'default'}
               label={item.label}
-              leadIcon={item.icon}
               onClick={() => setActiveSection(item.id)}
             />
           ))}
